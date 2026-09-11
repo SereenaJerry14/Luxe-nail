@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIP Atelier Account | LUXECLAWS Haute Nail Atelier</title>
+  <meta name="description" content="Manage your LUXECLAWS profile, custom fingertip sizing profiles, order tracking, wishlist, and saved addresses.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-title">LUXECLAWS</span>
+        <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop All</a>
+        <a href="about.html">Our Atelier</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle Theme">
+          <i id="theme-icon" class="ri-moon-line"></i>
+        </button>
+
+        <a href="cart.html" class="icon-btn cart-btn" aria-label="Shopping Cart">
+          <i class="ri-shopping-bag-line"></i>
+          <span class="badge-count cart-badge-count">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header Banner -->
+  <section class="page-header-banner">
+    <div class="container">
+      <nav class="breadcrumb-nav" style="justify-content: center;">
+        <a href="index.html">Home</a>
+        <i class="ri-arrow-right-s-line"></i>
+        <span>VIP Client Portal</span>
+      </nav>
+      <h1 class="font-serif">Client Atelier Account</h1>
+      <p>Manage your custom nail sizing calibration, bespoke commissions, order tracking, and VIP member benefits.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- VIEW 1: UN-AUTHENTICATED STATE (Login & Sign Up Forms) -->
+    <div id="auth-forms-view" style="display: none; max-width: 540px; margin: 3rem auto 6rem;">
+      <div class="cart-table-card">
+        <!-- Auth Tabs -->
+        <div style="display: flex; border-bottom: 1px solid var(--border-subtle); margin-bottom: 2rem;">
+          <button class="btn btn-secondary active" id="auth-tab-login" onclick="switchAuthTab('login')" style="flex: 1; border-radius: 0; border: none; border-bottom: 2px solid var(--gold-primary);">
+            VIP Member Sign In
+          </button>
+          <button class="btn btn-secondary" id="auth-tab-register" onclick="switchAuthTab('register')" style="flex: 1; border-radius: 0; border: none;">
+            Create VIP Account
+          </button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="page-login-form" onsubmit="handleAccountLogin(event)">
+          <div class="form-group" style="margin-bottom: 1.2rem;">
+            <label>Email Address</label>
+            <input type="email" id="login-email-input" class="form-input" required placeholder="vip@luxeclaws.com" value="elena.r@luxury.com">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label>Password</label>
+            <input type="password" id="login-pass-input" class="form-input" required placeholder="••••••••" value="password123">
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; margin-bottom: 1rem;">
+            <i class="ri-login-box-line"></i> Sign In to Account
+          </button>
+
+          <button type="button" class="btn btn-secondary" onclick="quickFillDemoUser()" style="width: 100%; font-size: 0.85rem;">
+            <i class="ri-flashlight-line"></i> 1-Click Instant Demo Login (Elena Rostova - Gold VIP)
+          </button>
+        </form>
+
+        <!-- Registration Form -->
+        <form id="page-register-form" onsubmit="handleAccountRegister(event)" style="display: none;">
+          <div class="form-group" style="margin-bottom: 1.2rem;">
+            <label>Full Name *</label>
+            <input type="text" id="reg-name-input" class="form-input" required placeholder="Sophia Laurent">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.2rem;">
+            <label>Email Address *</label>
+            <input type="email" id="reg-email-input" class="form-input" required placeholder="sophia@example.com">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.2rem;">
+            <label>Password (min 6 characters) *</label>
+            <input type="password" id="reg-pass-input" class="form-input" required minlength="6" placeholder="Create a secure password">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label>Default Nail Sizing Profile</label>
+            <select id="reg-size-input" class="form-input" style="background: var(--bg-surface-elevated); color: var(--text-primary);">
+              <option value="XS">Extra Small (3, 6, 5, 7, 9)</option>
+              <option value="S" selected>Small (2, 5, 4, 6, 8) - Most Popular</option>
+              <option value="M">Medium (1, 5, 4, 6, 7)</option>
+              <option value="L">Large (0, 4, 3, 5, 6)</option>
+              <option value="Custom">Custom Millimeter Measurements</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem;">
+            <i class="ri-user-add-line"></i> Register VIP Atelier Account
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- VIEW 2: AUTHENTICATED DASHBOARD STATE -->
+    <div id="account-portal-view" class="account-layout" style="display: none;">
+      <!-- Left: Account Navigation Sidebar -->
+      <aside class="account-sidebar-card">
+        <div class="user-avatar-badge" id="dash-avatar">ER</div>
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <h3 class="font-serif" id="dash-username" style="font-size: 1.2rem;">Elena Rostova</h3>
+          <span class="badge badge-gold" id="dash-tier" style="font-size: 0.75rem; margin-top: 0.3rem;">GOLD VIP ATELIER MEMBER</span>
+          <p id="dash-email" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">elena.r@luxury.com</p>
+        </div>
+
+        <ul class="account-nav-list">
+          <li>
+            <button class="account-nav-btn active" onclick="switchDashboardTab('overview')">
+              <i class="ri-dashboard-line"></i> Atelier Overview
+            </button>
+          </li>
+          <li>
+            <button class="account-nav-btn" onclick="switchDashboardTab('orders')">
+              <i class="ri-shopping-bag-3-line"></i> Order History & Tracking
+            </button>
+          </li>
+          <li>
+            <button class="account-nav-btn" onclick="switchDashboardTab('wishlist')">
+              <i class="ri-heart-line"></i> My Wishlist (<span id="wishlist-tab-count">0</span>)
+            </button>
+          </li>
+          <li>
+            <button class="account-nav-btn" onclick="switchDashboardTab('sizing')">
+              <i class="ri-ruler-2-line"></i> Custom Sizing Calibration
+            </button>
+          </li>
+          <li>
+            <button class="account-nav-btn" onclick="switchDashboardTab('addresses')">
+              <i class="ri-map-pin-line"></i> Saved Addresses
+            </button>
+          </li>
+          <li>
+            <button class="account-nav-btn logout" onclick="handleAccountLogout()">
+              <i class="ri-logout-box-r-line"></i> Sign Out
+            </button>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Right: Tab Content Panels -->
+      <section class="account-main-content">
+        <!-- TAB 1: OVERVIEW -->
+        <div id="tab-overview" class="tab-pane">
+          <!-- VIP Tier Banner -->
+          <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(255, 117, 143, 0.12) 100%); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 1.8rem; margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <span style="font-size: 0.8rem; letter-spacing: 0.1em; color: var(--gold-light); text-transform: uppercase;">Atelier Rewards Program</span>
+                <h2 class="font-serif" style="font-size: 1.6rem; margin-top: 0.2rem;">480 Tier Glam Points</h2>
+              </div>
+              <span class="badge badge-gold" style="font-size: 0.85rem; padding: 0.5rem 1rem;">Exclusive 15% VIP Discount</span>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">You are only 120 points away from Diamond VIP Atelier status with complimentary custom shape sculpting!</p>
+            <div style="background: var(--bg-surface); height: 8px; border-radius: var(--radius-full); overflow: hidden;">
+              <div style="background: var(--gold-gradient); width: 80%; height: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- Quick Stats Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="cart-table-card" style="padding: 1.5rem; text-align: center;">
+              <i class="ri-shopping-cart-2-line" style="font-size: 2rem; color: var(--gold-light); margin-bottom: 0.5rem;"></i>
+              <h3 id="stat-total-orders" style="font-size: 1.8rem; font-weight: 700;">2</h3>
+              <p style="color: var(--text-secondary); font-size: 0.85rem;">Total Orders Placed</p>
+            </div>
+            <div class="cart-table-card" style="padding: 1.5rem; text-align: center;">
+              <i class="ri-heart-3-line" style="font-size: 2rem; color: var(--pink-accent); margin-bottom: 0.5rem;"></i>
+              <h3 id="stat-wishlist-count" style="font-size: 1.8rem; font-weight: 700;">3</h3>
+              <p style="color: var(--text-secondary); font-size: 0.85rem;">Saved Favorites</p>
+            </div>
+            <div class="cart-table-card" style="padding: 1.5rem; text-align: center;">
+              <i class="ri-fingerprint-line" style="font-size: 2rem; color: var(--gold-light); margin-bottom: 0.5rem;"></i>
+              <h3 id="stat-saved-size" style="font-size: 1.8rem; font-weight: 700;">Size S</h3>
+              <p style="color: var(--text-secondary); font-size: 0.85rem;">Calibrated Fit</p>
+            </div>
+          </div>
+
+          <!-- Recent Order Teaser -->
+          <div class="cart-table-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+              <h3 class="font-serif" style="font-size: 1.3rem;">Latest Atelier Order</h3>
+              <button class="btn btn-secondary" onclick="switchDashboardTab('orders')">View All</button>
+            </div>
+            <div id="recent-order-box">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: ORDER HISTORY & TRACKING -->
+        <div id="tab-orders" class="tab-pane" style="display: none;">
+          <div class="cart-table-card">
+            <h3 class="font-serif" style="font-size: 1.4rem; margin-bottom: 1.5rem;">Your Order History & Live Tracking</h3>
+            <div id="full-orders-list">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: WISHLIST -->
+        <div id="tab-wishlist" class="tab-pane" style="display: none;">
+          <div class="cart-table-card">
+            <h3 class="font-serif" style="font-size: 1.4rem; margin-bottom: 1.5rem;">Your Saved Atelier Wishlist</h3>
+            <div class="product-grid" id="wishlist-products-grid">
+              <!-- Populated by JS -->
+            </div>
+            <div id="wishlist-empty-box" style="display: none; text-align: center; padding: 3rem 1rem;">
+              <i class="ri-heart-line" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+              <p style="color: var(--text-secondary);">Your wishlist is empty. Tap the heart on any set in our collection to save it here.</p>
+              <a href="shop.html" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">Browse Nail Sets</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: SIZING CALIBRATION -->
+        <div id="tab-sizing" class="tab-pane" style="display: none;">
+          <div class="cart-table-card">
+            <h3 class="font-serif" style="font-size: 1.4rem; margin-bottom: 0.5rem;">Client Sizing Calibration</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">Save your exact fingernail millimeter width measurements so every handcrafted set fits flush like a bespoke glove.</p>
+
+            <form id="sizing-save-form" onsubmit="saveCustomSizing(event)">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div class="form-group" style="text-align: center;">
+                  <label style="font-size: 0.8rem; font-weight: 600;">Thumb</label>
+                  <input type="number" id="size-thumb" class="form-input" style="text-align: center;" value="15" min="8" max="22" required>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                  <label style="font-size: 0.8rem; font-weight: 600;">Index</label>
+                  <input type="number" id="size-index" class="form-input" style="text-align: center;" value="12" min="8" max="22" required>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                  <label style="font-size: 0.8rem; font-weight: 600;">Middle</label>
+                  <input type="number" id="size-middle" class="form-input" style="text-align: center;" value="13" min="8" max="22" required>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                  <label style="font-size: 0.8rem; font-weight: 600;">Ring</label>
+                  <input type="number" id="size-ring" class="form-input" style="text-align: center;" value="11" min="8" max="22" required>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                  <label style="font-size: 0.8rem; font-weight: 600;">Pinky</label>
+                  <input type="number" id="size-pinky" class="form-input" style="text-align: center;" value="9" min="6" max="20" required>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span id="sizing-calc-tag" class="badge badge-gold">Mapped to Standard Size: Small (S)</span>
+                <button type="submit" class="btn btn-primary">
+                  <i class="ri-save-line"></i> Save Sizing Profile
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- TAB 5: ADDRESSES & PAYMENTS -->
+        <div id="tab-addresses" class="tab-pane" style="display: none;">
+          <div class="cart-table-card">
+            <h3 class="font-serif" style="font-size: 1.4rem; margin-bottom: 1.5rem;">Saved Delivery Addresses & Cards</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+              <!-- Address Card -->
+              <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 1.5rem; position: relative;">
+                <span class="badge badge-gold" style="position: absolute; top: 15px; right: 15px; font-size: 0.7rem;">DEFAULT SHIPPING</span>
+                <h4 style="margin-bottom: 0.5rem;"><i class="ri-home-4-line"></i> Primary Residence</h4>
+                <p id="addr-display-name" style="font-weight: 600; margin-bottom: 0.2rem;">Elena Rostova</p>
+                <p id="addr-display-street" style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">742 Evergreen Terrace, Suite 4B</p>
+                <p id="addr-display-city" style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Beverly Hills, CA 90210</p>
+                <p id="addr-display-phone" style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">+1 (555) 019-2834</p>
+              </div>
+
+              <!-- Payment Card -->
+              <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.5rem;">
+                <span class="badge badge-pink" style="float: right; font-size: 0.7rem;">DEFAULT CARD</span>
+                <h4 style="margin-bottom: 0.5rem;"><i class="ri-visa-line"></i> Visa Infinite</h4>
+                <p style="font-family: monospace; font-size: 1.1rem; letter-spacing: 2px; margin: 0.8rem 0;">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4242</p>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Expires: 08/28</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-column brand-col">
+        <a href="index.html" class="brand-logo">
+          <span class="brand-title">LUXECLAWS</span>
+          <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
+        </a>
+        <p>Bespoke handcrafted acrylic press-on nails built with salon-grade Japanese builder gel and authentic Swarovski crystals.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Shop Collections</h4>
+        <ul>
+          <li><a href="shop.html?category=glazed">Glazed Opal Aura</a></li>
+          <li><a href="shop.html?category=3d-charms">3D Sculpted Charms</a></li>
+          <li><a href="shop.html?category=bridal">Bridal & Nude</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Client Services</h4>
+        <ul>
+          <li><a href="account.html">My Account & Orders</a></li>
+          <li><a href="faq.html">Sizing & Wear FAQ</a></li>
+          <li><a href="shipping.html">Shipping & Delivery</a></li>
+          <li><a href="returns.html">Returns & Guarantee</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal & Privacy</h4>
+        <ul>
+          <li><a href="about.html">The Atelier Story</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 LUXECLAWS Haute Nail Atelier. All Rights Reserved.</p>
+      <div style="display: flex; gap: 1.2rem; align-items: center;">
+        <span>Handcrafted in Tokyo & Los Angeles</span>
+        <a href="admin.html" style="color: var(--text-muted); opacity: 0.4;" title="Atelier Admin Portal"><i class="ri-lock-line"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="products.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentUser = JSON.parse(localStorage.getItem('luxeclaws_user') || 'null');
+      let products = JSON.parse(localStorage.getItem('luxeclaws_products') || JSON.stringify(NAIL_PRODUCTS));
+      let wishlist = JSON.parse(localStorage.getItem('luxeclaws_wishlist') || '["prod-01", "prod-03"]');
+
+      // Ensure seed demo orders exist
+      let orders = JSON.parse(localStorage.getItem('luxeclaws_orders') || 'null');
+      if (!orders || orders.length === 0) {
+        orders = [
+          {
+            id: 'ORD-894210',
+            date: 'Sep 10, 2026',
+            timestamp: new Date().toISOString(),
+            customer: { name: 'Elena Rostova', email: 'elena.r@luxury.com', address: '742 Evergreen Terrace, Beverly Hills, CA 90210' },
+            items: [
+              { id: 'prod-01', name: 'Glazed Opal Aura', price: 48.00, shape: 'Almond', length: 'Medium', size: 'S', quantity: 1, image: 'assets/glazed_pearl.jpg' },
+              { id: 'prod-07', name: 'Deluxe Salon Prep & Care Kit', price: 16.00, shape: 'Standard', length: 'Universal', size: 'S', quantity: 1, image: 'assets/prep_kit.jpg' }
+            ],
+            shippingMethod: 'Standard Insured Courier',
+            subtotal: 64.00,
+            discount: 0,
+            shipping: 0,
+            total: 64.00,
+            status: 'Handcrafting & QC',
+            trackingNumber: 'LX-88294019'
+          }
+        ];
+        localStorage.setItem('luxeclaws_orders', JSON.stringify(orders));
+      }
+
+      // Check URL Hash for tab (e.g. account.html#wishlist)
+      const hash = window.location.hash.replace('#', '');
+      if (hash && ['orders', 'wishlist', 'sizing', 'addresses'].includes(hash)) {
+        setTimeout(() => switchDashboardTab(hash), 50);
+      }
+
+      function initView() {
+        if (!currentUser) {
+          document.getElementById('auth-forms-view').style.display = 'block';
+          document.getElementById('account-portal-view').style.display = 'none';
+        } else {
+          document.getElementById('auth-forms-view').style.display = 'none';
+          document.getElementById('account-portal-view').style.display = 'grid';
+          renderDashboardData();
+        }
+      }
+
+      function renderDashboardData() {
+        if (!currentUser) return;
+
+        // User info
+        document.getElementById('dash-username').textContent = currentUser.name || 'Elena Rostova';
+        document.getElementById('dash-email').textContent = currentUser.email || 'elena.r@luxury.com';
+        const initials = (currentUser.name || 'Elena Rostova').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        document.getElementById('dash-avatar').textContent = initials;
+        document.getElementById('dash-tier').textContent = currentUser.tier || 'GOLD VIP ATELIER MEMBER';
+
+        // Stats
+        document.getElementById('stat-total-orders').textContent = orders.length;
+        document.getElementById('stat-wishlist-count').textContent = wishlist.length;
+        document.getElementById('wishlist-tab-count').textContent = wishlist.length;
+        document.getElementById('stat-saved-size').textContent = `Size ${currentUser.size || 'S'}`;
+
+        // Address Display
+        document.getElementById('addr-display-name').textContent = currentUser.name || 'Elena Rostova';
+        if (currentUser.address) document.getElementById('addr-display-street').textContent = currentUser.address;
+
+        // Sizing Profile
+        if (currentUser.measurements) {
+          document.getElementById('size-thumb').value = currentUser.measurements.thumb || 15;
+          document.getElementById('size-index').value = currentUser.measurements.index || 12;
+          document.getElementById('size-middle').value = currentUser.measurements.middle || 13;
+          document.getElementById('size-ring').value = currentUser.measurements.ring || 11;
+          document.getElementById('size-pinky').value = currentUser.measurements.pinky || 9;
+        }
+
+        // Recent Order Preview
+        const recentBox = document.getElementById('recent-order-box');
+        if (orders.length > 0) {
+          const latest = orders[0];
+          recentBox.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <div>
+                <strong style="color: var(--gold-light);">${latest.id}</strong> &bull; Placed on ${latest.date}
+              </div>
+              <span class="badge badge-gold">${latest.status}</span>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+              <img src="${latest.items[0].image}" alt="${latest.items[0].name}" style="width: 60px; height: 60px; border-radius: var(--radius-sm); object-fit: cover;">
+              <div style="flex: 1;">
+                <div style="font-weight: 600;">${latest.items[0].name} ${latest.items.length > 1 ? `+ ${latest.items.length - 1} more items` : ''}</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Tracking: <strong>${latest.trackingNumber || 'Pending'}</strong></div>
+              </div>
+              <div style="font-weight: 700; color: var(--gold-light);">$${latest.total.toFixed(2)}</div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+              <a href="order-confirmation.html?orderId=${latest.id}" class="btn btn-secondary" style="font-size: 0.8rem;">Track Package</a>
+            </div>
+          `;
+        } else {
+          recentBox.innerHTML = `<p style="color: var(--text-secondary);">No orders placed yet.</p>`;
+        }
+
+        // Full Orders List
+        const fullOrdersList = document.getElementById('full-orders-list');
+        fullOrdersList.innerHTML = orders.map(ord => `
+          <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.8rem; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <div>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">Order Placed: <strong>${ord.date}</strong></span> &bull;
+                <span style="font-size: 0.85rem; color: var(--gold-light);">ID: <strong>${ord.id}</strong></span>
+              </div>
+              <div>
+                <span class="badge badge-gold">${ord.status}</span>
+              </div>
+            </div>
+
+            <div>
+              ${ord.items.map(it => `
+                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.8rem;">
+                  <img src="${it.image}" alt="${it.name}" style="width: 50px; height: 50px; border-radius: var(--radius-sm); object-fit: cover;">
+                  <div style="flex: 1;">
+                    <div style="font-weight: 600;">${it.name}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">${it.shape || 'Almond'} &bull; ${it.size || 'S'} &bull; Qty: ${it.quantity}</div>
+                  </div>
+                  <div style="font-weight: 600;">$${(it.price * it.quantity).toFixed(2)}</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 1rem; margin-top: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                Insured Courier: <strong>${ord.trackingNumber || 'LX-889021'}</strong>
+              </div>
+              <div style="display: flex; gap: 1rem; align-items: center;">
+                <div style="font-size: 1.1rem; font-weight: 700; color: var(--gold-light);">Total: $${ord.total.toFixed(2)}</div>
+                <a href="order-confirmation.html?orderId=${ord.id}" class="btn btn-secondary" style="font-size: 0.8rem;">Track Order</a>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // Wishlist Tab
+        renderWishlistGrid();
+      }
+
+      function renderWishlistGrid() {
+        const grid = document.getElementById('wishlist-products-grid');
+        const empty = document.getElementById('wishlist-empty-box');
+        const wishlistProducts = products.filter(p => wishlist.includes(p.id));
+
+        if (wishlistProducts.length === 0) {
+          grid.innerHTML = '';
+          empty.style.display = 'block';
+          return;
+        }
+
+        empty.style.display = 'none';
+        grid.innerHTML = wishlistProducts.map(p => `
+          <div class="product-card">
+            <div class="product-image-container">
+              <img src="${p.image}" alt="${p.name}" class="product-image">
+              <button class="wishlist-btn active" onclick="removeFromWishlistPage('${p.id}')">
+                <i class="ri-heart-fill"></i>
+              </button>
+            </div>
+            <div class="product-info">
+              <h3 class="product-title font-serif"><a href="product.html?id=${p.id}" style="color: inherit; text-decoration: none;">${p.name}</a></h3>
+              <p class="product-subtitle">${p.subtitle}</p>
+              <div class="product-pricing">
+                <span class="price-current">$${p.price.toFixed(2)}</span>
+              </div>
+              <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button class="btn btn-primary" style="width: 100%;" onclick="quickAddToCartFromWishlist('${p.id}')">
+                  <i class="ri-shopping-bag-line"></i> Move to Bag
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      window.switchAuthTab = function(tab) {
+        document.getElementById('auth-tab-login').classList.toggle('active', tab === 'login');
+        document.getElementById('auth-tab-register').classList.toggle('active', tab === 'register');
+        document.getElementById('page-login-form').style.display = tab === 'login' ? 'block' : 'none';
+        document.getElementById('page-register-form').style.display = tab === 'register' ? 'block' : 'none';
+      };
+
+      window.switchDashboardTab = function(tabName) {
+        document.querySelectorAll('.tab-pane').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.account-nav-btn').forEach(btn => btn.classList.remove('active'));
+
+        const targetPane = document.getElementById(`tab-${tabName}`);
+        if (targetPane) targetPane.style.display = 'block';
+
+        const activeBtn = Array.from(document.querySelectorAll('.account-nav-btn')).find(b => b.getAttribute('onclick')?.includes(tabName));
+        if (activeBtn) activeBtn.classList.add('active');
+      };
+
+      window.quickFillDemoUser = function() {
+        currentUser = {
+          name: 'Elena Rostova',
+          email: 'elena.r@luxury.com',
+          tier: 'GOLD VIP ATELIER MEMBER',
+          size: 'S',
+          address: '742 Evergreen Terrace, Suite 4B',
+          city: 'Beverly Hills',
+          zip: '90210',
+          measurements: { thumb: 15, index: 12, middle: 13, ring: 11, pinky: 9 }
+        };
+        localStorage.setItem('luxeclaws_user', JSON.stringify(currentUser));
+        initView();
+        showToast('Welcome back, Elena! (Gold VIP)', 'ri-vip-crown-fill');
+      };
+
+      window.handleAccountLogin = function(e) {
+        e.preventDefault();
+        const email = document.getElementById('login-email-input').value;
+        currentUser = {
+          name: 'Elena Rostova',
+          email: email,
+          tier: 'GOLD VIP ATELIER MEMBER',
+          size: 'S',
+          address: '742 Evergreen Terrace',
+          measurements: { thumb: 15, index: 12, middle: 13, ring: 11, pinky: 9 }
+        };
+        localStorage.setItem('luxeclaws_user', JSON.stringify(currentUser));
+        initView();
+        showToast('Signed in successfully!', 'ri-checkbox-circle-fill');
+      };
+
+      window.handleAccountRegister = function(e) {
+        e.preventDefault();
+        const name = document.getElementById('reg-name-input').value;
+        const email = document.getElementById('reg-email-input').value;
+        const size = document.getElementById('reg-size-input').value;
+
+        currentUser = {
+          name: name,
+          email: email,
+          tier: 'SILVER VIP ATELIER MEMBER',
+          size: size,
+          measurements: { thumb: 15, index: 12, middle: 13, ring: 11, pinky: 9 }
+        };
+        localStorage.setItem('luxeclaws_user', JSON.stringify(currentUser));
+        initView();
+        showToast(`Welcome to LUXECLAWS Atelier, ${name}!`, 'ri-sparkling-fill');
+      };
+
+      window.handleAccountLogout = function() {
+        if (confirm('Sign out of your VIP account?')) {
+          localStorage.removeItem('luxeclaws_user');
+          currentUser = null;
+          initView();
+          showToast('Signed out of Atelier portal', 'ri-logout-box-r-line');
+        }
+      };
+
+      window.saveCustomSizing = function(e) {
+        e.preventDefault();
+        if (!currentUser) return;
+        currentUser.measurements = {
+          thumb: parseInt(document.getElementById('size-thumb').value),
+          index: parseInt(document.getElementById('size-index').value),
+          middle: parseInt(document.getElementById('size-middle').value),
+          ring: parseInt(document.getElementById('size-ring').value),
+          pinky: parseInt(document.getElementById('size-pinky').value)
+        };
+        localStorage.setItem('luxeclaws_user', JSON.stringify(currentUser));
+        showToast('Custom Sizing Profile Saved!', 'ri-checkbox-circle-fill');
+      };
+
+      window.removeFromWishlistPage = function(id) {
+        wishlist = wishlist.filter(item => item !== id);
+        localStorage.setItem('luxeclaws_wishlist', JSON.stringify(wishlist));
+        renderWishlistGrid();
+        document.getElementById('wishlist-tab-count').textContent = wishlist.length;
+        document.getElementById('stat-wishlist-count').textContent = wishlist.length;
+        showToast('Removed from Wishlist', 'ri-heart-line');
+      };
+
+      window.quickAddToCartFromWishlist = function(id) {
+        const prod = products.find(p => p.id === id);
+        if (!prod) return;
+        let cart = JSON.parse(localStorage.getItem('luxeclaws_cart') || '[]');
+        cart.push({
+          id: prod.id,
+          name: prod.name,
+          price: prod.price,
+          image: prod.image,
+          shape: prod.defaultShape || 'Almond',
+          length: prod.defaultLength || 'Medium',
+          size: currentUser?.size || 'S',
+          quantity: 1
+        });
+        localStorage.setItem('luxeclaws_cart', JSON.stringify(cart));
+        showToast(`Added ${prod.name} to Shopping Bag`, 'ri-shopping-bag-fill');
+      };
+
+      function showToast(msg, icon) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<i class="${icon}" style="color: var(--pink-accent);"></i> <span>${msg}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 300);
+        }, 2800);
+      }
+
+      initView();
+    });
+  </script>
+</body>
+</html>

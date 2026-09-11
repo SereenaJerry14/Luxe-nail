@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details | LUXECLAWS Haute Nail Atelier</title>
+  <meta name="description" content="Handcrafted luxury acrylic press-on nails. Explore details, sizing, shape variants, and customer reviews.">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    .pdp-container {
+      max-width: 1380px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 1.5rem;
+    }
+    .pdp-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+    .pdp-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .pdp-main-img-box {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-gold);
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-lg);
+    }
+    .pdp-main-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .pdp-main-img-box:hover img {
+      transform: scale(1.04);
+    }
+    .pdp-thumb-row {
+      display: flex;
+      gap: 0.8rem;
+    }
+    .pdp-thumb {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: var(--transition-fast);
+    }
+    .pdp-thumb.active, .pdp-thumb:hover {
+      border-color: var(--gold-primary);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    .pdp-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pdp-info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .pdp-variant-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .pdp-variant-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      justify-content: space-between;
+    }
+    .pdp-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .pdp-chip {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 1rem;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .pdp-chip:hover {
+      border-color: var(--border-gold);
+      color: var(--text-primary);
+    }
+    .pdp-chip.active {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .pdp-accordion {
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 1rem;
+    }
+    .accordion-item {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .accordion-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-primary);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+    }
+    .accordion-body {
+      padding-bottom: 1rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      display: none;
+    }
+    .accordion-body.open {
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      .pdp-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span class="tag">SPRING DROP</span>
+    <span>✨ Complimentary Deluxe Nail Prep Kit + Free Shipping over $50! Use code <strong>GLAM15</strong> for 15% OFF</span>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-icon">✨</span>
+        <div>
+          <span class="logo-title">LUXECLAWS</span>
+          <span class="logo-subtitle">Haute Nail Atelier</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html#catalog" class="nav-link">Shop Collection</a></li>
+          <li><a href="index.html#sizing" class="nav-link">Sizing Guide</a></li>
+          <li><a href="account.html" class="nav-link">My Account</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="faq.html" class="nav-link">FAQ</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button class="btn-icon" id="theme-toggle-btn" title="Toggle Theme"><i class="ri-moon-line" id="theme-icon"></i></button>
+        <!-- Wishlist -->
+        <a href="account.html#wishlist" class="btn-icon" title="Wishlist"><i class="ri-heart-3-line"></i><span class="badge-count" id="wishlist-count">0</span></a>
+        <!-- Cart -->
+        <button class="btn-icon" id="cart-toggle-btn" title="Shopping Bag"><i class="ri-shopping-bag-3-line"></i><span class="badge-count" id="cart-count">0</span></button>
+        <!-- User -->
+        <div id="nav-user-container">
+          <a href="account.html" class="btn-icon" title="Account"><i class="ri-user-3-line"></i></a>
+        </div>
+        <a href="index.html#catalog" class="btn btn-gold" style="padding: 0.65rem 1.2rem; font-size: 0.85rem;">Shop Drops</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Product Detail Page (PDP) Content -->
+  <main class="pdp-container">
+    <!-- Breadcrumb -->
+    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem;">
+      <a href="index.html" style="color: var(--text-secondary); text-decoration: none;">Home</a> / 
+      <a href="index.html#catalog" style="color: var(--text-secondary); text-decoration: none;">Collection</a> / 
+      <span style="color: var(--gold-light);" id="pdp-breadcrumb-title">Glazed Opal Aura</span>
+    </div>
+
+    <div class="pdp-grid">
+      <!-- Media Gallery -->
+      <div class="pdp-gallery">
+        <div class="pdp-main-img-box">
+          <img src="assets/glazed_pearl.jpg" id="pdp-main-img" alt="Nail Set Hero">
+        </div>
+        <div class="pdp-thumb-row" id="pdp-thumb-row">
+          <div class="pdp-thumb active" onclick="switchPdpImage('assets/glazed_pearl.jpg', this)">
+            <img src="assets/glazed_pearl.jpg" alt="Thumb 1">
+          </div>
+          <div class="pdp-thumb" onclick="switchPdpImage('assets/customer_inspo.jpg', this)">
+            <img src="assets/customer_inspo.jpg" alt="Thumb 2">
+          </div>
+          <div class="pdp-thumb" onclick="switchPdpImage('assets/hero.jpg', this)">
+            <img src="assets/hero.jpg" alt="Thumb 3">
+          </div>
+        </div>
+      </div>
+
+      <!-- Info & Buy Panel -->
+      <div class="pdp-info-panel">
+        <div>
+          <span class="badge badge-gold" id="pdp-badge">BESTSELLER</span>
+          <h1 style="font-size: 2.4rem; margin-top: 0.5rem; margin-bottom: 0.3rem;" id="pdp-name">Glazed Opal Aura</h1>
+          <p style="color: var(--text-secondary); font-size: 0.92rem;" id="pdp-subtitle">High-Gloss Pearlescent Glaze with Micro-Pearl Accents</p>
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.5rem;">
+            <span class="rating-stars" style="color: #fca311;">★★★★★</span>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">(142 verified reviews)</span>
+          </div>
+        </div>
+
+        <div style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--gold-light);" id="pdp-price">
+          $48.00 <span style="font-size: 1.1rem; color: var(--text-muted); text-decoration: line-through;">$58.00</span>
+        </div>
+
+        <!-- Variant 1: Shape -->
+        <div class="pdp-variant-block">
+          <div class="pdp-variant-title">
+            <span>Choose Nail Shape:</span>
+            <span style="color: var(--gold-light);" id="pdp-selected-shape">Almond</span>
+          </div>
+          <div class="pdp-chips" id="pdp-shape-chips">
+            <button class="pdp-chip active" onclick="selectPdpShape('Almond', this)">Almond</button>
+            <button class="pdp-chip" onclick="selectPdpShape('Coffin', this)">Coffin</button>
+            <button class="pdp-chip" onclick="selectPdpShape('Stiletto', this)">Stiletto</button>
+            <button class="pdp-chip" onclick="selectPdpShape('Square', this)">Square</button>
+            <button class="pdp-chip" onclick="selectPdpShape('Oval', this)">Oval</button>
+          </div>
+        </div>
+
+        <!-- Variant 2: Length -->
+        <div class="pdp-variant-block">
+          <div class="pdp-variant-title">
+            <span>Choose Length:</span>
+            <span style="color: var(--gold-light);" id="pdp-selected-length">Medium</span>
+          </div>
+          <div class="pdp-chips" id="pdp-length-chips">
+            <button class="pdp-chip" onclick="selectPdpLength('Short', this)">Short</button>
+            <button class="pdp-chip active" onclick="selectPdpLength('Medium', this)">Medium</button>
+            <button class="pdp-chip" onclick="selectPdpLength('Long', this)">Long</button>
+            <button class="pdp-chip" onclick="selectPdpLength('Extra Long', this)">Extra Long</button>
+          </div>
+        </div>
+
+        <!-- Variant 3: Size -->
+        <div class="pdp-variant-block">
+          <div class="pdp-variant-title">
+            <span>Nail Bed Sizing:</span>
+            <a href="index.html#sizing" style="color: var(--pink-accent); font-size: 0.78rem; text-decoration: underline;">How to Measure?</a>
+          </div>
+          <div class="pdp-chips" id="pdp-size-chips">
+            <button class="pdp-chip" onclick="selectPdpSize('XS', this)">XS (3,6,5,7,9)</button>
+            <button class="pdp-chip active" onclick="selectPdpSize('S', this)">S (2,5,4,6,8)</button>
+            <button class="pdp-chip" onclick="selectPdpSize('M', this)">M (1,5,4,6,7)</button>
+            <button class="pdp-chip" onclick="selectPdpSize('L', this)">L (0,4,3,5,6)</button>
+            <button class="pdp-chip" onclick="selectPdpSize('Custom', this)">Custom mm</button>
+          </div>
+        </div>
+
+        <!-- Add to Bag Action -->
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+          <button class="btn btn-gold" id="pdp-add-btn" onclick="pdpAddToCart()" style="flex: 1; padding: 1.1rem; font-size: 1rem;">
+            <i class="ri-shopping-bag-3-line"></i> Add To Bag • <span id="pdp-btn-price">$48.00</span>
+          </button>
+          <button class="btn btn-secondary" onclick="pdpToggleWishlist()" style="padding: 1rem 1.4rem; font-size: 1.2rem;" title="Wishlist">
+            <i class="ri-heart-3-line" id="pdp-heart-icon"></i>
+          </button>
+        </div>
+
+        <!-- Free Delivery perk banner -->
+        <div style="background: rgba(212, 175, 55, 0.08); border: 1px solid var(--border-gold); padding: 0.9rem 1.2rem; border-radius: var(--radius-md); font-size: 0.82rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.8rem;">
+          <i class="ri-gift-line" style="font-size: 1.3rem; color: var(--gold-light);"></i>
+          <span>Includes <strong>Free Deluxe Prep Kit</strong> ($16 value) with salon glue, buffer, and 48 adhesive jelly tabs.</span>
+        </div>
+
+        <!-- Accordions -->
+        <div class="pdp-accordion">
+          <div class="accordion-item">
+            <button class="accordion-btn" onclick="toggleAccordion('acc-1')">
+              <span>Artisan Description & Gel Craftsmanship</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <div class="accordion-body open" id="acc-1">
+              Inspired by radiant oyster pearls and the viral glazed donut aesthetic. Hand-sculpted with 5 layers of salon-grade Japanese builder gel and infused with ultrafine rainbow chrome shimmer. Accented with handcrafted faux-pearl bead clusters on accent nails.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-btn" onclick="toggleAccordion('acc-2')">
+              <span>What is Included in Every Box</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <div class="accordion-body" id="acc-2">
+              <ul style="padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem;">
+                <li>10 Custom-sized Luxury Acrylic Press-On Nails</li>
+                <li>Full Application Prep Kit (2g Ultra-Bond Glue, 24 Gel Adhesive Tabs, Mini Crystal Buffer, Cuticle Stick, Alcohol Wipes)</li>
+                <li>Luxury Velvet Presentation Storage Case</li>
+                <li>Detailed Step-by-Step Wear & Removal Guide</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-btn" onclick="toggleAccordion('acc-3')">
+              <span>Wear Time, Application & Reusability</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <div class="accordion-body" id="acc-3">
+              Up to 3+ weeks of non-budging wear when applied with our included ultra-bond glue. For temporary 3-7 day wear, use the waterproof jelly tabs. Every set is 100% reusable up to 5+ times with proper gentle removal.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand-logo">
+          <span class="logo-icon">✨</span>
+          <span class="logo-title">LUXECLAWS</span>
+        </a>
+        <p>Bespoke, artisan-sculpted acrylic press-on nails crafted with Japanese salon gel and Swarovski crystals.</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html#catalog">Shop All Sets</a></li>
+          <li><a href="index.html#sizing">Precision Size Chart</a></li>
+          <li><a href="account.html">My Account Portal</a></li>
+          <li><a href="about.html">About Our Atelier</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Trust & Policy</h4>
+        <ul>
+          <li><a href="shipping.html">Shipping & Delivery</a></li>
+          <li><a href="returns.html">Returns & Guarantee</a></li>
+          <li><a href="faq.html">FAQ & Help Desk</a></li>
+          <li><a href="terms.html">Terms & Privacy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Stay In The Glow</h4>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">Subscribe for secret VIP drops & 15% off.</p>
+        <div style="display: flex; gap: 0.5rem;">
+          <input type="email" placeholder="Your email..." style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); padding: 0.5rem 0.8rem; border-radius: var(--radius-full); color: #fff; font-size: 0.82rem; flex-grow: 1; outline: none;">
+          <button class="btn btn-gold" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Join</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 LUXECLAWS Nail Atelier. All rights reserved. <a href="admin.html" style="color: inherit; opacity: 0.2; text-decoration: none;"><i class="ri-lock-2-line"></i></a></p>
+    </div>
+  </footer>
+
+  <!-- Slide-Over Shopping Bag Drawer -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay">
+    <div class="cart-drawer">
+      <div class="cart-header">
+        <h3><i class="ri-shopping-bag-3-line"></i> Your Bag (<span id="cart-drawer-count">0</span>)</h3>
+        <button class="btn-icon" id="cart-close-btn"><i class="ri-close-line"></i></button>
+      </div>
+      <div class="free-shipping-tracker">
+        <div class="tracker-text" id="free-shipping-caption">Add $50.00 more for Free Shipping!</div>
+        <div class="tracker-bar-bg">
+          <div class="tracker-bar-fill" id="shipping-progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+      <div class="cart-items-container" id="cart-items-list"></div>
+      <div class="cart-footer">
+        <div class="promo-code-box">
+          <input type="text" id="promo-input" placeholder="Promo code (try GLAM15)">
+          <button class="btn btn-secondary" id="apply-promo-btn">Apply</button>
+        </div>
+        <div class="cart-total-row">
+          <span>Total</span>
+          <span class="total-amount" id="cart-total-val">$0.00</span>
+        </div>
+        <a href="index.html" class="btn btn-gold" style="width: 100%; padding: 1rem; text-align: center;">
+          <i class="ri-lock-2-line"></i> Proceed to Checkout
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // PDP Specific Controller Logic
+    let currentPdpProduct = NAIL_PRODUCTS[0];
+    let selectedShape = 'Almond';
+    let selectedLength = 'Medium';
+    let selectedSize = 'S';
+
+    // Parse URL param ?id=prod-02
+    const urlParams = new URLSearchParams(window.location.search);
+    const prodId = urlParams.get('id') || 'prod-01';
+    const found = (JSON.parse(localStorage.getItem('luxeclaws_products')) || NAIL_PRODUCTS).find(p => p.id === prodId);
+    if (found) currentPdpProduct = found;
+
+    document.getElementById('pdp-name').textContent = currentPdpProduct.name;
+    document.getElementById('pdp-breadcrumb-title').textContent = currentPdpProduct.name;
+    document.getElementById('pdp-subtitle').textContent = currentPdpProduct.subtitle || '';
+    document.getElementById('pdp-price').innerHTML = `$${currentPdpProduct.price.toFixed(2)} ${currentPdpProduct.originalPrice ? `<span style="font-size: 1.1rem; color: var(--text-muted); text-decoration: line-through;">$${currentPdpProduct.originalPrice.toFixed(2)}</span>` : ''}`;
+    document.getElementById('pdp-btn-price').textContent = `$${currentPdpProduct.price.toFixed(2)}`;
+    document.getElementById('pdp-main-img').src = currentPdpProduct.image;
+    document.getElementById('pdp-badge').textContent = currentPdpProduct.badge || 'EXCLUSIVE';
+    document.getElementById('acc-1').textContent = currentPdpProduct.description || '';
+
+    function switchPdpImage(src, el) {
+      document.getElementById('pdp-main-img').src = src;
+      document.querySelectorAll('.pdp-thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function selectPdpShape(shape, el) {
+      selectedShape = shape;
+      document.getElementById('pdp-selected-shape').textContent = shape;
+      document.querySelectorAll('#pdp-shape-chips .pdp-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function selectPdpLength(length, el) {
+      selectedLength = length;
+      document.getElementById('pdp-selected-length').textContent = length;
+      document.querySelectorAll('#pdp-length-chips .pdp-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function selectPdpSize(size, el) {
+      selectedSize = size;
+      document.querySelectorAll('#pdp-size-chips .pdp-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function toggleAccordion(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('open');
+    }
+
+    function pdpAddToCart() {
+      const cart = JSON.parse(localStorage.getItem('luxeclaws_cart') || '[]');
+      const itemKey = `${currentPdpProduct.id}-${selectedShape}-${selectedLength}-${selectedSize}`;
+      const existing = cart.find(i => i.cartItemId === itemKey);
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          cartItemId: itemKey,
+          id: currentPdpProduct.id,
+          name: currentPdpProduct.name,
+          shape: selectedShape,
+          length: selectedLength,
+          size: selectedSize,
+          price: currentPdpProduct.price,
+          image: currentPdpProduct.image,
+          quantity: 1
+        });
+      }
+      localStorage.setItem('luxeclaws_cart', JSON.stringify(cart));
+      if (window.renderCart) window.renderCart();
+      const drawer = document.getElementById('cart-drawer-overlay');
+      if (drawer) drawer.classList.add('open');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<i class="ri-shopping-bag-3-fill" style="color: var(--pink-accent);"></i> <span>Added ${currentPdpProduct.name} to Bag!</span>`;
+      document.getElementById('toast-container')?.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    function pdpToggleWishlist() {
+      if (window.toggleWishlist) {
+        window.toggleWishlist(currentPdpProduct.id);
+        const icon = document.getElementById('pdp-heart-icon');
+        if (icon) {
+          icon.className = icon.className.includes('fill') ? 'ri-heart-3-line' : 'ri-heart-3-fill';
+          icon.style.color = icon.className.includes('fill') ? 'var(--pink-accent)' : '';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

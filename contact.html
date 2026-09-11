@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact VIP Concierge | LUXECLAWS Haute Nail Atelier</title>
+  <meta name="description" content="Get in touch with the LUXECLAWS client care team, custom commission consultations, or press inquiries.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-title">LUXECLAWS</span>
+        <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop All</a>
+        <a href="about.html">Our Atelier</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html" class="active">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle Theme">
+          <i id="theme-icon" class="ri-moon-line"></i>
+        </button>
+
+        <a href="account.html" class="icon-btn" aria-label="Account">
+          <i class="ri-user-3-line"></i>
+        </a>
+
+        <a href="cart.html" class="icon-btn cart-btn" aria-label="Shopping Cart">
+          <i class="ri-shopping-bag-line"></i>
+          <span class="badge-count cart-badge-count">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header Banner -->
+  <section class="page-header-banner">
+    <div class="container">
+      <nav class="breadcrumb-nav" style="justify-content: center;">
+        <a href="index.html">Home</a>
+        <i class="ri-arrow-right-s-line"></i>
+        <span>Contact Concierge</span>
+      </nav>
+      <h1 class="font-serif">VIP Atelier Concierge</h1>
+      <p>Have questions regarding custom sizing, bespoke commissions, or existing orders? Our client team is at your service.</p>
+    </div>
+  </section>
+
+  <main class="info-page-container">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;">
+      <!-- Contact Information Cards -->
+      <div>
+        <div class="info-section-block" style="margin-bottom: 1.5rem;">
+          <h3 class="font-serif" style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--gold-light);">
+            <i class="ri-customer-service-2-line"></i> Direct Atelier Channels
+          </h3>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 1.2rem; font-size: 0.95rem;">
+            <li style="display: flex; gap: 1rem; align-items: flex-start;">
+              <i class="ri-mail-send-line" style="font-size: 1.3rem; color: var(--gold-light);"></i>
+              <div>
+                <strong>Client Care & Commissions:</strong><br>
+                <a href="mailto:concierge@luxeclaws.com" style="color: var(--text-secondary); text-decoration: none;">concierge@luxeclaws.com</a>
+              </div>
+            </li>
+            <li style="display: flex; gap: 1rem; align-items: flex-start;">
+              <i class="ri-phone-line" style="font-size: 1.3rem; color: var(--gold-light);"></i>
+              <div>
+                <strong>VIP Studio Direct Line:</strong><br>
+                <span style="color: var(--text-secondary);">+1 (800) 849-CLAW (Mon - Fri, 9am - 6pm PST)</span>
+              </div>
+            </li>
+            <li style="display: flex; gap: 1rem; align-items: flex-start;">
+              <i class="ri-map-pin-2-line" style="font-size: 1.3rem; color: var(--gold-light);"></i>
+              <div>
+                <strong>Haute Design Atelier:</strong><br>
+                <span style="color: var(--text-secondary);">9600 Wilshire Blvd, Beverly Hills, CA 90212</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-section-block">
+          <h3 class="font-serif" style="font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--gold-light);">
+            <i class="ri-time-line"></i> Response Guarantee
+          </h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+            All client inquiries, sizing questions, and bespoke bridal moodboard submissions receive a personal response from our lead artisan within <strong>24 business hours</strong>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact / Custom Inquiry Form -->
+      <div class="cart-table-card">
+        <h3 class="font-serif" style="font-size: 1.4rem; margin-bottom: 1.5rem;">Send an Atelier Inquiry</h3>
+
+        <form id="concierge-form" onsubmit="handleContactSubmit(event)">
+          <div class="form-group" style="margin-bottom: 1.2rem;">
+            <label>Your Full Name *</label>
+            <input type="text" class="form-input" id="c-name" required placeholder="Elena Rostova">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.2rem;">
+            <label>Email Address *</label>
+            <input type="email" class="form-input" id="c-email" required placeholder="elena@luxury.com">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.2rem;">
+            <label>Inquiry Topic *</label>
+            <select class="form-input" id="c-topic" style="background: var(--bg-surface-elevated); color: var(--text-primary);">
+              <option value="custom">Bespoke 1-of-1 Custom Commission</option>
+              <option value="sizing">Fingertip Sizing Calibration Assistance</option>
+              <option value="order">Existing Order Status & Tracking</option>
+              <option value="bridal">Bridal Party Group Order</option>
+              <option value="press">Press & Influencer Collaboration</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label>Message / Commission Vision *</label>
+            <textarea class="form-input" id="c-message" rows="5" required placeholder="Describe your vision, desired shapes, lengths, or order number..." style="resize: vertical;"></textarea>
+          </div>
+
+          <button type="submit" id="c-submit-btn" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1rem;">
+            <i class="ri-send-plane-fill"></i> Dispatch Inquiry to Atelier
+          </button>
+        </form>
+
+        <div id="contact-success-msg" style="display: none; margin-top: 1.5rem; background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71; padding: 1.2rem; border-radius: var(--radius-sm); text-align: center;">
+          <i class="ri-checkbox-circle-fill" style="font-size: 1.6rem; display: block; margin-bottom: 0.4rem;"></i>
+          <strong>Message Received!</strong>
+          <p style="font-size: 0.85rem; margin: 0.3rem 0 0; color: var(--text-primary);">Our concierge team has received your inquiry and will follow up shortly.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-column brand-col">
+        <a href="index.html" class="brand-logo">
+          <span class="brand-title">LUXECLAWS</span>
+          <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
+        </a>
+        <p>Bespoke handcrafted acrylic press-on nails built with salon-grade Japanese builder gel and authentic Swarovski crystals.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Client Services</h4>
+        <ul>
+          <li><a href="account.html">My Account & Orders</a></li>
+          <li><a href="faq.html">Sizing & Wear FAQ</a></li>
+          <li><a href="shipping.html">Shipping & Delivery</a></li>
+          <li><a href="returns.html">Returns & Guarantee</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal & Privacy</h4>
+        <ul>
+          <li><a href="about.html">The Atelier Story</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 LUXECLAWS Haute Nail Atelier. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('c-submit-btn');
+      btn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Dispatching...`;
+      btn.disabled = true;
+
+      setTimeout(() => {
+        document.getElementById('concierge-form').reset();
+        btn.innerHTML = `<i class="ri-send-plane-fill"></i> Dispatch Inquiry to Atelier`;
+        btn.disabled = false;
+        document.getElementById('contact-success-msg').style.display = 'block';
+      }, 900);
+    }
+  </script>
+</body>
+</html>

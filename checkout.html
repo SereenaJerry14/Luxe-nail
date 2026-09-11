@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIP Secure Checkout | LUXECLAWS Haute Nail Atelier</title>
+  <meta name="description" content="Secure luxury checkout for handcrafted press-on nails. 256-bit SSL encrypted.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-title">LUXECLAWS</span>
+        <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #2ecc71;">
+        <i class="ri-shield-check-fill" style="font-size: 1.2rem;"></i>
+        <span>256-Bit SSL Encrypted Checkout</span>
+      </div>
+
+      <div class="header-actions">
+        <a href="cart.html" class="icon-btn" aria-label="Return to Cart">
+          <i class="ri-shopping-bag-line"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header-banner" style="padding: 2.5rem 0 1.5rem;">
+    <div class="container">
+      <h1 class="font-serif" style="font-size: 2.2rem;">VIP Atelier Checkout</h1>
+      <p>Handcrafted precision dispatched with insured luxury courier delivery.</p>
+    </div>
+  </section>
+
+  <!-- Checkout Grid -->
+  <main class="container">
+    <div class="checkout-page-grid">
+      <!-- Left Column: Checkout Steps & Forms -->
+      <section>
+        <!-- Steps Indicator -->
+        <div class="checkout-steps-bar">
+          <div class="step-node active" id="node-step-1">
+            <div class="step-number">1</div>
+            <span>Shipping Details</span>
+          </div>
+          <div class="step-node" id="node-step-2">
+            <div class="step-number">2</div>
+            <span>Delivery Method</span>
+          </div>
+          <div class="step-node" id="node-step-3">
+            <div class="step-number">3</div>
+            <span>Payment & Place Order</span>
+          </div>
+        </div>
+
+        <form id="checkout-form" onsubmit="handleCheckoutSubmit(event)">
+          <!-- STEP 1: Shipping Address -->
+          <div id="step-pane-1" class="cart-table-card" style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+              <h3 class="font-serif" style="font-size: 1.3rem;">1. Contact & Shipping Address</h3>
+              <span id="autofill-indicator" style="font-size: 0.8rem; color: var(--gold-light); display: none;">
+                <i class="ri-user-star-line"></i> Auto-filled from VIP Account
+              </span>
+            </div>
+
+            <div class="form-row" style="margin-bottom: 1.2rem;">
+              <div class="form-group">
+                <label>First Name *</label>
+                <input type="text" id="ship-fname" class="form-input" required placeholder="Elena">
+              </div>
+              <div class="form-group">
+                <label>Last Name *</label>
+                <input type="text" id="ship-lname" class="form-input" required placeholder="Rostova">
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-bottom: 1.2rem;">
+              <div class="form-group">
+                <label>Email Address for Order Tracking *</label>
+                <input type="email" id="ship-email" class="form-input" required placeholder="elena@example.com">
+              </div>
+              <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" id="ship-phone" class="form-input" required placeholder="+1 (555) 019-2834">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.2rem;">
+              <label>Street Address *</label>
+              <input type="text" id="ship-address" class="form-input" required placeholder="742 Evergreen Terrace, Suite 4B">
+            </div>
+
+            <div class="form-row" style="margin-bottom: 1.5rem;">
+              <div class="form-group">
+                <label>City *</label>
+                <input type="text" id="ship-city" class="form-input" required placeholder="Beverly Hills">
+              </div>
+              <div class="form-group">
+                <label>State / Province *</label>
+                <input type="text" id="ship-state" class="form-input" required placeholder="CA">
+              </div>
+              <div class="form-group">
+                <label>Postal Code *</label>
+                <input type="text" id="ship-zip" class="form-input" required placeholder="90210">
+              </div>
+            </div>
+
+            <div style="text-align: right;">
+              <button type="button" class="btn btn-primary" onclick="goToStep(2)">
+                Continue to Delivery <i class="ri-arrow-right-line"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Delivery Method -->
+          <div id="step-pane-2" class="cart-table-card" style="margin-bottom: 2rem; display: none;">
+            <h3 class="font-serif" style="font-size: 1.3rem; margin-bottom: 1.5rem;">2. Select Atelier Delivery Method</h3>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+              <label style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-gold); background: var(--bg-surface-elevated); cursor: pointer;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                  <input type="radio" name="shipping-speed" value="standard" checked onchange="updateShippingChoice('standard', 4.95)">
+                  <div>
+                    <strong>Standard Insured Atelier Courier (3-5 Business Days)</strong>
+                    <p style="color: var(--text-secondary); margin: 0; font-size: 0.8rem;">Signature tracking & eco-luxe velvet packaging</p>
+                  </div>
+                </div>
+                <span style="font-weight: 600; color: var(--gold-light);">$4.95 (Free over $75)</span>
+              </label>
+
+              <label style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); cursor: pointer;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                  <input type="radio" name="shipping-speed" value="rush" onchange="updateShippingChoice('rush', 14.95)">
+                  <div>
+                    <strong>Rush Priority Air Courier (1-2 Business Days)</strong>
+                    <p style="color: var(--text-secondary); margin: 0; font-size: 0.8rem;">Priority queue handcrafted crafting & express air delivery</p>
+                  </div>
+                </div>
+                <span style="font-weight: 600; color: var(--gold-light);">$14.95</span>
+              </label>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+              <button type="button" class="btn btn-secondary" onclick="goToStep(1)">
+                <i class="ri-arrow-left-line"></i> Back to Shipping
+              </button>
+              <button type="button" class="btn btn-primary" onclick="goToStep(3)">
+                Continue to Payment <i class="ri-arrow-right-line"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Payment Method & Place Order -->
+          <div id="step-pane-3" class="cart-table-card" style="margin-bottom: 2rem; display: none;">
+            <h3 class="font-serif" style="font-size: 1.3rem; margin-bottom: 1.5rem;">3. Secure Payment</h3>
+
+            <!-- Payment Tabs -->
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+              <button type="button" class="btn btn-secondary active" id="pay-tab-card" onclick="selectPaymentTab('card')" style="flex: 1;">
+                <i class="ri-bank-card-line"></i> Credit Card
+              </button>
+              <button type="button" class="btn btn-secondary" id="pay-tab-apple" onclick="selectPaymentTab('apple')" style="flex: 1;">
+                <i class="ri-apple-fill"></i> Apple Pay
+              </button>
+              <button type="button" class="btn btn-secondary" id="pay-tab-klarna" onclick="selectPaymentTab('klarna')" style="flex: 1;">
+                <i class="ri-money-dollar-circle-line"></i> Klarna 4x
+              </button>
+            </div>
+
+            <div id="card-fields">
+              <div class="form-group" style="margin-bottom: 1.2rem;">
+                <label>Card Number</label>
+                <div style="position: relative;">
+                  <input type="text" class="form-input" placeholder="4242 &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4242" value="4242 8899 1042 9901" required>
+                  <i class="ri-visa-line" style="position: absolute; right: 15px; top: 12px; font-size: 1.4rem; color: var(--gold-light);"></i>
+                </div>
+              </div>
+
+              <div class="form-row" style="margin-bottom: 1.5rem;">
+                <div class="form-group">
+                  <label>Expiry Date</label>
+                  <input type="text" class="form-input" placeholder="MM/YY" value="08/28" required>
+                </div>
+                <div class="form-group">
+                  <label>CVV Code</label>
+                  <input type="password" class="form-input" placeholder="123" value="889" maxlength="4" required>
+                </div>
+              </div>
+            </div>
+
+            <div id="alternative-payment-fields" style="display: none; padding: 2rem; text-align: center; background: var(--bg-surface-elevated); border-radius: var(--radius-sm); margin-bottom: 1.5rem;">
+              <i class="ri-fingerprint-line" style="font-size: 3rem; color: var(--gold-light);"></i>
+              <p style="margin-top: 0.8rem; font-size: 0.95rem;">Biometric one-touch authorization will be requested upon placing order.</p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+              <button type="button" class="btn btn-secondary" onclick="goToStep(2)">
+                <i class="ri-arrow-left-line"></i> Back to Delivery
+              </button>
+              <button type="submit" id="place-order-btn" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
+                <i class="ri-lock-fill"></i> Complete Order ($<span id="pay-button-amount">0.00</span>)
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Column: Order Summary Preview -->
+      <aside class="cart-summary-card">
+        <h3 class="font-serif" style="font-size: 1.2rem; margin-bottom: 1.2rem;">Order Summary</h3>
+        
+        <div id="checkout-items-preview" style="max-height: 280px; overflow-y: auto; margin-bottom: 1.5rem; padding-right: 0.5rem;">
+          <!-- Item thumbnails populated by JS -->
+        </div>
+
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span id="co-subtotal">$0.00</span>
+        </div>
+
+        <div class="summary-line" id="co-discount-row" style="display: none; color: #2ecc71;">
+          <span>Promo Code</span>
+          <span id="co-discount">-$0.00</span>
+        </div>
+
+        <div class="summary-line">
+          <span>Shipping (<span id="co-ship-label">Standard</span>)</span>
+          <span id="co-shipping">$4.95</span>
+        </div>
+
+        <div class="summary-line total">
+          <span>Total to Pay</span>
+          <span id="co-grand-total" style="color: var(--gold-light);">$0.00</span>
+        </div>
+
+        <div style="margin-top: 1.8rem; background: var(--bg-surface-elevated); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); font-size: 0.8rem; color: var(--text-secondary);">
+          <i class="ri-shield-star-line" style="color: var(--gold-light);"></i> <strong>LUXECLAWS Guarantee:</strong> Every order is backed by our 30-Day Perfect Fit Guarantee and replacement nail service.
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script>
+    let currentStep = 1;
+    let selectedShippingType = 'standard';
+    let selectedShippingCost = 4.95;
+    let cart = JSON.parse(localStorage.getItem('luxeclaws_cart') || '[]');
+    let user = JSON.parse(localStorage.getItem('luxeclaws_user') || 'null');
+    let appliedPromo = localStorage.getItem('luxeclaws_applied_promo') || null;
+    const promoDiscounts = { 'GLAM15': 0.15, 'CLAWSSAVE20': 0.20, 'FREESHIP': 0.00 };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // If cart empty, redirect to shop
+      if (cart.length === 0) {
+        alert('Your shopping bag is empty. Redirecting to our atelier collection.');
+        window.location.href = 'shop.html';
+        return;
+      }
+
+      // Autofill user details if logged in
+      if (user) {
+        if (user.name) {
+          const names = user.name.split(' ');
+          document.getElementById('ship-fname').value = names[0] || '';
+          document.getElementById('ship-lname').value = names.slice(1).join(' ') || '';
+        }
+        if (user.email) document.getElementById('ship-email').value = user.email;
+        if (user.address) document.getElementById('ship-address').value = user.address;
+        if (user.city) document.getElementById('ship-city').value = user.city;
+        if (user.zip) document.getElementById('ship-zip').value = user.zip;
+        document.getElementById('autofill-indicator').style.display = 'inline-block';
+      }
+
+      renderOrderPreview();
+    });
+
+    function renderOrderPreview() {
+      const previewContainer = document.getElementById('checkout-items-preview');
+      previewContainer.innerHTML = cart.map(item => `
+        <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border-subtle);">
+          <img src="${item.image}" alt="${item.name}" style="width: 55px; height: 55px; border-radius: var(--radius-sm); object-fit: cover;">
+          <div style="flex: 1;">
+            <div style="font-size: 0.9rem; font-weight: 600;">${item.name}</div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary);">${item.shape || 'Almond'} &bull; ${item.size || 'S'} &bull; Qty: ${item.quantity}</div>
+          </div>
+          <div style="font-size: 0.9rem; font-weight: 600; color: var(--gold-light);">$${(item.price * item.quantity).toFixed(2)}</div>
+        </div>
+      `).join('');
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      let discount = 0;
+      let shipping = selectedShippingType === 'rush' ? 14.95 : (subtotal > 75 ? 0 : 4.95);
+
+      if (appliedPromo && promoDiscounts[appliedPromo] !== undefined) {
+        if (appliedPromo === 'FREESHIP') {
+          shipping = 0;
+          document.getElementById('co-discount-row').style.display = 'flex';
+          document.getElementById('co-discount').textContent = 'Free Shipping Applied';
+        } else {
+          discount = subtotal * promoDiscounts[appliedPromo];
+          document.getElementById('co-discount-row').style.display = 'flex';
+          document.getElementById('co-discount').textContent = `-$${discount.toFixed(2)}`;
+        }
+      }
+
+      const grandTotal = Math.max(0, subtotal - discount + shipping);
+
+      document.getElementById('co-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('co-shipping').textContent = shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`;
+      document.getElementById('co-grand-total').textContent = `$${grandTotal.toFixed(2)}`;
+      document.getElementById('pay-button-amount').textContent = grandTotal.toFixed(2);
+    }
+
+    function goToStep(step) {
+      // Validate Step 1 before leaving
+      if (step === 2) {
+        const fname = document.getElementById('ship-fname').value.trim();
+        const lname = document.getElementById('ship-lname').value.trim();
+        const email = document.getElementById('ship-email').value.trim();
+        const address = document.getElementById('ship-address').value.trim();
+        if (!fname || !lname || !email || !address) {
+          alert('Please fill in all required shipping address fields.');
+          return;
+        }
+      }
+
+      currentStep = step;
+      document.getElementById('step-pane-1').style.display = step === 1 ? 'block' : 'none';
+      document.getElementById('step-pane-2').style.display = step === 2 ? 'block' : 'none';
+      document.getElementById('step-pane-3').style.display = step === 3 ? 'block' : 'none';
+
+      document.getElementById('node-step-1').className = `step-node ${step === 1 ? 'active' : (step > 1 ? 'done' : '')}`;
+      document.getElementById('node-step-2').className = `step-node ${step === 2 ? 'active' : (step > 2 ? 'done' : '')}`;
+      document.getElementById('node-step-3').className = `step-node ${step === 3 ? 'active' : ''}`;
+
+      window.scrollTo({ top: 150, behavior: 'smooth' });
+    }
+
+    function updateShippingChoice(type, cost) {
+      selectedShippingType = type;
+      selectedShippingCost = cost;
+      document.getElementById('co-ship-label').textContent = type === 'rush' ? 'Rush Air Priority' : 'Standard';
+      renderOrderPreview();
+    }
+
+    function selectPaymentTab(type) {
+      document.getElementById('pay-tab-card').classList.toggle('active', type === 'card');
+      document.getElementById('pay-tab-apple').classList.toggle('active', type === 'apple');
+      document.getElementById('pay-tab-klarna').classList.toggle('active', type === 'klarna');
+
+      document.getElementById('card-fields').style.display = type === 'card' ? 'block' : 'none';
+      document.getElementById('alternative-payment-fields').style.display = type !== 'card' ? 'block' : 'none';
+    }
+
+    function handleCheckoutSubmit(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('place-order-btn');
+      btn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Authorizing Atelier Order...`;
+      btn.disabled = true;
+
+      const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      let discount = appliedPromo && promoDiscounts[appliedPromo] ? subtotal * promoDiscounts[appliedPromo] : 0;
+      let shipping = selectedShippingType === 'rush' ? 14.95 : (subtotal > 75 ? 0 : 4.95);
+      const grandTotal = subtotal - discount + shipping;
+
+      const newOrder = {
+        id: orderId,
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        timestamp: new Date().toISOString(),
+        customer: {
+          name: `${document.getElementById('ship-fname').value} ${document.getElementById('ship-lname').value}`,
+          email: document.getElementById('ship-email').value,
+          phone: document.getElementById('ship-phone').value,
+          address: `${document.getElementById('ship-address').value}, ${document.getElementById('ship-city').value}, ${document.getElementById('ship-state').value} ${document.getElementById('ship-zip').value}`
+        },
+        items: [...cart],
+        shippingMethod: selectedShippingType === 'rush' ? 'Rush Priority Air Courier' : 'Standard Insured Courier',
+        subtotal: subtotal,
+        discount: discount,
+        shipping: shipping,
+        total: grandTotal,
+        status: 'Handcrafting & QC',
+        trackingNumber: 'LX-' + Math.floor(10000000 + Math.random() * 90000000)
+      };
+
+      // Save to Orders List
+      let existingOrders = JSON.parse(localStorage.getItem('luxeclaws_orders') || '[]');
+      existingOrders.unshift(newOrder);
+      localStorage.setItem('luxeclaws_orders', JSON.stringify(existingOrders));
+
+      // Save Last Placed Order for Confirmation screen
+      localStorage.setItem('luxeclaws_last_order', JSON.stringify(newOrder));
+
+      // Clear Cart
+      localStorage.removeItem('luxeclaws_cart');
+      localStorage.removeItem('luxeclaws_applied_promo');
+
+      setTimeout(() => {
+        window.location.href = `order-confirmation.html?orderId=${orderId}`;
+      }, 1400);
+    }
+  </script>
+</body>
+</html>

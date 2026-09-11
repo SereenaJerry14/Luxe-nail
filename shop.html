@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bespoke Collection | LUXECLAWS Haute Nail Atelier</title>
+  <meta name="description" content="Explore our handcrafted luxury acrylic press-on nails. Filter by shape, length, aesthetic, and finish. Reusable, salon-grade Japanese gel artistry.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-title">LUXECLAWS</span>
+        <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html" class="active">Shop All</a>
+        <a href="shop.html?category=glazed">Glazed & Chrome</a>
+        <a href="shop.html?category=3d-charms">3D Sculpted</a>
+        <a href="shop.html?category=bridal">Bridal & Nude</a>
+        <a href="about.html">Our Atelier</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle Theme">
+          <i id="theme-icon" class="ri-moon-line"></i>
+        </button>
+
+        <a href="account.html" class="icon-btn" aria-label="Account">
+          <i class="ri-user-3-line"></i>
+        </a>
+
+        <a href="account.html#wishlist" class="icon-btn" aria-label="Wishlist">
+          <i class="ri-heart-line"></i>
+          <span class="badge-count wishlist-badge-count" style="display: none;">0</span>
+        </a>
+
+        <a href="cart.html" class="icon-btn cart-btn" aria-label="Shopping Cart">
+          <i class="ri-shopping-bag-line"></i>
+          <span class="badge-count cart-badge-count">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header Banner -->
+  <section class="page-header-banner">
+    <div class="container">
+      <nav class="breadcrumb-nav" style="justify-content: center;">
+        <a href="index.html">Home</a>
+        <i class="ri-arrow-right-s-line"></i>
+        <span>Shop Atelier Collection</span>
+      </nav>
+      <h1 class="font-serif">The Atelier Nail Collection</h1>
+      <p>Hand-sculpted salon acrylic press-ons made with layered Japanese gel, authentic Swarovski crystals, and 3+ week durability.</p>
+    </div>
+  </section>
+
+  <!-- Main Shop Section -->
+  <main class="container">
+    <div class="shop-layout">
+      <!-- Sidebar Filters -->
+      <aside class="shop-sidebar">
+        <!-- Search -->
+        <div class="filter-group">
+          <div class="filter-group-title">
+            <span><i class="ri-search-line"></i> Search</span>
+          </div>
+          <div class="search-sort-box" style="width: 100%;">
+            <input type="text" id="shop-search-input" placeholder="Search designs, finish..." style="width: 100%; padding: 0.6rem 1rem; border-radius: var(--radius-full); background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="filter-group">
+          <div class="filter-group-title">
+            <span>Aesthetic Categories</span>
+          </div>
+          <div class="filter-pill-list" id="category-filters">
+            <button class="filter-chip active" data-filter="all">All Sets</button>
+            <button class="filter-chip" data-filter="glazed">Glazed & Pearl</button>
+            <button class="filter-chip" data-filter="y2k">Y2K Chrome</button>
+            <button class="filter-chip" data-filter="3d-charms">3D Sculpted</button>
+            <button class="filter-chip" data-filter="bridal">Bridal & Nude</button>
+            <button class="filter-chip" data-filter="gothic">Gothic / Celestial</button>
+            <button class="filter-chip" data-filter="accessories">Care & Prep Kits</button>
+          </div>
+        </div>
+
+        <!-- Shapes -->
+        <div class="filter-group">
+          <div class="filter-group-title">
+            <span>Nail Shape</span>
+          </div>
+          <div class="filter-pill-list" id="shape-filters">
+            <button class="filter-chip active" data-shape="all">All Shapes</button>
+            <button class="filter-chip" data-shape="Almond">Almond</button>
+            <button class="filter-chip" data-shape="Coffin">Coffin</button>
+            <button class="filter-chip" data-shape="Stiletto">Stiletto</button>
+            <button class="filter-chip" data-shape="Square">Square</button>
+            <button class="filter-chip" data-shape="Oval">Oval</button>
+          </div>
+        </div>
+
+        <!-- Lengths -->
+        <div class="filter-group">
+          <div class="filter-group-title">
+            <span>Length</span>
+          </div>
+          <div class="filter-pill-list" id="length-filters">
+            <button class="filter-chip active" data-length="all">All Lengths</button>
+            <button class="filter-chip" data-length="Short">Short</button>
+            <button class="filter-chip" data-length="Medium">Medium</button>
+            <button class="filter-chip" data-length="Long">Long</button>
+            <button class="filter-chip" data-length="Extra Long">Extra Long</button>
+          </div>
+        </div>
+
+        <!-- Reset Button -->
+        <button id="reset-filters-btn" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;">
+          <i class="ri-refresh-line"></i> Reset All Filters
+        </button>
+      </aside>
+
+      <!-- Products Grid & Toolbar Area -->
+      <section class="shop-main-content">
+        <div class="shop-toolbar">
+          <div class="result-count">
+            Showing <strong id="product-count-display">0</strong> Luxury Designs
+          </div>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <label for="shop-sort" style="font-size: 0.85rem; color: var(--text-secondary);">Sort By:</label>
+            <select id="shop-sort" class="sort-select" style="padding: 0.5rem 1rem; border-radius: var(--radius-sm); background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary); cursor: pointer;">
+              <option value="featured">Featured Atelier Picks</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating">Highest Rated</option>
+              <option value="reviews">Most Reviewed</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Catalog Grid -->
+        <div class="product-grid" id="shop-products-grid">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- No Results Fallback -->
+        <div id="no-results-state" class="empty-cart-state" style="display: none; padding: 4rem 1rem; text-align: center;">
+          <i class="ri-search-eye-line" style="font-size: 3rem; color: var(--gold-light); margin-bottom: 1rem; display: block;"></i>
+          <h3 class="font-serif" style="margin-bottom: 0.5rem;">No matching nail sets found</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Try adjusting your search terms or clearing your shape and length filters.</p>
+          <button class="btn btn-primary" onclick="resetAllShopFilters()">View All Designs</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-column brand-col">
+        <a href="index.html" class="brand-logo">
+          <span class="brand-title">LUXECLAWS</span>
+          <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
+        </a>
+        <p>Bespoke handcrafted acrylic press-on nails built with salon-grade Japanese builder gel and authentic Swarovski crystals.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Shop Collections</h4>
+        <ul>
+          <li><a href="shop.html?category=glazed">Glazed Opal Aura</a></li>
+          <li><a href="shop.html?category=3d-charms">3D Sculpted Charms</a></li>
+          <li><a href="shop.html?category=bridal">Bridal & Nude</a></li>
+          <li><a href="shop.html?category=accessories">Care & Prep Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Client Services</h4>
+        <ul>
+          <li><a href="account.html">My Account & Orders</a></li>
+          <li><a href="faq.html">Sizing & Wear FAQ</a></li>
+          <li><a href="shipping.html">Shipping & Delivery</a></li>
+          <li><a href="returns.html">Returns & Guarantee</a></li>
+          <li><a href="contact.html">Contact Concierge</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal & Privacy</h4>
+        <ul>
+          <li><a href="about.html">The Atelier Story</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 LUXECLAWS Haute Nail Atelier. All Rights Reserved.</p>
+      <div style="display: flex; gap: 1.2rem; align-items: center;">
+        <span>Handcrafted in Tokyo & Los Angeles</span>
+        <a href="admin.html" style="color: var(--text-muted); opacity: 0.4;" title="Atelier Admin Portal"><i class="ri-lock-line"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="products.js"></script>
+  <script>
+    // Shop Page Logic & Real-Time Filtering
+    document.addEventListener('DOMContentLoaded', () => {
+      const storedProducts = JSON.parse(localStorage.getItem('luxeclaws_products') || JSON.stringify(NAIL_PRODUCTS));
+      const grid = document.getElementById('shop-products-grid');
+      const countDisplay = document.getElementById('product-count-display');
+      const noResults = document.getElementById('no-results-state');
+      const searchInput = document.getElementById('shop-search-input');
+      const sortSelect = document.getElementById('shop-sort');
+      const resetBtn = document.getElementById('reset-filters-btn');
+      
+      const categoryPills = document.querySelectorAll('#category-filters .filter-chip');
+      const shapePills = document.querySelectorAll('#shape-filters .filter-chip');
+      const lengthPills = document.querySelectorAll('#length-filters .filter-chip');
+
+      // Theme toggle
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      const themeIcon = document.getElementById('theme-icon');
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('luxeclaws_theme', theme);
+        if (themeIcon) themeIcon.className = theme === 'dark' ? 'ri-moon-line' : 'ri-sun-line';
+      }
+      applyTheme(localStorage.getItem('luxeclaws_theme') || 'dark');
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme') || 'dark';
+          applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+      }
+
+      // Parse URL Search Parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      let selectedCategory = urlParams.get('category') || 'all';
+      let selectedShape = urlParams.get('shape') || 'all';
+      let selectedLength = urlParams.get('length') || 'all';
+      let searchQuery = urlParams.get('search') || '';
+
+      if (searchQuery) searchInput.value = searchQuery;
+
+      // Update Active Category Pill from URL
+      categoryPills.forEach(pill => {
+        if (pill.dataset.filter === selectedCategory) {
+          categoryPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+        }
+      });
+
+      function renderShopProducts() {
+        let filtered = [...storedProducts];
+
+        // Search Filter
+        const query = searchInput.value.trim().toLowerCase();
+        if (query) {
+          filtered = filtered.filter(p => 
+            p.name.toLowerCase().includes(query) ||
+            p.subtitle.toLowerCase().includes(query) ||
+            p.description.toLowerCase().includes(query) ||
+            p.finish.toLowerCase().includes(query)
+          );
+        }
+
+        // Category Filter
+        if (selectedCategory !== 'all') {
+          filtered = filtered.filter(p => p.category === selectedCategory);
+        }
+
+        // Shape Filter
+        if (selectedShape !== 'all') {
+          filtered = filtered.filter(p => p.shapes && p.shapes.includes(selectedShape));
+        }
+
+        // Length Filter
+        if (selectedLength !== 'all') {
+          filtered = filtered.filter(p => p.lengths && p.lengths.includes(selectedLength));
+        }
+
+        // Sort Logic
+        const sortBy = sortSelect.value;
+        if (sortBy === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+        else if (sortBy === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+        else if (sortBy === 'rating') filtered.sort((a, b) => b.rating - a.rating);
+        else if (sortBy === 'reviews') filtered.sort((a, b) => b.reviewsCount - a.reviewsCount);
+
+        // Render Count
+        countDisplay.textContent = filtered.length;
+
+        if (filtered.length === 0) {
+          grid.innerHTML = '';
+          noResults.style.display = 'block';
+          return;
+        }
+
+        noResults.style.display = 'none';
+        grid.innerHTML = filtered.map(product => `
+          <div class="product-card" data-id="${product.id}">
+            <div class="product-image-container">
+              <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+              ${product.badge ? `<span class="badge ${product.badge.includes('BEST') ? 'badge-gold' : 'badge-pink'}">${product.badge}</span>` : ''}
+              <button class="wishlist-btn ${isInWishlist(product.id) ? 'active' : ''}" data-id="${product.id}" onclick="toggleWishlist('${product.id}', event)">
+                <i class="${isInWishlist(product.id) ? 'ri-heart-fill' : 'ri-heart-line'}"></i>
+              </button>
+            </div>
+            <div class="product-info">
+              <div class="product-rating">
+                <i class="ri-star-fill star-gold"></i>
+                <span class="rating-value">${product.rating}</span>
+                <span class="review-count">(${product.reviewsCount})</span>
+              </div>
+              <h3 class="product-title font-serif">
+                <a href="product.html?id=${product.id}" style="color: inherit; text-decoration: none;">${product.name}</a>
+              </h3>
+              <p class="product-subtitle">${product.subtitle}</p>
+              
+              <div style="display: flex; gap: 0.4rem; margin: 0.6rem 0; flex-wrap: wrap;">
+                ${(product.shapes || []).slice(0, 3).map(s => `<span class="shape-badge">${s}</span>`).join('')}
+              </div>
+
+              <div class="product-pricing">
+                <span class="price-current">$${product.price.toFixed(2)}</span>
+                ${product.originalPrice ? `<span class="price-original">$${product.originalPrice.toFixed(2)}</span>` : ''}
+              </div>
+
+              <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <a href="product.html?id=${product.id}" class="btn btn-secondary" style="flex: 1; text-align: center; text-decoration: none;">Details</a>
+                <button class="btn btn-primary" onclick="quickAddToCart('${product.id}', event)" style="flex: 1;">
+                  <i class="ri-shopping-bag-line"></i> Add
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Filter events
+      categoryPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          categoryPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          selectedCategory = pill.dataset.filter;
+          renderShopProducts();
+        });
+      });
+
+      shapePills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          shapePills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          selectedShape = pill.dataset.shape;
+          renderShopProducts();
+        });
+      });
+
+      lengthPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          lengthPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          selectedLength = pill.dataset.length;
+          renderShopProducts();
+        });
+      });
+
+      searchInput.addEventListener('input', renderShopProducts);
+      sortSelect.addEventListener('change', renderShopProducts);
+
+      window.resetAllShopFilters = function() {
+        selectedCategory = 'all';
+        selectedShape = 'all';
+        selectedLength = 'all';
+        searchInput.value = '';
+        categoryPills.forEach(p => p.classList.toggle('active', p.dataset.filter === 'all'));
+        shapePills.forEach(p => p.classList.toggle('active', p.dataset.shape === 'all'));
+        lengthPills.forEach(p => p.classList.toggle('active', p.dataset.length === 'all'));
+        renderShopProducts();
+      };
+
+      resetBtn.addEventListener('click', window.resetAllShopFilters);
+
+      // Wishlist & Cart helpers
+      window.isInWishlist = function(id) {
+        const wishlist = JSON.parse(localStorage.getItem('luxeclaws_wishlist') || '[]');
+        return wishlist.includes(id);
+      };
+
+      window.toggleWishlist = function(id, e) {
+        if (e) e.stopPropagation();
+        let wishlist = JSON.parse(localStorage.getItem('luxeclaws_wishlist') || '[]');
+        if (wishlist.includes(id)) {
+          wishlist = wishlist.filter(item => item !== id);
+          showToast('Removed from Wishlist', 'ri-heart-line');
+        } else {
+          wishlist.push(id);
+          showToast('Added to Wishlist', 'ri-heart-fill');
+        }
+        localStorage.setItem('luxeclaws_wishlist', JSON.stringify(wishlist));
+        updateBadgeCounts();
+        renderShopProducts();
+      };
+
+      window.quickAddToCart = function(id, e) {
+        if (e) e.stopPropagation();
+        const prod = storedProducts.find(p => p.id === id);
+        if (!prod) return;
+        let cart = JSON.parse(localStorage.getItem('luxeclaws_cart') || '[]');
+        const existing = cart.find(item => item.id === id && item.shape === (prod.defaultShape || 'Almond') && item.size === 'S');
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          cart.push({
+            id: prod.id,
+            name: prod.name,
+            price: prod.price,
+            image: prod.image,
+            shape: prod.defaultShape || 'Almond',
+            length: prod.defaultLength || 'Medium',
+            size: 'S',
+            quantity: 1
+          });
+        }
+        localStorage.setItem('luxeclaws_cart', JSON.stringify(cart));
+        updateBadgeCounts();
+        showToast(`Added ${prod.name} to Cart`, 'ri-shopping-bag-fill');
+      };
+
+      function updateBadgeCounts() {
+        const cart = JSON.parse(localStorage.getItem('luxeclaws_cart') || '[]');
+        const wishlist = JSON.parse(localStorage.getItem('luxeclaws_wishlist') || '[]');
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        
+        document.querySelectorAll('.cart-badge-count').forEach(el => {
+          el.textContent = totalItems;
+          el.style.display = totalItems > 0 ? 'inline-block' : 'none';
+        });
+
+        document.querySelectorAll('.wishlist-badge-count').forEach(el => {
+          el.textContent = wishlist.length;
+          el.style.display = wishlist.length > 0 ? 'inline-block' : 'none';
+        });
+      }
+
+      function showToast(msg, icon) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<i class="${icon}" style="color: var(--pink-accent);"></i> <span>${msg}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 300);
+        }, 2800);
+      }
+
+      // Initial Load
+      updateBadgeCounts();
+      renderShopProducts();
+    });
+  </script>
+</body>
+</html>

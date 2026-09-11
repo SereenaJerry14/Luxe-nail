@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Bag | LUXECLAWS Haute Nail Atelier</title>
+  <meta name="description" content="Review your luxury acrylic nail selections, apply atelier promo codes, and proceed to secure VIP checkout.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-title">LUXECLAWS</span>
+        <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop All</a>
+        <a href="shop.html?category=glazed">Glazed & Chrome</a>
+        <a href="shop.html?category=3d-charms">3D Sculpted</a>
+        <a href="shop.html?category=bridal">Bridal & Nude</a>
+        <a href="about.html">Our Atelier</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle Theme">
+          <i id="theme-icon" class="ri-moon-line"></i>
+        </button>
+
+        <a href="account.html" class="icon-btn" aria-label="Account">
+          <i class="ri-user-3-line"></i>
+        </a>
+
+        <a href="cart.html" class="icon-btn cart-btn" aria-label="Shopping Cart">
+          <i class="ri-shopping-bag-line"></i>
+          <span class="badge-count cart-badge-count">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header Banner -->
+  <section class="page-header-banner">
+    <div class="container">
+      <nav class="breadcrumb-nav" style="justify-content: center;">
+        <a href="index.html">Home</a>
+        <i class="ri-arrow-right-s-line"></i>
+        <a href="shop.html">Shop</a>
+        <i class="ri-arrow-right-s-line"></i>
+        <span>Shopping Bag</span>
+      </nav>
+      <h1 class="font-serif">Your Atelier Shopping Bag</h1>
+      <p>Complimentary luxury presentation box & salon prep kit included with every set.</p>
+    </div>
+  </section>
+
+  <!-- Cart Main Section -->
+  <main class="container">
+    <div class="cart-page-grid" id="cart-content-layout">
+      <!-- Left: Cart Items List -->
+      <section class="cart-table-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-subtle);">
+          <h2 class="font-serif" style="font-size: 1.4rem;">Selected Items (<span id="cart-total-count">0</span>)</h2>
+          <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;" onclick="clearFullCart()">
+            <i class="ri-delete-bin-line"></i> Clear Bag
+          </button>
+        </div>
+
+        <div id="cart-items-container">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Free shipping notice -->
+        <div style="margin-top: 2rem; background: var(--bg-surface-elevated); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 1rem;">
+          <i class="ri-gift-line" style="font-size: 1.6rem; color: var(--gold-light);"></i>
+          <div style="font-size: 0.9rem;">
+            <strong>Complimentary Atelier Prep Kit</strong>
+            <p style="color: var(--text-secondary); margin: 0; font-size: 0.8rem;">Each press-on set includes premium nail glue, 24 jelly tabs, crystal buffer, and luxury travel case.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Order Summary Card -->
+      <aside class="cart-summary-card">
+        <h3 class="font-serif" style="font-size: 1.3rem; margin-bottom: 1.5rem;">Order Summary</h3>
+        
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span id="summary-subtotal">$0.00</span>
+        </div>
+
+        <div class="summary-line" id="discount-row" style="display: none; color: #2ecc71;">
+          <span>Promo Code (<span id="discount-code-tag">GLAM15</span>)</span>
+          <span id="summary-discount">-$0.00</span>
+        </div>
+
+        <div class="summary-line">
+          <span>Estimated Shipping</span>
+          <span id="summary-shipping">$4.95</span>
+        </div>
+
+        <div class="summary-line">
+          <span>Estimated Taxes</span>
+          <span>Calculated at checkout</span>
+        </div>
+
+        <!-- Promo Code Input -->
+        <div style="margin: 1.5rem 0; padding-top: 1.2rem; border-top: 1px solid var(--border-subtle);">
+          <label style="display: block; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Promo or Atelier Gift Card</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="cart-promo-input" placeholder="e.g. GLAM15" style="flex: 1; padding: 0.6rem 0.9rem; border-radius: var(--radius-sm); background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); color: var(--text-primary); text-transform: uppercase;">
+            <button class="btn btn-secondary" onclick="applyCartPromo()">Apply</button>
+          </div>
+          <p id="promo-status-msg" style="font-size: 0.75rem; margin-top: 0.4rem; display: none;"></p>
+        </div>
+
+        <div class="summary-line total">
+          <span>Grand Total</span>
+          <span id="summary-grand-total" style="color: var(--gold-light);">$0.00</span>
+        </div>
+
+        <a href="checkout.html" class="btn btn-primary" style="width: 100%; text-align: center; text-decoration: none; padding: 1rem; font-size: 1rem; margin-top: 1.5rem;">
+          <i class="ri-lock-line"></i> Proceed to Checkout
+        </a>
+
+        <div style="text-align: center; margin-top: 1.2rem;">
+          <a href="shop.html" style="color: var(--text-secondary); font-size: 0.85rem; text-decoration: none;">
+            <i class="ri-arrow-left-s-line"></i> Continue Browsing Atelier
+          </a>
+        </div>
+
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle); display: flex; justify-content: center; gap: 1.2rem; color: var(--text-muted); font-size: 1.4rem;">
+          <i class="ri-visa-line" title="Visa"></i>
+          <i class="ri-mastercard-line" title="Mastercard"></i>
+          <i class="ri-apple-line" title="Apple Pay"></i>
+          <i class="ri-paypal-line" title="PayPal"></i>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Empty Bag State -->
+    <div id="cart-empty-view" class="empty-cart-state" style="display: none; padding: 6rem 1rem; text-align: center;">
+      <i class="ri-shopping-bag-line" style="font-size: 4rem; color: var(--gold-light); margin-bottom: 1.5rem; display: block;"></i>
+      <h2 class="font-serif" style="margin-bottom: 0.8rem;">Your Shopping Bag is Empty</h2>
+      <p style="color: var(--text-secondary); max-width: 480px; margin: 0 auto 2rem;">Discover our handmade Japanese gel nail creations, customized to your exact fingertip sizes.</p>
+      <a href="shop.html" class="btn btn-primary" style="padding: 0.9rem 2.2rem; text-decoration: none;">Explore Atelier Collection</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-column brand-col">
+        <a href="index.html" class="brand-logo">
+          <span class="brand-title">LUXECLAWS</span>
+          <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
+        </a>
+        <p>Bespoke handcrafted acrylic press-on nails built with salon-grade Japanese builder gel and authentic Swarovski crystals.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Shop Collections</h4>
+        <ul>
+          <li><a href="shop.html?category=glazed">Glazed Opal Aura</a></li>
+          <li><a href="shop.html?category=3d-charms">3D Sculpted Charms</a></li>
+          <li><a href="shop.html?category=bridal">Bridal & Nude</a></li>
+          <li><a href="shop.html?category=accessories">Care & Prep Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Client Services</h4>
+        <ul>
+          <li><a href="account.html">My Account & Orders</a></li>
+          <li><a href="faq.html">Sizing & Wear FAQ</a></li>
+          <li><a href="shipping.html">Shipping & Delivery</a></li>
+          <li><a href="returns.html">Returns & Guarantee</a></li>
+          <li><a href="contact.html">Contact Concierge</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal & Privacy</h4>
+        <ul>
+          <li><a href="about.html">The Atelier Story</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 LUXECLAWS Haute Nail Atelier. All Rights Reserved.</p>
+      <div style="display: flex; gap: 1.2rem; align-items: center;">
+        <span>Handcrafted in Tokyo & Los Angeles</span>
+        <a href="admin.html" style="color: var(--text-muted); opacity: 0.4;" title="Atelier Admin Portal"><i class="ri-lock-line"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let cart = JSON.parse(localStorage.getItem('luxeclaws_cart') || '[]');
+      let appliedPromo = localStorage.getItem('luxeclaws_applied_promo') || null;
+      const promoDiscounts = { 'GLAM15': 0.15, 'CLAWSSAVE20': 0.20, 'FREESHIP': 0.00 };
+
+      const cartContainer = document.getElementById('cart-items-container');
+      const cartLayout = document.getElementById('cart-content-layout');
+      const emptyView = document.getElementById('cart-empty-view');
+      const totalCountSpan = document.getElementById('cart-total-count');
+      const subtotalEl = document.getElementById('summary-subtotal');
+      const discountRow = document.getElementById('discount-row');
+      const discountCodeTag = document.getElementById('discount-code-tag');
+      const discountEl = document.getElementById('summary-discount');
+      const shippingEl = document.getElementById('summary-shipping');
+      const grandTotalEl = document.getElementById('summary-grand-total');
+      const promoInput = document.getElementById('cart-promo-input');
+      const promoStatusMsg = document.getElementById('promo-status-msg');
+
+      // Theme toggle
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      const themeIcon = document.getElementById('theme-icon');
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('luxeclaws_theme', theme);
+        if (themeIcon) themeIcon.className = theme === 'dark' ? 'ri-moon-line' : 'ri-sun-line';
+      }
+      applyTheme(localStorage.getItem('luxeclaws_theme') || 'dark');
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme') || 'dark';
+          applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+      }
+
+      function renderCart() {
+        if (cart.length === 0) {
+          cartLayout.style.display = 'none';
+          emptyView.style.display = 'block';
+          updateBadgeCounts();
+          return;
+        }
+
+        cartLayout.style.display = 'grid';
+        emptyView.style.display = 'none';
+
+        const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+        totalCountSpan.textContent = totalQty;
+
+        cartContainer.innerHTML = cart.map((item, index) => `
+          <div class="cart-item-row">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-thumb">
+            <div>
+              <h4 class="font-serif" style="font-size: 1.1rem; margin-bottom: 0.3rem;">
+                <a href="product.html?id=${item.id}" style="color: inherit; text-decoration: none;">${item.name}</a>
+              </h4>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem;">
+                Shape: <strong>${item.shape || 'Almond'}</strong> | Length: <strong>${item.length || 'Medium'}</strong> | Size: <strong>${item.size || 'S'}</strong>
+              </div>
+              <div style="font-size: 0.95rem; font-weight: 600; color: var(--gold-light);">
+                $${item.price.toFixed(2)}
+              </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 0.6rem;">
+              <button class="quantity-btn" onclick="updateItemQty(${index}, -1)" style="width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); color: var(--text-primary); cursor: pointer;">-</button>
+              <span style="font-weight: 600; min-width: 20px; text-align: center;">${item.quantity}</span>
+              <button class="quantity-btn" onclick="updateItemQty(${index}, 1)" style="width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); color: var(--text-primary); cursor: pointer;">+</button>
+            </div>
+
+            <button class="icon-btn" onclick="removeCartItem(${index})" style="color: #ff6b6b;" title="Remove Item">
+              <i class="ri-delete-bin-line"></i>
+            </button>
+          </div>
+        `).join('');
+
+        // Calculate Totals
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        let discount = 0;
+        let shipping = subtotal > 75 ? 0 : 4.95;
+
+        if (appliedPromo && promoDiscounts[appliedPromo] !== undefined) {
+          if (appliedPromo === 'FREESHIP') {
+            shipping = 0;
+            discountRow.style.display = 'flex';
+            discountCodeTag.textContent = appliedPromo;
+            discountEl.textContent = 'Free Shipping Applied';
+          } else {
+            discount = subtotal * promoDiscounts[appliedPromo];
+            discountRow.style.display = 'flex';
+            discountCodeTag.textContent = appliedPromo;
+            discountEl.textContent = `-$${discount.toFixed(2)}`;
+          }
+        } else {
+          discountRow.style.display = 'none';
+        }
+
+        const grandTotal = Math.max(0, subtotal - discount + shipping);
+
+        subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+        shippingEl.textContent = shipping === 0 ? 'COMPLIMENTARY' : `$${shipping.toFixed(2)}`;
+        grandTotalEl.textContent = `$${grandTotal.toFixed(2)}`;
+
+        updateBadgeCounts();
+      }
+
+      window.updateItemQty = function(index, delta) {
+        cart[index].quantity += delta;
+        if (cart[index].quantity <= 0) {
+          cart.splice(index, 1);
+        }
+        localStorage.setItem('luxeclaws_cart', JSON.stringify(cart));
+        renderCart();
+      };
+
+      window.removeCartItem = function(index) {
+        cart.splice(index, 1);
+        localStorage.setItem('luxeclaws_cart', JSON.stringify(cart));
+        renderCart();
+        showToast('Item removed from bag', 'ri-delete-bin-line');
+      };
+
+      window.clearFullCart = function() {
+        if (confirm('Are you sure you want to clear your shopping bag?')) {
+          cart = [];
+          localStorage.setItem('luxeclaws_cart', JSON.stringify(cart));
+          renderCart();
+          showToast('Shopping bag cleared', 'ri-delete-bin-line');
+        }
+      };
+
+      window.applyCartPromo = function() {
+        const code = promoInput.value.trim().toUpperCase();
+        if (!code) return;
+
+        if (promoDiscounts[code] !== undefined) {
+          appliedPromo = code;
+          localStorage.setItem('luxeclaws_applied_promo', code);
+          promoStatusMsg.style.display = 'block';
+          promoStatusMsg.style.color = '#2ecc71';
+          promoStatusMsg.textContent = `Success! Promo code ${code} applied.`;
+          renderCart();
+          showToast(`Promo code ${code} applied!`, 'ri-checkbox-circle-fill');
+        } else {
+          promoStatusMsg.style.display = 'block';
+          promoStatusMsg.style.color = '#ff6b6b';
+          promoStatusMsg.textContent = 'Invalid promo code. Try GLAM15 or CLAWSSAVE20';
+        }
+      };
+
+      function updateBadgeCounts() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.querySelectorAll('.cart-badge-count').forEach(el => {
+          el.textContent = totalItems;
+          el.style.display = totalItems > 0 ? 'inline-block' : 'none';
+        });
+      }
+
+      function showToast(msg, icon) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<i class="${icon}" style="color: var(--pink-accent);"></i> <span>${msg}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 300);
+        }, 2800);
+      }
+
+      renderCart();
+    });
+  </script>
+</body>
+</html>
