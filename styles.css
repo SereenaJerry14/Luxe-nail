@@ -2303,6 +2303,249 @@ button, input, select, textarea {
   padding-top: 1rem;
 }
 
+/* ==========================================================================
+   PAYMENT METHODS & CHECKOUT ENHANCEMENTS (UPI, CARD, PAY ON DELIVERY, WALLETS)
+   ========================================================================== */
+
+.payment-methods-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1.8rem;
+}
+
+@media (max-width: 650px) {
+  .payment-methods-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.payment-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1rem 0.6rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.payment-tab-btn i {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+}
+
+.payment-tab-btn:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+  border-color: var(--border-gold);
+}
+
+.payment-tab-btn.active {
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.12), rgba(255, 117, 143, 0.08));
+  border-color: var(--gold-primary);
+  color: var(--gold-light);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.payment-tab-btn.active i {
+  color: var(--gold-light);
+  transform: scale(1.1);
+}
+
+.payment-pane {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.8rem;
+  margin-bottom: 1.8rem;
+  animation: fadeIn 0.3s ease;
+}
+
+/* UPI Mode Selector Pills */
+.upi-submode-nav {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+  background: var(--bg-main);
+  padding: 0.35rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+}
+
+.upi-submode-btn {
+  flex: 1;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.upi-submode-btn.active {
+  background: var(--gold-gradient);
+  color: #120e06;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+}
+
+/* UPI Apps Grid */
+.upi-apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.4rem;
+}
+
+.upi-app-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.upi-app-card:hover {
+  border-color: var(--gold-primary);
+  transform: translateY(-2px);
+  background: var(--bg-surface-hover);
+}
+
+.upi-app-card.selected {
+  border-color: var(--gold-primary);
+  background: rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
+}
+
+.upi-app-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+/* UPI QR Container */
+.qr-payment-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--bg-main);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-gold);
+}
+
+.qr-box {
+  width: 190px;
+  height: 190px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.qr-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.qr-scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ff4d6d, #d4af37, transparent);
+  box-shadow: 0 0 10px #d4af37;
+  animation: qrScan 2.4s infinite ease-in-out;
+}
+
+@keyframes qrScan {
+  0% { top: 4%; }
+  50% { top: 92%; }
+  100% { top: 4%; }
+}
+
+/* Pay on Delivery (COD) Card */
+.cod-feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin: 1.2rem 0;
+}
+
+.cod-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.cod-feature-item i {
+  color: #2ecc71;
+  font-size: 1.1rem;
+  margin-top: 2px;
+}
+
+/* Bank Selector Grid */
+.bank-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.bank-option-chip {
+  padding: 0.7rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  color: var(--text-secondary);
+}
+
+.bank-option-chip:hover, .bank-option-chip.selected {
+  border-color: var(--gold-primary);
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold-light);
+}
+
 /* Trust & Info Article Layout */
 .info-page-container {
   max-width: 960px;
@@ -2377,3 +2620,4 @@ button, input, select, textarea {
     position: static;
   }
 }
+

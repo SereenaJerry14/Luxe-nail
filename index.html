@@ -747,33 +747,59 @@
 
       <!-- Step 3: Payment Simulation -->
       <div class="checkout-step-pane" id="step-pane-3">
-        <h3 style="font-size: 1.3rem; margin-bottom: 1.2rem;">Payment Method</h3>
+        <h3 style="font-size: 1.3rem; margin-bottom: 1.2rem;">Select Payment Method</h3>
         
-        <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem;">
-          <button type="button" class="btn btn-secondary active" style="flex: 1; border-color: var(--gold-primary);">
-            <i class="ri-bank-card-line"></i> Credit / Debit
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 1.2rem;">
+          <button type="button" class="btn btn-secondary active" id="modal-pay-upi" onclick="selectModalPay('upi')" style="padding: 0.8rem 0.5rem; font-size: 0.85rem; border-color: var(--gold-primary);">
+            <i class="ri-qr-code-line"></i> Pay with UPI
           </button>
-          <button type="button" class="btn btn-secondary" style="flex: 1;">
-            <i class="ri-apple-fill"></i> Apple Pay
+          <button type="button" class="btn btn-secondary" id="modal-pay-card" onclick="selectModalPay('card')" style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">
+            <i class="ri-bank-card-line"></i> Card
           </button>
-          <button type="button" class="btn btn-secondary" style="flex: 1;">
-            <i class="ri-shopping-bag-2-line"></i> Klarna 4x
+          <button type="button" class="btn btn-secondary" id="modal-pay-cod" onclick="selectModalPay('cod')" style="padding: 0.8rem 0.5rem; font-size: 0.85rem;">
+            <i class="ri-truck-line"></i> Pay on Delivery
           </button>
         </div>
 
-        <div class="form-group" style="margin-bottom: 1rem;">
-          <label>Card Number</label>
-          <input type="text" value="4532 •••• •••• 8829" placeholder="4000 0000 0000 0000">
+        <!-- Modal UPI Pane -->
+        <div id="modal-pane-upi" style="background: var(--bg-surface-elevated); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 1.2rem;">
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 0.8rem; flex-wrap: wrap;">
+            <span class="badge badge-gold" style="font-size: 0.75rem;">Google Pay</span>
+            <span class="badge badge-gold" style="font-size: 0.75rem;">PhonePe</span>
+            <span class="badge badge-gold" style="font-size: 0.75rem;">Paytm</span>
+            <span class="badge badge-gold" style="font-size: 0.75rem;">BHIM</span>
+            <span class="badge badge-gold" style="font-size: 0.75rem;">CRED</span>
+          </div>
+          <label style="font-size: 0.85rem; display: block; margin-bottom: 0.4rem; color: var(--text-secondary);">UPI ID / VPA</label>
+          <input type="text" id="modal-upi-input" class="form-input" style="width: 100%; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary);" placeholder="e.g. yourname@okhdfcbank" value="anastasia.vance@okaxis">
         </div>
-        <div class="form-row" style="margin-bottom: 1.5rem;">
-          <div class="form-group">
-            <label>Expiry Date</label>
-            <input type="text" value="08/29" placeholder="MM/YY">
+
+        <!-- Modal Card Pane -->
+        <div id="modal-pane-card" style="display: none; background: var(--bg-surface-elevated); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 1.2rem;">
+          <div class="form-group" style="margin-bottom: 0.8rem;">
+            <label style="font-size: 0.85rem; color: var(--text-secondary);">Card Number</label>
+            <input type="text" class="form-input" value="4532 •••• •••• 8829" placeholder="4000 0000 0000 0000" style="width: 100%; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
           </div>
-          <div class="form-group">
-            <label>CVC Security Code</label>
-            <input type="password" value="923" placeholder="CVC">
+          <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <div class="form-group">
+              <label style="font-size: 0.85rem; color: var(--text-secondary);">Expiry</label>
+              <input type="text" class="form-input" value="08/29" placeholder="MM/YY" style="width: 100%; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+            </div>
+            <div class="form-group">
+              <label style="font-size: 0.85rem; color: var(--text-secondary);">CVV</label>
+              <input type="password" class="form-input" value="923" placeholder="CVV" style="width: 100%; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary);">
+            </div>
           </div>
+        </div>
+
+        <!-- Modal COD Pane -->
+        <div id="modal-pane-cod" style="display: none; background: var(--bg-surface-elevated); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 1.2rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; color: #2ecc71; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem;">
+            <i class="ri-checkbox-circle-fill"></i> Zero Advance Payment Required
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">
+            Pay with Cash, QR scan, or Card at your doorstep when the insured courier delivers your package.
+          </p>
         </div>
 
         <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
@@ -784,7 +810,7 @@
         <div style="display: flex; justify-content: space-between;">
           <button type="button" class="btn btn-secondary" id="backto-step-2-btn"><i class="ri-arrow-left-line"></i> Back</button>
           <button type="button" class="btn btn-primary" id="place-order-btn" style="padding: 0.9rem 2rem;">
-            <i class="ri-check-line"></i> Complete Order & Sculpt My Nails
+            <i class="ri-check-line"></i> <span id="modal-submit-label">Pay via UPI & Sculpt Nails</span>
           </button>
         </div>
       </div>

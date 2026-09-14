@@ -473,10 +473,17 @@ document.addEventListener('DOMContentLoaded', () => {
         </td>
         <td>
           ${o.items.map(i => `
-            <div>• <strong>${i.name}</strong> (${i.shape} • ${i.length} • <span style="color: var(--gold-light);">Size ${i.size}</span>) x${i.quantity}</div>
+            <div>• <strong>${i.name}</strong> (${i.shape || 'Almond'} • ${i.length || 'Medium'} • <span style="color: var(--gold-light);">Size ${i.size || 'S'}</span>) x${i.quantity || 1}</div>
           `).join('')}
         </td>
-        <td><strong style="color: var(--gold-light); font-size: 1.05rem;">$${o.total.toFixed(2)}</strong></td>
+        <td>
+          <strong style="color: var(--gold-light); font-size: 1.05rem;">$${o.total.toFixed(2)}</strong>
+          <div style="margin-top: 4px;">
+            <span class="badge ${o.paymentMethod?.includes('Delivery') || o.paymentMethod?.includes('COD') ? 'badge-gold' : 'badge-pink'}" style="font-size: 0.68rem;">
+              ${o.paymentMethod || 'Paid (Card / UPI)'}
+            </span>
+          </div>
+        </td>
         <td><span class="badge ${o.speed === 'rush' ? 'badge-pink' : 'badge-gold'}">${o.speed === 'rush' ? '✨ Rush Air (24h)' : 'Standard'}</span></td>
         <td>
           <select class="status-select" onchange="updateOrderStatus('${o.id}', this.value)">

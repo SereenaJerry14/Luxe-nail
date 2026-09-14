@@ -100,13 +100,31 @@
             <span>Shipping</span>
             <span id="conf-shipping">$0.00</span>
           </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+            <span>Payment Method</span>
+            <span id="conf-pay-method" style="font-weight: 600; color: var(--text-primary);">Pay with UPI</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+            <span>Payment Status</span>
+            <span id="conf-pay-status" class="badge badge-gold" style="font-size: 0.75rem;">Paid</span>
+          </div>
           <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; color: var(--gold-light); border-top: 1px solid var(--border-subtle); padding-top: 0.8rem; margin-top: 0.8rem;">
-            <span>Total Paid</span>
+            <span id="conf-total-label">Total Paid</span>
             <span id="conf-total">$0.00</span>
           </div>
         </div>
 
-        <div style="margin-top: 1.5rem; display: flex; gap: 2rem; font-size: 0.85rem; color: var(--text-secondary);">
+        <!-- COD Specific Notice Banner -->
+        <div id="conf-cod-banner" style="display: none; margin-top: 1.2rem; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--border-gold); padding: 1rem 1.2rem; border-radius: var(--radius-sm); font-size: 0.85rem;">
+          <div style="display: flex; align-items: center; gap: 0.6rem; color: var(--gold-light); font-weight: 700; margin-bottom: 0.3rem;">
+            <i class="ri-truck-line" style="font-size: 1.2rem;"></i> Pay on Delivery Reminder
+          </div>
+          <p style="margin: 0; color: var(--text-secondary);">
+            Please keep exact cash, card, or your UPI app (GPay/PhonePe/Paytm) ready. You will pay the courier directly upon physical receipt and verification of your package.
+          </p>
+        </div>
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 2rem; font-size: 0.85rem; color: var(--text-secondary); flex-wrap: wrap;">
           <div>
             <strong>Delivery Address:</strong>
             <p id="conf-address" style="margin: 0.3rem 0 0;"></p>
@@ -114,6 +132,10 @@
           <div>
             <strong>Shipping Method:</strong>
             <p id="conf-method" style="margin: 0.3rem 0 0;"></p>
+          </div>
+          <div>
+            <strong>Payment Reference:</strong>
+            <p id="conf-pay-ref" style="margin: 0.3rem 0 0; font-family: monospace; color: var(--gold-light);">UPI-982401824</p>
           </div>
         </div>
       </div>
@@ -180,13 +202,34 @@
 
       if (order) {
         document.getElementById('conf-order-id').textContent = order.id;
-        document.getElementById('conf-customer-email').textContent = order.customer.email || 'your registered email';
+        document.getElementById('conf-customer-email').textContent = order.customer ? order.customer.email : 'your registered email';
         document.getElementById('conf-tracking-no').textContent = order.trackingNumber || 'LX-89421098';
-        document.getElementById('conf-address').textContent = order.customer.address || '742 Evergreen Terrace, Beverly Hills, CA 90210';
+        document.getElementById('conf-address').textContent = order.customer ? order.customer.address : '742 Evergreen Terrace, Beverly Hills, CA 90210';
         document.getElementById('conf-method').textContent = order.shippingMethod || 'Standard Insured Courier (3-5 Business Days)';
         document.getElementById('conf-subtotal').textContent = `$${(order.subtotal || 0).toFixed(2)}`;
         document.getElementById('conf-shipping').textContent = order.shipping === 0 ? 'FREE' : `$${(order.shipping || 4.95).toFixed(2)}`;
         document.getElementById('conf-total').textContent = `$${(order.total || 0).toFixed(2)}`;
+        
+        // Payment details
+        const payMethod = order.paymentMethod || 'UPI (Google Pay)';
+        const payStatus = order.paymentStatus || 'Paid';
+        const payRef = order.paymentRef || ('UPI-' + Math.floor(1000000000 + Math.random() * 9000000000));
+
+        document.getElementById('conf-pay-method').textContent = payMethod;
+        document.getElementById('conf-pay-status').textContent = payStatus;
+        document.getElementById('conf-pay-ref').textContent = payRef;
+
+        if (payStatus.toLowerCase().includes('delivery') || payMethod.toLowerCase().includes('delivery') || payMethod.toLowerCase().includes('cod')) {
+          document.getElementById('conf-pay-status').className = 'badge badge-gold';
+          document.getElementById('conf-pay-status').textContent = 'Pay on Delivery';
+          document.getElementById('conf-total-label').textContent = 'Payable on Delivery';
+          document.getElementById('conf-cod-banner').style.display = 'block';
+        } else {
+          document.getElementById('conf-pay-status').className = 'badge badge-pink';
+          document.getElementById('conf-pay-status').textContent = '✓ 256-Bit Paid';
+          document.getElementById('conf-total-label').textContent = 'Total Paid';
+          document.getElementById('conf-cod-banner').style.display = 'none';
+        }
 
         const itemsContainer = document.getElementById('conf-items-list');
         if (order.items && order.items.length > 0) {
@@ -206,3 +249,4 @@
   </script>
 </body>
 </html>
+

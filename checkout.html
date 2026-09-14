@@ -158,53 +158,285 @@
 
           <!-- STEP 3: Payment Method & Place Order -->
           <div id="step-pane-3" class="cart-table-card" style="margin-bottom: 2rem; display: none;">
-            <h3 class="font-serif" style="font-size: 1.3rem; margin-bottom: 1.5rem;">3. Secure Payment</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+              <h3 class="font-serif" style="font-size: 1.3rem;">3. Select Payment Method</h3>
+              <span style="font-size: 0.8rem; color: #2ecc71; display: flex; align-items: center; gap: 0.3rem;">
+                <i class="ri-shield-check-line"></i> 100% Encrypted & Safe
+              </span>
+            </div>
 
-            <!-- Payment Tabs -->
-            <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
-              <button type="button" class="btn btn-secondary active" id="pay-tab-card" onclick="selectPaymentTab('card')" style="flex: 1;">
-                <i class="ri-bank-card-line"></i> Credit Card
+            <!-- 4 Main Payment Method Tabs -->
+            <div class="payment-methods-nav">
+              <button type="button" class="payment-tab-btn active" id="pay-nav-upi" onclick="selectPaymentMethod('upi')">
+                <i class="ri-qr-code-line"></i>
+                <span>Pay with UPI</span>
               </button>
-              <button type="button" class="btn btn-secondary" id="pay-tab-apple" onclick="selectPaymentTab('apple')" style="flex: 1;">
-                <i class="ri-apple-fill"></i> Apple Pay
+              <button type="button" class="payment-tab-btn" id="pay-nav-card" onclick="selectPaymentMethod('card')">
+                <i class="ri-bank-card-line"></i>
+                <span>Credit / Debit</span>
               </button>
-              <button type="button" class="btn btn-secondary" id="pay-tab-klarna" onclick="selectPaymentTab('klarna')" style="flex: 1;">
-                <i class="ri-money-dollar-circle-line"></i> Klarna 4x
+              <button type="button" class="payment-tab-btn" id="pay-nav-cod" onclick="selectPaymentMethod('cod')">
+                <i class="ri-truck-line"></i>
+                <span>Pay on Delivery</span>
+              </button>
+              <button type="button" class="payment-tab-btn" id="pay-nav-wallets" onclick="selectPaymentMethod('wallets')">
+                <i class="ri-wallet-3-line"></i>
+                <span>Net Banking / Wallets</span>
               </button>
             </div>
 
-            <div id="card-fields">
+            <!-- PAYMENT PANE 1: UPI (Unified Payments Interface) -->
+            <div id="pane-upi" class="payment-pane" style="display: block;">
+              <div class="upi-submode-nav">
+                <button type="button" class="upi-submode-btn active" id="submode-btn-apps" onclick="switchUpiSubmode('apps')">
+                  <i class="ri-smartphone-line"></i> UPI Apps
+                </button>
+                <button type="button" class="upi-submode-btn" id="submode-btn-id" onclick="switchUpiSubmode('id')">
+                  <i class="ri-at-line"></i> UPI ID / VPA
+                </button>
+                <button type="button" class="upi-submode-btn" id="submode-btn-qr" onclick="switchUpiSubmode('qr')">
+                  <i class="ri-qr-code-fill"></i> Scan QR Code
+                </button>
+              </div>
+
+              <!-- UPI Submode A: App Grid -->
+              <div id="upi-submode-apps-container">
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">Select your preferred UPI application for 1-click seamless payment:</p>
+                <div class="upi-apps-grid">
+                  <div class="upi-app-card selected" id="app-card-gpay" onclick="selectUpiApp('Google Pay')">
+                    <div class="upi-app-icon" style="background: rgba(66, 133, 244, 0.15); color: #4285f4;"><i class="ri-google-fill"></i></div>
+                    <strong style="font-size: 0.85rem;">Google Pay</strong>
+                    <span style="font-size: 0.7rem; color: #2ecc71;">⚡ Instant</span>
+                  </div>
+
+                  <div class="upi-app-card" id="app-card-phonepe" onclick="selectUpiApp('PhonePe')">
+                    <div class="upi-app-icon" style="background: rgba(95, 37, 159, 0.15); color: #a855f7;"><i class="ri-flashlight-fill"></i></div>
+                    <strong style="font-size: 0.85rem;">PhonePe</strong>
+                    <span style="font-size: 0.7rem; color: #2ecc71;">⚡ Fast Pay</span>
+                  </div>
+
+                  <div class="upi-app-card" id="app-card-paytm" onclick="selectUpiApp('Paytm')">
+                    <div class="upi-app-icon" style="background: rgba(0, 185, 245, 0.15); color: #00b9f5;"><i class="ri-wallet-fill"></i></div>
+                    <strong style="font-size: 0.85rem;">Paytm UPI</strong>
+                    <span style="font-size: 0.7rem; color: #2ecc71;">⚡ Instant</span>
+                  </div>
+
+                  <div class="upi-app-card" id="app-card-bhim" onclick="selectUpiApp('BHIM UPI')">
+                    <div class="upi-app-icon" style="background: rgba(0, 128, 0, 0.15); color: #2ecc71;"><i class="ri-shield-flash-line"></i></div>
+                    <strong style="font-size: 0.85rem;">BHIM UPI</strong>
+                    <span style="font-size: 0.7rem; color: #2ecc71;">Govt. Verified</span>
+                  </div>
+
+                  <div class="upi-app-card" id="app-card-cred" onclick="selectUpiApp('CRED UPI')">
+                    <div class="upi-app-icon" style="background: rgba(212, 175, 55, 0.15); color: var(--gold-light);"><i class="ri-vip-crown-line"></i></div>
+                    <strong style="font-size: 0.85rem;">CRED Pay</strong>
+                    <span style="font-size: 0.7rem; color: var(--gold-light);">💎 VIP Cashback</span>
+                  </div>
+                </div>
+                <div style="background: var(--bg-surface); padding: 0.9rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.8rem; font-size: 0.8rem; color: var(--text-secondary);">
+                  <i class="ri-information-line" style="color: var(--gold-light); font-size: 1.1rem;"></i>
+                  <span>A payment request intent will open directly in your selected app upon clicking Complete Order.</span>
+                </div>
+              </div>
+
+              <!-- UPI Submode B: Enter UPI ID / VPA -->
+              <div id="upi-submode-id-container" style="display: none;">
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                  <label>Enter Virtual Payment Address (UPI ID) *</label>
+                  <div style="display: flex; gap: 0.6rem;">
+                    <div style="position: relative; flex: 1;">
+                      <input type="text" id="upi-id-input" class="form-input" placeholder="e.g. mobileNumber@okhdfcbank or username@ybl" value="elena.atelier@okaxis">
+                      <i id="upi-verified-badge" class="ri-checkbox-circle-fill" style="position: absolute; right: 12px; top: 12px; font-size: 1.2rem; color: #2ecc71;"></i>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="verifyUpiId()" style="white-space: nowrap; padding: 0.6rem 1.2rem;">
+                      <i class="ri-check-line"></i> Verify
+                    </button>
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 1.2rem;">
+                  <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Quick suffixes:</span>
+                  <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                    <button type="button" class="badge badge-gold" style="cursor: pointer;" onclick="appendUpiSuffix('@okhdfcbank')">@okhdfcbank</button>
+                    <button type="button" class="badge badge-gold" style="cursor: pointer;" onclick="appendUpiSuffix('@okaxis')">@okaxis</button>
+                    <button type="button" class="badge badge-gold" style="cursor: pointer;" onclick="appendUpiSuffix('@ybl')">@ybl</button>
+                    <button type="button" class="badge badge-gold" style="cursor: pointer;" onclick="appendUpiSuffix('@paytm')">@paytm</button>
+                    <button type="button" class="badge badge-gold" style="cursor: pointer;" onclick="appendUpiSuffix('@ibl')">@ibl</button>
+                  </div>
+                </div>
+
+                <div id="upi-verify-feedback" style="font-size: 0.82rem; color: #2ecc71; background: rgba(46, 204, 113, 0.1); padding: 0.7rem 1rem; border-radius: var(--radius-sm); border: 1px solid rgba(46, 204, 113, 0.3); display: flex; align-items: center; gap: 0.5rem;">
+                  <i class="ri-shield-check-fill"></i> <span>UPI ID Verified: <strong>ELENA ROSTOVA</strong> (Bank of Atelier / Axis)</span>
+                </div>
+              </div>
+
+              <!-- UPI Submode C: Dynamic QR Code -->
+              <div id="upi-submode-qr-container" style="display: none;">
+                <div class="qr-payment-wrapper">
+                  <div style="font-size: 0.85rem; color: var(--gold-light); font-weight: 600; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem;">
+                    <i class="ri-scan-2-line"></i> Scan with any UPI App (GPay, PhonePe, Paytm, CRED)
+                  </div>
+
+                  <div class="qr-box">
+                    <div class="qr-scan-line"></div>
+                    <!-- High-Res Vector Mockup of Atelier VIP QR Code -->
+                    <svg viewBox="0 0 160 160" width="100%" height="100%">
+                      <rect width="160" height="160" fill="#ffffff"/>
+                      <!-- Corner Target 1 -->
+                      <rect x="10" y="10" width="40" height="40" fill="#120e06" rx="4"/>
+                      <rect x="16" y="16" width="28" height="28" fill="#ffffff" rx="2"/>
+                      <rect x="22" y="22" width="16" height="16" fill="#d4af37" rx="2"/>
+                      <!-- Corner Target 2 -->
+                      <rect x="110" y="10" width="40" height="40" fill="#120e06" rx="4"/>
+                      <rect x="116" y="16" width="28" height="28" fill="#ffffff" rx="2"/>
+                      <rect x="122" y="22" width="16" height="16" fill="#d4af37" rx="2"/>
+                      <!-- Corner Target 3 -->
+                      <rect x="10" y="110" width="40" height="40" fill="#120e06" rx="4"/>
+                      <rect x="16" y="116" width="28" height="28" fill="#ffffff" rx="2"/>
+                      <rect x="22" y="122" width="16" height="16" fill="#d4af37" rx="2"/>
+                      <!-- Decorative QR Data Matrix Blocks -->
+                      <rect x="60" y="15" width="8" height="16" fill="#120e06"/>
+                      <rect x="75" y="10" width="12" height="10" fill="#120e06"/>
+                      <rect x="92" y="18" width="10" height="8" fill="#120e06"/>
+                      <rect x="15" y="60" width="12" height="10" fill="#120e06"/>
+                      <rect x="18" y="80" width="18" height="10" fill="#120e06"/>
+                      <rect x="60" y="55" width="40" height="40" fill="#120e06" rx="8"/>
+                      <circle cx="80" cy="75" r="14" fill="#fae19c"/>
+                      <text x="80" y="80" font-size="14" text-anchor="middle" font-weight="bold" fill="#120e06">✨</text>
+                      <rect x="110" y="60" width="15" height="12" fill="#120e06"/>
+                      <rect x="135" y="75" width="15" height="12" fill="#120e06"/>
+                      <rect x="60" y="110" width="18" height="14" fill="#120e06"/>
+                      <rect x="85" y="125" width="20" height="12" fill="#120e06"/>
+                      <rect x="120" y="115" width="25" height="25" fill="#120e06" rx="2"/>
+                    </svg>
+                  </div>
+
+                  <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem;">
+                    Amount to Pay: <span style="color: var(--gold-light);" id="qr-payable-amt">$0.00</span>
+                  </div>
+                  <div style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    QR expires in: <strong id="qr-countdown" style="color: #ff758f;">04:58</strong>
+                  </div>
+
+                  <button type="button" class="btn btn-secondary" onclick="simulateQrPaymentSuccess()" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
+                    <i class="ri-checkbox-circle-line" style="color: #2ecc71;"></i> Simulate UPI QR Approval
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- PAYMENT PANE 2: Credit / Debit Cards -->
+            <div id="pane-card" class="payment-pane" style="display: none;">
               <div class="form-group" style="margin-bottom: 1.2rem;">
-                <label>Card Number</label>
+                <label>Cardholder Name *</label>
+                <input type="text" id="card-holder-name" class="form-input" placeholder="Elena Rostova" value="Elena Rostova">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1.2rem;">
+                <label>Card Number *</label>
                 <div style="position: relative;">
-                  <input type="text" class="form-input" placeholder="4242 &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4242" value="4242 8899 1042 9901" required>
-                  <i class="ri-visa-line" style="position: absolute; right: 15px; top: 12px; font-size: 1.4rem; color: var(--gold-light);"></i>
+                  <input type="text" id="card-number-input" class="form-input" placeholder="4242 •••• •••• 4242" value="4242 8899 1042 9901" maxlength="19" oninput="formatCardNumber(this)">
+                  <div id="card-brand-icon" style="position: absolute; right: 15px; top: 12px; font-size: 1.5rem; color: var(--gold-light);">
+                    <i class="ri-visa-line"></i>
+                  </div>
                 </div>
               </div>
 
-              <div class="form-row" style="margin-bottom: 1.5rem;">
+              <div class="form-row" style="margin-bottom: 1.2rem;">
                 <div class="form-group">
-                  <label>Expiry Date</label>
-                  <input type="text" class="form-input" placeholder="MM/YY" value="08/28" required>
+                  <label>Expiry Date (MM/YY) *</label>
+                  <input type="text" id="card-expiry-input" class="form-input" placeholder="MM/YY" value="08/28" maxlength="5" oninput="formatExpiry(this)">
                 </div>
                 <div class="form-group">
-                  <label>CVV Code</label>
-                  <input type="password" class="form-input" placeholder="123" value="889" maxlength="4" required>
+                  <label>CVV / CVC Security Code *</label>
+                  <div style="position: relative;">
+                    <input type="password" id="card-cvv-input" class="form-input" placeholder="123" value="889" maxlength="4">
+                    <i class="ri-lock-2-line" style="position: absolute; right: 15px; top: 12px; color: var(--text-muted);"></i>
+                  </div>
                 </div>
+              </div>
+
+              <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                <input type="checkbox" id="save-card-check" checked>
+                <span>Save this card securely in my VIP Atelier vault for 1-click future reorders</span>
+              </label>
+
+              <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 1rem; font-size: 0.75rem; color: var(--text-muted);">
+                <span><i class="ri-shield-keyhole-line" style="color: #2ecc71;"></i> PCI-DSS Level 1</span>
+                <span><i class="ri-bank-line"></i> RuPay / Visa / Mastercard / Amex Accepted</span>
               </div>
             </div>
 
-            <div id="alternative-payment-fields" style="display: none; padding: 2rem; text-align: center; background: var(--bg-surface-elevated); border-radius: var(--radius-sm); margin-bottom: 1.5rem;">
-              <i class="ri-fingerprint-line" style="font-size: 3rem; color: var(--gold-light);"></i>
-              <p style="margin-top: 0.8rem; font-size: 0.95rem;">Biometric one-touch authorization will be requested upon placing order.</p>
+            <!-- PAYMENT PANE 3: Pay on Delivery (Cash on Delivery / COD) -->
+            <div id="pane-cod" class="payment-pane" style="display: none;">
+              <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+                <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(46, 204, 113, 0.15); color: #2ecc71; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                  <i class="ri-hand-coin-line"></i>
+                </div>
+                <div>
+                  <strong style="font-size: 1.05rem; display: block; color: var(--text-primary);">Pay on Delivery (Cash / Digital COD)</strong>
+                  <span style="font-size: 0.8rem; color: #2ecc71;">✓ Free COD &bull; Zero Convenience Surcharge</span>
+                </div>
+              </div>
+
+              <div class="cod-feature-list">
+                <div class="cod-feature-item">
+                  <i class="ri-checkbox-circle-fill"></i>
+                  <div><strong>Flexible Doorstep Payment:</strong> Pay using exact Cash, scan our delivery agent's UPI QR code, or swipe any Card upon doorstep arrival.</div>
+                </div>
+                <div class="cod-feature-item">
+                  <i class="ri-checkbox-circle-fill"></i>
+                  <div><strong>100% Quality Inspection:</strong> Inspect your tamper-proof Atelier luxury velvet seal before completing handoff.</div>
+                </div>
+                <div class="cod-feature-item">
+                  <i class="ri-checkbox-circle-fill"></i>
+                  <div><strong>Courier OTP Verification:</strong> A secure 4-digit handover code will be sent to <span id="cod-phone-preview" style="color: var(--gold-light);">your mobile</span> once dispatched.</div>
+                </div>
+              </div>
+
+              <div style="background: var(--bg-surface); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-gold); font-size: 0.82rem; color: var(--text-secondary);">
+                <i class="ri-information-line" style="color: var(--gold-light);"></i> Please keep exact change or have your UPI app ready when our courier arrives at your address.
+              </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+            <!-- PAYMENT PANE 4: Net Banking & Digital Wallets -->
+            <div id="pane-wallets" class="payment-pane" style="display: none;">
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">Select your Bank or Digital Wallet:</p>
+              
+              <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold-light); margin-bottom: 0.6rem;">Top Banks</h4>
+              <div class="bank-selector-grid">
+                <div class="bank-option-chip selected" onclick="selectBank(this, 'HDFC Bank')">HDFC Bank</div>
+                <div class="bank-option-chip" onclick="selectBank(this, 'ICICI Bank')">ICICI Bank</div>
+                <div class="bank-option-chip" onclick="selectBank(this, 'State Bank of India')">SBI</div>
+                <div class="bank-option-chip" onclick="selectBank(this, 'Axis Bank')">Axis Bank</div>
+                <div class="bank-option-chip" onclick="selectBank(this, 'Kotak Mahindra')">Kotak</div>
+                <div class="bank-option-chip" onclick="selectBank(this, 'Chase / International')">Chase / Int.</div>
+              </div>
+
+              <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold-light); margin: 1rem 0 0.6rem;">Express Wallets & Pay Later</h4>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.6rem;">
+                <button type="button" class="btn btn-secondary" style="padding: 0.7rem;" onclick="selectWallet(this, 'Apple Pay')">
+                  <i class="ri-apple-fill"></i> Apple Pay
+                </button>
+                <button type="button" class="btn btn-secondary" style="padding: 0.7rem;" onclick="selectWallet(this, 'Google Wallet')">
+                  <i class="ri-google-fill"></i> Google Wallet
+                </button>
+                <button type="button" class="btn btn-secondary" style="padding: 0.7rem;" onclick="selectWallet(this, 'Amazon Pay')">
+                  <i class="ri-amazon-fill"></i> Amazon Pay
+                </button>
+                <button type="button" class="btn btn-secondary" style="padding: 0.7rem;" onclick="selectWallet(this, 'Klarna 4x')">
+                  <i class="ri-money-dollar-circle-line"></i> Klarna 4x
+                </button>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; gap: 1rem;">
               <button type="button" class="btn btn-secondary" onclick="goToStep(2)">
                 <i class="ri-arrow-left-line"></i> Back to Delivery
               </button>
-              <button type="submit" id="place-order-btn" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
-                <i class="ri-lock-fill"></i> Complete Order ($<span id="pay-button-amount">0.00</span>)
+              <button type="submit" id="place-order-btn" class="btn btn-primary" style="padding: 1rem 2.2rem; font-size: 1rem;">
+                <i class="ri-lock-fill"></i> <span id="pay-button-text">Authorize UPI Payment</span> ($<span id="pay-button-amount">0.00</span>)
               </button>
             </div>
           </div>
@@ -252,6 +484,14 @@
     let currentStep = 1;
     let selectedShippingType = 'standard';
     let selectedShippingCost = 4.95;
+    let currentPaymentMethod = 'upi'; // 'upi' | 'card' | 'cod' | 'wallets'
+    let currentUpiSubmode = 'apps';   // 'apps' | 'id' | 'qr'
+    let selectedUpiApp = 'Google Pay';
+    let selectedBankName = 'HDFC Bank';
+    let selectedWalletName = 'Apple Pay';
+    let qrTimerInterval = null;
+    let qrSecondsLeft = 298;
+
     let cart = JSON.parse(localStorage.getItem('luxeclaws_cart') || '[]');
     let user = JSON.parse(localStorage.getItem('luxeclaws_user') || 'null');
     let appliedPromo = localStorage.getItem('luxeclaws_applied_promo') || null;
@@ -271,15 +511,25 @@
           const names = user.name.split(' ');
           document.getElementById('ship-fname').value = names[0] || '';
           document.getElementById('ship-lname').value = names.slice(1).join(' ') || '';
+          document.getElementById('card-holder-name').value = user.name;
         }
         if (user.email) document.getElementById('ship-email').value = user.email;
+        if (user.phone) {
+          document.getElementById('ship-phone').value = user.phone;
+          document.getElementById('cod-phone-preview').textContent = user.phone;
+        }
         if (user.address) document.getElementById('ship-address').value = user.address;
         if (user.city) document.getElementById('ship-city').value = user.city;
         if (user.zip) document.getElementById('ship-zip').value = user.zip;
         document.getElementById('autofill-indicator').style.display = 'inline-block';
       }
 
+      document.getElementById('ship-phone').addEventListener('input', (e) => {
+        document.getElementById('cod-phone-preview').textContent = e.target.value || 'your mobile';
+      });
+
       renderOrderPreview();
+      updatePaymentButtonLabel();
     });
 
     function renderOrderPreview() {
@@ -317,6 +567,7 @@
       document.getElementById('co-shipping').textContent = shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`;
       document.getElementById('co-grand-total').textContent = `$${grandTotal.toFixed(2)}`;
       document.getElementById('pay-button-amount').textContent = grandTotal.toFixed(2);
+      document.getElementById('qr-payable-amt').textContent = `$${grandTotal.toFixed(2)}`;
     }
 
     function goToStep(step) {
@@ -325,11 +576,13 @@
         const fname = document.getElementById('ship-fname').value.trim();
         const lname = document.getElementById('ship-lname').value.trim();
         const email = document.getElementById('ship-email').value.trim();
+        const phone = document.getElementById('ship-phone').value.trim();
         const address = document.getElementById('ship-address').value.trim();
         if (!fname || !lname || !email || !address) {
           alert('Please fill in all required shipping address fields.');
           return;
         }
+        document.getElementById('cod-phone-preview').textContent = phone || 'your mobile';
       }
 
       currentStep = step;
@@ -341,6 +594,10 @@
       document.getElementById('node-step-2').className = `step-node ${step === 2 ? 'active' : (step > 2 ? 'done' : '')}`;
       document.getElementById('node-step-3').className = `step-node ${step === 3 ? 'active' : ''}`;
 
+      if (step === 3 && currentPaymentMethod === 'upi' && currentUpiSubmode === 'qr') {
+        startQrTimer();
+      }
+
       window.scrollTo({ top: 150, behavior: 'smooth' });
     }
 
@@ -351,20 +608,199 @@
       renderOrderPreview();
     }
 
-    function selectPaymentTab(type) {
-      document.getElementById('pay-tab-card').classList.toggle('active', type === 'card');
-      document.getElementById('pay-tab-apple').classList.toggle('active', type === 'apple');
-      document.getElementById('pay-tab-klarna').classList.toggle('active', type === 'klarna');
+    /* Payment Methods Management */
+    function selectPaymentMethod(method) {
+      currentPaymentMethod = method;
+      
+      // Update nav buttons
+      ['upi', 'card', 'cod', 'wallets'].forEach(m => {
+        const btn = document.getElementById(`pay-nav-${m}`);
+        const pane = document.getElementById(`pane-${m}`);
+        if (btn) btn.classList.toggle('active', m === method);
+        if (pane) pane.style.display = (m === method) ? 'block' : 'none';
+      });
 
-      document.getElementById('card-fields').style.display = type === 'card' ? 'block' : 'none';
-      document.getElementById('alternative-payment-fields').style.display = type !== 'card' ? 'block' : 'none';
+      if (method === 'upi' && currentUpiSubmode === 'qr') {
+        startQrTimer();
+      }
+
+      updatePaymentButtonLabel();
     }
 
+    function updatePaymentButtonLabel() {
+      const label = document.getElementById('pay-button-text');
+      if (!label) return;
+
+      if (currentPaymentMethod === 'upi') {
+        if (currentUpiSubmode === 'apps') label.textContent = `Pay via ${selectedUpiApp}`;
+        else if (currentUpiSubmode === 'qr') label.textContent = 'I Have Scanned & Paid via UPI';
+        else label.textContent = 'Authorize UPI ID Payment';
+      } else if (currentPaymentMethod === 'card') {
+        label.textContent = 'Pay with Card & Confirm';
+      } else if (currentPaymentMethod === 'cod') {
+        label.textContent = 'Place Order with Pay on Delivery';
+      } else if (currentPaymentMethod === 'wallets') {
+        label.textContent = `Pay via ${selectedBankName || selectedWalletName}`;
+      }
+    }
+
+    /* UPI Submode Handlers */
+    function switchUpiSubmode(submode) {
+      currentUpiSubmode = submode;
+      ['apps', 'id', 'qr'].forEach(s => {
+        const btn = document.getElementById(`submode-btn-${s}`);
+        const cont = document.getElementById(`upi-submode-${s}-container`);
+        if (btn) btn.classList.toggle('active', s === submode);
+        if (cont) cont.style.display = (s === submode) ? 'block' : 'none';
+      });
+
+      if (submode === 'qr') {
+        startQrTimer();
+      }
+      updatePaymentButtonLabel();
+    }
+
+    function selectUpiApp(appName) {
+      selectedUpiApp = appName;
+      document.querySelectorAll('.upi-app-card').forEach(c => c.classList.remove('selected'));
+      const cardMap = {
+        'Google Pay': 'app-card-gpay',
+        'PhonePe': 'app-card-phonepe',
+        'Paytm': 'app-card-paytm',
+        'BHIM UPI': 'app-card-bhim',
+        'CRED UPI': 'app-card-cred'
+      };
+      if (cardMap[appName]) {
+        document.getElementById(cardMap[appName]).classList.add('selected');
+      }
+      updatePaymentButtonLabel();
+    }
+
+    function appendUpiSuffix(suffix) {
+      const input = document.getElementById('upi-id-input');
+      let base = input.value.split('@')[0];
+      if (!base) base = 'elena.atelier';
+      input.value = base + suffix;
+      verifyUpiId();
+    }
+
+    function verifyUpiId() {
+      const input = document.getElementById('upi-id-input').value.trim();
+      const feedback = document.getElementById('upi-verify-feedback');
+      const badge = document.getElementById('upi-verified-badge');
+      
+      if (input.includes('@') && input.length > 5) {
+        feedback.style.display = 'flex';
+        feedback.innerHTML = `<i class="ri-shield-check-fill"></i> <span>UPI ID Verified: <strong>${input.toUpperCase()}</strong></span>`;
+        badge.style.display = 'block';
+        badge.className = 'ri-checkbox-circle-fill';
+        badge.style.color = '#2ecc71';
+      } else {
+        feedback.style.display = 'flex';
+        feedback.style.borderColor = '#ff4d6d';
+        feedback.style.color = '#ff4d6d';
+        feedback.innerHTML = `<i class="ri-error-warning-line"></i> <span>Please enter a valid UPI VPA address.</span>`;
+        badge.className = 'ri-close-circle-line';
+        badge.style.color = '#ff4d6d';
+      }
+    }
+
+    function startQrTimer() {
+      if (qrTimerInterval) clearInterval(qrTimerInterval);
+      qrSecondsLeft = 298;
+      const countEl = document.getElementById('qr-countdown');
+      qrTimerInterval = setInterval(() => {
+        qrSecondsLeft--;
+        if (qrSecondsLeft <= 0) {
+          clearInterval(qrTimerInterval);
+          if (countEl) countEl.textContent = '00:00 (Expired)';
+          return;
+        }
+        const m = Math.floor(qrSecondsLeft / 60).toString().padStart(2, '0');
+        const s = (qrSecondsLeft % 60).toString().padStart(2, '0');
+        if (countEl) countEl.textContent = `${m}:${s}`;
+      }, 1000);
+    }
+
+    function simulateQrPaymentSuccess() {
+      alert('✓ UPI Payment of ' + document.getElementById('co-grand-total').textContent + ' Confirmed via QR Scanner!');
+      document.getElementById('place-order-btn').click();
+    }
+
+    /* Card Formatters */
+    function formatCardNumber(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 16);
+      let parts = v.match(/[\s\S]{1,4}/g) || [];
+      input.value = parts.join(' ');
+
+      // Brand detection
+      const icon = document.getElementById('card-brand-icon');
+      if (v.startsWith('4')) {
+        icon.innerHTML = '<i class="ri-visa-line" style="color: #5c9df5;"></i>';
+      } else if (/^5[1-5]/.test(v)) {
+        icon.innerHTML = '<i class="ri-mastercard-line" style="color: #ff5f00;"></i>';
+      } else if (/^3[47]/.test(v)) {
+        icon.innerHTML = '<i class="ri-bank-card-fill" style="color: #2ecc71;"></i>';
+      } else {
+        icon.innerHTML = '<i class="ri-bank-card-line" style="color: var(--gold-light);"></i>';
+      }
+    }
+
+    function formatExpiry(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 2) {
+        input.value = v.substring(0, 2) + '/' + v.substring(2, 4);
+      } else {
+        input.value = v;
+      }
+    }
+
+    function selectBank(element, bankName) {
+      document.querySelectorAll('.bank-option-chip').forEach(c => c.classList.remove('selected'));
+      element.classList.add('selected');
+      selectedBankName = bankName;
+      updatePaymentButtonLabel();
+    }
+
+    function selectWallet(element, walletName) {
+      selectedWalletName = walletName;
+      selectedBankName = walletName;
+      updatePaymentButtonLabel();
+    }
+
+    /* Place Order Controller */
     function handleCheckoutSubmit(e) {
       e.preventDefault();
       
       const btn = document.getElementById('place-order-btn');
-      btn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Authorizing Atelier Order...`;
+      const orderAmount = document.getElementById('pay-button-amount').textContent;
+      
+      let paymentDisplayTitle = 'Credit Card (•••• 9901)';
+      let paymentStatus = 'Paid';
+      let paymentRef = 'TXN-' + Math.floor(10000000 + Math.random() * 90000000);
+
+      if (currentPaymentMethod === 'upi') {
+        if (currentUpiSubmode === 'apps') {
+          paymentDisplayTitle = `UPI (${selectedUpiApp})`;
+        } else if (currentUpiSubmode === 'qr') {
+          paymentDisplayTitle = 'UPI (QR Code Scan)';
+        } else {
+          paymentDisplayTitle = `UPI ID (${document.getElementById('upi-id-input').value || 'elena@okaxis'})`;
+        }
+        paymentRef = 'UPI-' + Math.floor(1000000000 + Math.random() * 9000000000);
+      } else if (currentPaymentMethod === 'card') {
+        const num = document.getElementById('card-number-input').value.replace(/\s/g, '');
+        const last4 = num.slice(-4) || '9901';
+        paymentDisplayTitle = `Credit / Debit Card (•••• ${last4})`;
+      } else if (currentPaymentMethod === 'cod') {
+        paymentDisplayTitle = 'Pay on Delivery (Cash / Digital COD)';
+        paymentStatus = 'Pay on Doorstep Delivery';
+        paymentRef = 'COD-ORDER-' + Math.floor(100000 + Math.random() * 900000);
+      } else if (currentPaymentMethod === 'wallets') {
+        paymentDisplayTitle = `Net Banking / Wallet (${selectedBankName || selectedWalletName})`;
+      }
+
+      btn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Authorizing ${paymentDisplayTitle}...`;
       btn.disabled = true;
 
       const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
@@ -389,6 +825,9 @@
         discount: discount,
         shipping: shipping,
         total: grandTotal,
+        paymentMethod: paymentDisplayTitle,
+        paymentStatus: paymentStatus,
+        paymentRef: paymentRef,
         status: 'Handcrafting & QC',
         trackingNumber: 'LX-' + Math.floor(10000000 + Math.random() * 90000000)
       };
@@ -407,8 +846,9 @@
 
       setTimeout(() => {
         window.location.href = `order-confirmation.html?orderId=${orderId}`;
-      }, 1400);
+      }, 1200);
     }
   </script>
 </body>
 </html>
+

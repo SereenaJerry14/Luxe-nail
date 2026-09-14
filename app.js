@@ -933,6 +933,28 @@ document.addEventListener('DOMContentLoaded', () => {
     backtoStep2Btn.addEventListener('click', () => setCheckoutStep(2));
   }
 
+  // Modal Payment Method Handling
+  let modalSelectedPayment = 'upi';
+  window.selectModalPay = function(method) {
+    modalSelectedPayment = method;
+    ['upi', 'card', 'cod'].forEach(m => {
+      const btn = document.getElementById(`modal-pay-${m}`);
+      const pane = document.getElementById(`modal-pane-${m}`);
+      if (btn) {
+        btn.classList.toggle('active', m === method);
+        btn.style.borderColor = (m === method) ? 'var(--gold-primary)' : 'var(--border-subtle)';
+      }
+      if (pane) pane.style.display = (m === method) ? 'block' : 'none';
+    });
+
+    const label = document.getElementById('modal-submit-label');
+    if (label) {
+      if (method === 'upi') label.textContent = 'Pay via UPI & Sculpt Nails';
+      else if (method === 'card') label.textContent = 'Pay with Card & Sculpt Nails';
+      else if (method === 'cod') label.textContent = 'Place Order (Pay on Delivery)';
+    }
+  };
+
   if (placeOrderBtn) {
     placeOrderBtn.addEventListener('click', () => {
       placeOrderBtn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Sculpting Order...`;
@@ -951,6 +973,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const shipState = document.getElementById('ship-state')?.value || 'CA';
       const shipZip = document.getElementById('ship-zip')?.value || '90210';
 
+      let payMethodTitle = 'Pay with UPI (GPay / PhonePe)';
+      let payStatus = 'Paid';
+      if (modalSelectedPayment === 'card') {
+        payMethodTitle = 'Credit / Debit Card (•••• 8829)';
+        payStatus = 'Paid';
+      } else if (modalSelectedPayment === 'cod') {
+        payMethodTitle = 'Pay on Delivery (Cash / Digital COD)';
+        payStatus = 'Pending on Doorstep Delivery';
+      }
+
       const newOrderRecord = {
         id: orderId,
         date: new Date().toLocaleString(),
@@ -959,6 +991,8 @@ document.addEventListener('DOMContentLoaded', () => {
         shippingAddress: `${shipAddr}, ${shipCity}, ${shipState} ${shipZip}`,
         items: [...state.cart],
         total: grandTotal,
+        paymentMethod: payMethodTitle,
+        paymentStatus: payStatus,
         speed: state.checkout.shippingSpeed,
         status: 'In Sculpting'
       };
