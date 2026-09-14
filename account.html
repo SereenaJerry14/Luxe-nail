@@ -470,14 +470,29 @@
 
         // Full Orders List
         const fullOrdersList = document.getElementById('full-orders-list');
-        fullOrdersList.innerHTML = orders.map(ord => `
+        fullOrdersList.innerHTML = orders.map(ord => {
+          let refundActionBtn = '';
+          let refundBadge = '';
+
+          if (ord.refundStatus === 'Refunded') {
+            refundBadge = `<span class="badge badge-pink" style="font-size: 0.72rem;"><i class="ri-checkbox-circle-fill"></i> Refunded ($${ord.refundAmount || ord.total.toFixed(2)})</span>`;
+          } else if (ord.refundStatus === 'Pending Review') {
+            refundBadge = `<span class="badge badge-gold" style="font-size: 0.72rem;"><i class="ri-time-line"></i> Refund Under Review (${ord.refundMethod || 'UPI'})</span>`;
+          } else {
+            refundActionBtn = `<button class="btn btn-secondary" onclick="openRefundModal('${ord.id}')" style="font-size: 0.8rem; padding: 0.4rem 0.8rem; color: #ff758f; border-color: rgba(255, 117, 143, 0.4);">
+              <i class="ri-refund-2-line"></i> Request Refund / Return
+            </button>`;
+          }
+
+          return `
           <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.5rem; margin-bottom: 1.5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.8rem; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
               <div>
                 <span style="font-size: 0.85rem; color: var(--text-secondary);">Order Placed: <strong>${ord.date}</strong></span> &bull;
                 <span style="font-size: 0.85rem; color: var(--gold-light);">ID: <strong>${ord.id}</strong></span>
               </div>
-              <div>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                ${refundBadge}
                 <span class="badge badge-gold">${ord.status}</span>
               </div>
             </div>
@@ -495,17 +510,20 @@
               `).join('')}
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 1rem; margin-top: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 1rem; margin-top: 1rem; flex-wrap: wrap; gap: 0.8rem;">
               <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                Insured Courier: <strong>${ord.trackingNumber || 'LX-889021'}</strong>
+                Insured Courier: <strong>${ord.trackingNumber || 'LX-889021'}</strong> &bull;
+                Payment: <span style="color: var(--gold-light);">${ord.paymentMethod || 'Credit Card / UPI'}</span>
               </div>
-              <div style="display: flex; gap: 1rem; align-items: center;">
+              <div style="display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap;">
                 <div style="font-size: 1.1rem; font-weight: 700; color: var(--gold-light);">Total: $${ord.total.toFixed(2)}</div>
+                ${refundActionBtn}
                 <a href="order-confirmation.html?orderId=${ord.id}" class="btn btn-secondary" style="font-size: 0.8rem;">Track Order</a>
               </div>
             </div>
           </div>
-        `).join('');
+        `;
+        }).join('');
 
         // Wishlist Tab
         renderWishlistGrid();
@@ -677,8 +695,163 @@
         }, 2800);
       }
 
+      /* Refund Modal Handlers */
+      let activeRefundOrderId = null;
+
+      window.openRefundModal = function(orderId) {
+        activeRefundOrderId = orderId;
+        const ord = orders.find(o => o.id === orderId);
+        if (!ord) return;
+
+        document.getElementById('refund-modal-order-id').textContent = ord.id;
+        document.getElementById('refund-modal-total').textContent = `$${ord.total.toFixed(2)}`;
+        document.getElementById('refund-modal-payment-mode').textContent = ord.paymentMethod || 'Credit Card / UPI';
+        document.getElementById('refund-upi-input').value = currentUser?.email?.split('@')[0] + '@okaxis' || 'elena@okaxis';
+        
+        document.getElementById('account-refund-modal').style.display = 'flex';
+      };
+
+      window.closeRefundModal = function() {
+        document.getElementById('account-refund-modal').style.display = 'none';
+        activeRefundOrderId = null;
+      };
+
+      window.toggleRefundMethodFields = function(method) {
+        const upiField = document.getElementById('refund-upi-field-box');
+        if (upiField) upiField.style.display = (method === 'upi') ? 'block' : 'none';
+      };
+
+      window.submitRefundRequest = function(e) {
+        e.preventDefault();
+        if (!activeRefundOrderId) return;
+
+        const reason = document.getElementById('refund-reason-select').value;
+        const method = document.querySelector('input[name="refund-method-choice"]:checked')?.value || 'upi';
+        const upiId = document.getElementById('refund-upi-input').value;
+        const notes = document.getElementById('refund-notes-input').value;
+
+        // Update in localStorage orders list
+        let storedOrders = JSON.parse(localStorage.getItem('luxeclaws_orders') || '[]');
+        const idx = storedOrders.findIndex(o => o.id === activeRefundOrderId);
+        if (idx !== -1) {
+          storedOrders[idx].refundStatus = 'Pending Review';
+          storedOrders[idx].refundReason = reason;
+          storedOrders[idx].refundMethod = method === 'upi' ? `Instant UPI (${upiId})` : (method === 'credit' ? 'Atelier Store Credit (+10% Bonus)' : 'Original Payment Source');
+          storedOrders[idx].refundNotes = notes;
+          storedOrders[idx].refundRequestedAt = new Date().toISOString();
+          
+          localStorage.setItem('luxeclaws_orders', JSON.stringify(storedOrders));
+          orders = storedOrders;
+        }
+
+        closeRefundModal();
+        initView();
+        showToast(`Refund request submitted for ${activeRefundOrderId}! Concierge will review within 2 hours.`, 'ri-shield-check-fill');
+      };
+
       initView();
     });
   </script>
+
+  <!-- LUXURY REFUND & RETURN REQUEST MODAL -->
+  <div class="modal-backdrop" id="account-refund-modal" style="display: none;">
+    <div class="checkout-modal-container" style="max-width: 580px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeRefundModal()"><i class="ri-close-line"></i></button>
+      
+      <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem;">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(255, 117, 143, 0.15); color: var(--pink-accent); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+          <i class="ri-refund-2-line"></i>
+        </div>
+        <div>
+          <h3 class="font-serif" style="font-size: 1.4rem; margin: 0;">Request Order Refund / Return</h3>
+          <span style="font-size: 0.8rem; color: var(--text-secondary);">Backed by our 30-Day Atelier Perfect Fit Guarantee</span>
+        </div>
+      </div>
+
+      <!-- Order Summary Bar -->
+      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); padding: 1rem 1.2rem; border-radius: var(--radius-sm); margin-bottom: 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">Order ID</span>
+          <div id="refund-modal-order-id" style="font-weight: 700; color: var(--gold-light);">ORD-894210</div>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">Original Payment</span>
+          <div id="refund-modal-payment-mode" style="font-size: 0.88rem; color: var(--text-primary); font-weight: 600;">UPI (Google Pay)</div>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">Refundable Amount</span>
+          <div id="refund-modal-total" style="font-weight: 700; color: #2ecc71; font-size: 1.1rem;">$52.95</div>
+        </div>
+      </div>
+
+      <form id="client-refund-form" onsubmit="submitRefundRequest(event)" style="display: flex; flex-direction: column; gap: 1.2rem;">
+        <div class="form-group">
+          <label>Reason for Refund / Return *</label>
+          <select id="refund-reason-select" class="form-input" required>
+            <option value="Sizing Calibration Mismatch">Sizing Calibration Mismatch (Eligible for Free Replacement Set or 100% Refund)</option>
+            <option value="Changed Mind - Unopened Package">Changed Mind / Unopened Factory-Sealed Box</option>
+            <option value="Damaged / Broken in Transit">Damaged / Broken in Transit</option>
+            <option value="Received Wrong Nail Shape / Design">Received Wrong Nail Shape / Design</option>
+            <option value="Order Cancellation Before Dispatch">Order Cancellation Before Handcrafted Dispatch</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label style="margin-bottom: 0.6rem; display: block;">Select Refund Payout Channel *</label>
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <label style="display: flex; align-items: center; justify-content: space-between; padding: 0.9rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); cursor: pointer;">
+              <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <input type="radio" name="refund-method-choice" value="upi" checked onchange="toggleRefundMethodFields('upi')">
+                <div>
+                  <strong>⚡ UPI Payout (Post-QC Return Inspection)</strong>
+                  <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Transferred to your UPI ID within 24h of physical return & quality check</p>
+                </div>
+              </div>
+              <span class="badge badge-gold" style="font-size: 0.7rem;">QC VERIFIED</span>
+            </label>
+
+            <label style="display: flex; align-items: center; justify-content: space-between; padding: 0.9rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); cursor: pointer;">
+              <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <input type="radio" name="refund-method-choice" value="original" onchange="toggleRefundMethodFields('original')">
+                <div>
+                  <strong>💳 Original Payment Method (Credit / Debit Card / Net Banking)</strong>
+                  <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Credited back to bank account in 2-4 days post QC inspection</p>
+                </div>
+              </div>
+            </label>
+
+            <label style="display: flex; align-items: center; justify-content: space-between; padding: 0.9rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); cursor: pointer;">
+              <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <input type="radio" name="refund-method-choice" value="credit" onchange="toggleRefundMethodFields('credit')">
+                <div>
+                  <strong>💎 Atelier Store Credit + 10% VIP Bonus</strong>
+                  <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Instant wallet balance credited upon parcel return & QC pass</p>
+                </div>
+              </div>
+              <span class="badge badge-pink" style="font-size: 0.7rem;">+10% BONUS</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="refund-upi-field-box" class="form-group">
+          <label>Your UPI ID / VPA for Payout *</label>
+          <input type="text" id="refund-upi-input" class="form-input" placeholder="e.g. yourname@okhdfcbank" value="elena.r@okaxis">
+        </div>
+
+        <div class="form-group">
+          <label>Additional Notes / Sizing Measurement Corrections</label>
+          <textarea id="refund-notes-input" class="form-input" rows="3" placeholder="Tell our master artisan what happened or provide updated millimeter widths if requesting a size exchange..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 0.5rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeRefundModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="padding: 0.8rem 1.8rem;">
+            <i class="ri-check-line"></i> Submit Refund Claim
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
+

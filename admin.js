@@ -454,7 +454,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!tbody) return;
 
     let filtered = [...state.orders];
-    if (filter !== 'All') {
+    if (filter === 'Refund Requested') {
+      filtered = filtered.filter(o => o.refundStatus === 'Pending Review');
+    } else if (filter === 'Refunded') {
+      filtered = filtered.filter(o => o.refundStatus === 'Refunded' || o.status === 'Refunded');
+    } else if (filter !== 'All') {
       filtered = filtered.filter(o => o.status === filter);
     }
 
@@ -463,7 +467,15 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    tbody.innerHTML = filtered.map(o => `
+    tbody.innerHTML = filtered.map(o => {
+      let refundStatusBadge = '';
+      if (o.refundStatus === 'Pending Review') {
+        refundStatusBadge = `<div style="margin-top: 4px;"><span class="badge badge-pink" style="font-size: 0.68rem;"><i class="ri-error-warning-line"></i> Claim: ${o.refundReason || 'Refund Request'}</span></div>`;
+      } else if (o.refundStatus === 'Refunded') {
+        refundStatusBadge = `<div style="margin-top: 4px;"><span class="badge badge-gold" style="font-size: 0.68rem;"><i class="ri-checkbox-circle-line"></i> Refunded: $${(o.refundAmount || o.total).toFixed(2)}</span></div>`;
+      }
+
+      return `
       <tr>
         <td><strong>#${o.id}</strong></td>
         <td><small style="color: var(--text-muted);">${o.date || 'Today'}</small></td>
@@ -483,6 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
               ${o.paymentMethod || 'Paid (Card / UPI)'}
             </span>
           </div>
+          ${refundStatusBadge}
         </td>
         <td><span class="badge ${o.speed === 'rush' ? 'badge-pink' : 'badge-gold'}">${o.speed === 'rush' ? '✨ Rush Air (24h)' : 'Standard'}</span></td>
         <td>
@@ -491,12 +504,16 @@ document.addEventListener('DOMContentLoaded', () => {
             <option value="In Sculpting" ${o.status === 'In Sculpting' ? 'selected' : ''}>In Sculpting</option>
             <option value="Quality Check" ${o.status === 'Quality Check' ? 'selected' : ''}>Quality Check</option>
             <option value="Shipped" ${o.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+            <option value="Refunded" ${o.status === 'Refunded' ? 'selected' : ''}>Refunded</option>
           </select>
         </td>
         <td>
-          <div style="display: flex; gap: 0.4rem;">
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
             <button class="btn btn-secondary" onclick="generateTracking('${o.id}')" title="Ship with FedEx" style="padding: 0.35rem 0.6rem; font-size: 0.75rem;">
               <i class="ri-truck-line"></i> Ship
+            </button>
+            <button class="btn btn-secondary" onclick="openAdminRefundModal('${o.id}')" title="Issue Refund / Reversal" style="padding: 0.35rem 0.6rem; font-size: 0.75rem; color: #ff758f; border-color: rgba(255, 117, 143, 0.4);">
+              <i class="ri-refund-2-line"></i> Refund
             </button>
             <button class="btn btn-secondary" onclick="printOrderSlip('${o.id}')" title="Print Sculpting Slip" style="padding: 0.35rem 0.6rem; font-size: 0.75rem;">
               <i class="ri-printer-line"></i>
@@ -504,7 +521,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </td>
       </tr>
-    `).join('');
+    `;
+    }).join('');
   }
 
   window.filterOrders = function(status) {
@@ -520,6 +538,66 @@ document.addEventListener('DOMContentLoaded', () => {
       renderDashboardRecentOrders();
       renderOrdersTable();
     }
+  };
+
+  /* Admin Refund Modal Handlers */
+  let activeAdminRefundOrderId = null;
+
+  window.openAdminRefundModal = function(orderId) {
+    activeAdminRefundOrderId = orderId;
+    const order = state.orders.find(o => o.id === orderId);
+    if (!order) return;
+
+    document.getElementById('adm-refund-order-id').textContent = `#${order.id}`;
+    document.getElementById('adm-refund-customer').textContent = order.customer;
+    document.getElementById('adm-refund-orig-pay').textContent = order.paymentMethod || 'UPI (Google Pay)';
+    document.getElementById('adm-refund-order-total').textContent = `$${order.total.toFixed(2)}`;
+    document.getElementById('adm-refund-amount-input').value = order.total.toFixed(2);
+
+    const clientReasonBox = document.getElementById('adm-refund-client-reason-box');
+    if (order.refundReason || order.refundMethod) {
+      clientReasonBox.style.display = 'block';
+      document.getElementById('adm-refund-client-reason').textContent = order.refundReason || 'Customer requested return';
+      document.getElementById('adm-refund-client-method').innerHTML = `Preferred Destination: <strong>${order.refundMethod || 'Instant UPI'}</strong>`;
+    } else {
+      clientReasonBox.style.display = 'none';
+    }
+
+    document.getElementById('admin-refund-modal').style.display = 'flex';
+  };
+
+  window.closeAdminRefundModal = function() {
+    document.getElementById('admin-refund-modal').style.display = 'none';
+    activeAdminRefundOrderId = null;
+  };
+
+  window.handleAdminRefundSubmit = function(e) {
+    e.preventDefault();
+    if (!activeAdminRefundOrderId) return;
+
+    const order = state.orders.find(o => o.id === activeAdminRefundOrderId);
+    if (!order) return;
+
+    const refundAmt = parseFloat(document.getElementById('adm-refund-amount-input').value) || order.total;
+    const refundAction = document.getElementById('adm-refund-action-type').value;
+    const channel = document.getElementById('adm-refund-payout-channel').value;
+    const auditNote = document.getElementById('adm-refund-audit-note').value;
+
+    order.refundStatus = 'Refunded';
+    order.refundAmount = refundAmt;
+    order.refundActionType = refundAction;
+    order.refundProcessedAt = new Date().toISOString();
+    order.refundAuditNote = auditNote;
+    order.status = 'Refunded';
+    order.paymentStatus = `Refunded ($${refundAmt.toFixed(2)} via ${channel.split(' ')[0]})`;
+
+    saveAllState();
+    closeAdminRefundModal();
+    renderOrdersTable();
+    renderDashboardStats();
+    renderDashboardRecentOrders();
+
+    showToast(`✓ Refund of $${refundAmt.toFixed(2)} successfully executed for Order #${activeAdminRefundOrderId} via ${channel}!`, 'ri-refund-2-line');
   };
 
   window.generateTracking = function(orderId) {

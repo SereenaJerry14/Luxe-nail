@@ -564,6 +564,8 @@
                 <option value="In Sculpting">In Sculpting</option>
                 <option value="Quality Check">Quality Check</option>
                 <option value="Shipped">Shipped</option>
+                <option value="Refund Requested">⚠️ Refund Requested</option>
+                <option value="Refunded">✓ Refunded Orders</option>
               </select>
             </div>
           </div>
@@ -922,6 +924,93 @@
     </div>
   </div>
 
+  <!-- Admin Refund Execution Modal -->
+  <div class="modal-backdrop" id="admin-refund-modal" style="display: none;">
+    <div class="checkout-modal-container" style="max-width: 580px;">
+      <button class="modal-close-btn" onclick="closeAdminRefundModal()"><i class="ri-close-line"></i></button>
+      
+      <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem;">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(255, 117, 143, 0.15); color: var(--pink-accent); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+          <i class="ri-refund-2-line"></i>
+        </div>
+        <div>
+          <h3 style="font-size: 1.4rem; margin: 0;">Execute Order Refund</h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Process reversal back to client via UPI, Card, or VIP Store Credit</span>
+        </div>
+      </div>
+
+      <!-- Order Details Banner -->
+      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); padding: 1rem 1.2rem; border-radius: var(--radius-sm); margin-bottom: 1.2rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.9rem;">
+          <span>Order Number:</span>
+          <strong id="adm-refund-order-id" style="color: var(--gold-light);">#ORD-894210</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.9rem;">
+          <span>Client Name:</span>
+          <strong id="adm-refund-customer">Elena Rostova</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.9rem;">
+          <span>Original Payment:</span>
+          <strong id="adm-refund-orig-pay" style="color: #2ecc71;">UPI (PhonePe)</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 1.05rem; border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; margin-top: 0.5rem;">
+          <span>Total Order Value:</span>
+          <strong id="adm-refund-order-total" style="color: var(--gold-light); font-size: 1.2rem;">$52.95</strong>
+        </div>
+      </div>
+
+      <!-- Claim Reason if provided by client -->
+      <div id="adm-refund-client-reason-box" style="display: none; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--border-gold); padding: 0.8rem 1rem; border-radius: var(--radius-sm); font-size: 0.82rem; margin-bottom: 1.2rem;">
+        <strong style="color: var(--gold-light);"><i class="ri-information-line"></i> Client Request:</strong> <span id="adm-refund-client-reason">Sizing Calibration Mismatch</span>
+        <div id="adm-refund-client-method" style="margin-top: 0.3rem; color: var(--text-secondary);">Preferred Destination: <strong>Instant UPI (elena@okaxis)</strong></div>
+      </div>
+
+      <form id="execute-admin-refund-form" onsubmit="handleAdminRefundSubmit(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Refund Amount ($ USD) *</label>
+            <input type="number" step="0.01" id="adm-refund-amount-input" value="52.95" required>
+          </div>
+          <div class="form-group">
+            <label>Refund Action Type *</label>
+            <select id="adm-refund-action-type">
+              <option value="Full Refund">100% Full Payment Reversal</option>
+              <option value="Partial Sizing Refund">Partial Sizing Adjustment Refund</option>
+              <option value="Free Sizing Exchange">Complimentary Size Replacement Set</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Payout Gateway Channel *</label>
+          <select id="adm-refund-payout-channel">
+            <option value="UPI Gateway Reversal (Post-QC)">UPI Gateway Reversal (0% fee, Post-QC)</option>
+            <option value="Credit / Debit Card Reversal">Stripe / Card Gateway Reversal (2-4 business days)</option>
+            <option value="Atelier Store Credit (+10% VIP Bonus)">VIP Atelier Store Credit (+10% Bonus)</option>
+            <option value="Cash on Delivery Waiver">Cash on Delivery Surcharge Voided</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Atelier Reversal Notes / Audit Reference</label>
+          <input type="text" id="adm-refund-audit-note" value="Physical QC Inspection Passed: Unopened seal verified" placeholder="Internal audit reference">
+        </div>
+
+        <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.82rem; color: #2ecc71; background: rgba(46, 204, 113, 0.1); padding: 0.8rem 1rem; border-radius: var(--radius-sm); border: 1px solid rgba(46, 204, 113, 0.3);">
+          <input type="checkbox" id="adm-qc-verified-check" required checked>
+          <span><strong>✓ Product Physical Inspection Passed:</strong> Returned package was received at atelier and passed hygiene & sizing quality check.</span>
+        </label>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 0.5rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeAdminRefundModal()">Cancel</button>
+          <button type="submit" class="btn btn-gold" style="padding: 0.8rem 1.8rem;">
+            <i class="ri-check-line"></i> Authorize & Issue Refund Post-QC
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toast-container"></div>
 
@@ -930,3 +1019,4 @@
   <script src="admin.js"></script>
 </body>
 </html>
+

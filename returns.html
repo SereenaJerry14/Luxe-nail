@@ -67,14 +67,110 @@
       </p>
     </div>
 
+    <!-- Quality Check & Refund Timeline Flow -->
+    <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.8rem; margin-bottom: 2rem;">
+      <h3 class="font-serif" style="font-size: 1.25rem; margin-bottom: 1.2rem; text-align: center; color: var(--gold-light);">
+        <i class="ri-shield-check-line"></i> Atelier 4-Step Quality Check & Refund Process
+      </h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: center;">
+        <div style="background: var(--bg-surface); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+          <div style="width: 36px; height: 36px; border-radius: var(--radius-full); background: rgba(212, 175, 55, 0.15); color: var(--gold-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.6rem; font-weight: 700;">1</div>
+          <strong style="font-size: 0.9rem; display: block; margin-bottom: 0.3rem;">1. Submit Claim</strong>
+          <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">Request refund or size exchange with your UPI ID / notes below.</p>
+        </div>
+
+        <div style="background: var(--bg-surface); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+          <div style="width: 36px; height: 36px; border-radius: var(--radius-full); background: rgba(212, 175, 55, 0.15); color: var(--gold-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.6rem; font-weight: 700;">2</div>
+          <strong style="font-size: 0.9rem; display: block; margin-bottom: 0.3rem;">2. Courier Pickup</strong>
+          <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">Complimentary doorstep courier pickup arranged by our atelier.</p>
+        </div>
+
+        <div style="background: var(--bg-surface); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-gold);">
+          <div style="width: 36px; height: 36px; border-radius: var(--radius-full); background: rgba(255, 117, 143, 0.15); color: var(--pink-accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.6rem; font-weight: 700;">3</div>
+          <strong style="font-size: 0.9rem; display: block; margin-bottom: 0.3rem; color: var(--pink-accent);">3. Product QC Check</strong>
+          <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">Master artisan inspects returned item & confirms hygienic seal / sizing.</p>
+        </div>
+
+        <div style="background: var(--bg-surface); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+          <div style="width: 36px; height: 36px; border-radius: var(--radius-full); background: rgba(46, 204, 113, 0.15); color: #2ecc71; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.6rem; font-weight: 700;">4</div>
+          <strong style="font-size: 0.9rem; display: block; margin-bottom: 0.3rem; color: #2ecc71;">4. Refund Dispatched</strong>
+          <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">Full payout reversed to your UPI ID or Card upon QC approval.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Self-Service Refund & Sizing Portal -->
+    <div style="background: var(--bg-surface); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 2.2rem; margin-bottom: 2rem; box-shadow: var(--shadow-md);">
+      <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(212, 175, 55, 0.15); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+          <i class="ri-refund-2-line"></i>
+        </div>
+        <div>
+          <h2 class="font-serif" style="font-size: 1.5rem; margin: 0;">Self-Service Refund & Size Exchange Portal</h2>
+          <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">Lookup your Atelier order to check 30-day refund eligibility and initiate a return for QC verification.</p>
+        </div>
+      </div>
+
+      <!-- Lookup Form -->
+      <form id="portal-lookup-form" onsubmit="lookupOrderForRefund(event)" style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+        <input type="text" id="portal-order-id" class="form-input" placeholder="Order ID (e.g. ORD-894210 or LC-948271)" style="flex: 1; min-width: 200px;" required>
+        <input type="email" id="portal-email" class="form-input" placeholder="Billing Email Address" style="flex: 1; min-width: 200px;" required>
+        <button type="submit" class="btn btn-primary" style="padding: 0.8rem 1.6rem; white-space: nowrap;">
+          <i class="ri-search-line"></i> Check Refund Status
+        </button>
+      </form>
+
+      <!-- Lookup Results Box -->
+      <div id="portal-result-box" style="display: none; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <strong style="color: var(--gold-light); font-size: 1.1rem;" id="res-order-id">ORD-894210</strong>
+            <span style="font-size: 0.85rem; color: var(--text-secondary);" id="res-order-date"> &bull; Placed on Sep 14, 2026</span>
+          </div>
+          <span class="badge badge-gold" id="res-eligibility-badge">✓ Eligible for 100% Refund Post-QC</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">Customer & Delivery:</div>
+            <strong id="res-customer-name">Elena Rostova</strong> (<span id="res-customer-email">elena@example.com</span>)
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">Order Amount Paid:</div>
+            <strong style="color: var(--gold-light); font-size: 1.1rem;" id="res-order-total">$52.95</strong>
+          </div>
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">Payment Method:</div>
+            <span id="res-pay-method" class="badge badge-pink" style="font-size: 0.75rem;">UPI (Google Pay)</span>
+          </div>
+        </div>
+
+        <!-- Current Refund Status View -->
+        <div id="res-current-status-view" style="margin-bottom: 1.2rem;"></div>
+
+        <!-- Actions -->
+        <div id="res-action-buttons" style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary" onclick="initiatePortalRefund('UPI Reversal (Post-QC Inspection)')">
+            <i class="ri-qr-code-line"></i> Request UPI Refund (Post-QC)
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="initiatePortalRefund('Free Sizing Replacement')">
+            <i class="ri-ruler-2-line"></i> Request Sizing Exchange Set
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="initiatePortalRefund('Atelier Store Credit + 10% VIP Bonus')">
+            <i class="ri-vip-crown-line"></i> Convert to Store Credit (+10%)
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Hygiene Policy -->
     <article class="info-section-block">
       <h2>Sanitary & Hygiene Return Standards</h2>
       <p>
-        Due to strict personal cosmetic hygiene standards and health regulations, nail sets that have been opened, unsealed, or applied to natural fingernails cannot be returned for a refund.
+        Due to strict personal cosmetic hygiene standards and health regulations, nail sets that have been opened, unsealed, or applied to natural fingernails cannot be returned for a cash refund.
       </p>
       <p>
-        If your order arrives in brand-new, unopened, and factory-sealed condition with the velvet presentation case intact, you may initiate a return within <strong>14 days of delivery</strong> for a full refund or atelier store credit.
+        If your order arrives in brand-new, unopened, and factory-sealed condition with the velvet presentation case intact, you may initiate a return within <strong>14 days of delivery</strong>. Once the returned parcel arrives at our atelier and passes physical Quality Check (QC), a 100% refund is reversed to your original payment method or UPI ID.
       </p>
     </article>
 
@@ -95,11 +191,113 @@
     <article class="info-section-block">
       <h2>How to Initiate a Return or Size Adjustment</h2>
       <ol style="padding-left: 1.4rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 1rem; font-size: 0.95rem;">
-        <li>Email our concierge at <a href="mailto:concierge@luxeclaws.com" style="color: var(--gold-light);">concierge@luxeclaws.com</a> with your order number (e.g. <code>ORD-894210</code>).</li>
-        <li>Include a clear photograph of your natural nail bed measurements or unopened packaging.</li>
-        <li>Our concierge will issue a prepaid return shipping label or confirm immediate replacement dispatch.</li>
+        <li>Use our <strong>Self-Service Refund Portal</strong> above or email our concierge at <a href="mailto:concierge@luxeclaws.com" style="color: var(--gold-light);">concierge@luxeclaws.com</a>.</li>
+        <li>Our courier will collect the package from your address with a prepaid return tracking label.</li>
+        <li>Upon receipt at our atelier, our master artisan conducts a <strong>Quality Check (QC) inspection</strong>.</li>
+        <li>Once QC approval is complete, your refund is transferred directly to your UPI ID or Card within 24 hours.</li>
       </ol>
     </article>
+  </main>
+
+  <script>
+    let activeFoundOrder = null;
+
+    function lookupOrderForRefund(e) {
+      e.preventDefault();
+      const queryId = document.getElementById('portal-order-id').value.trim().toUpperCase();
+      const queryEmail = document.getElementById('portal-email').value.trim().toLowerCase();
+
+      const orders = JSON.parse(localStorage.getItem('luxeclaws_orders') || '[]');
+      
+      // Find matching order
+      let order = orders.find(o => 
+        (o.id.toUpperCase() === queryId || (o.trackingNumber && o.trackingNumber.toUpperCase() === queryId))
+      );
+
+      // If not found in localStorage, use default mock
+      if (!order) {
+        if (queryId.includes('ORD') || queryId.includes('LC')) {
+          order = {
+            id: queryId,
+            date: 'Sep 12, 2026',
+            customer: { name: 'Valued Client', email: queryEmail },
+            total: 54.00,
+            paymentMethod: 'UPI (PhonePe)',
+            status: 'Delivered',
+            refundStatus: null
+          };
+        } else {
+          alert('No Atelier order found with Order ID: ' + queryId + '. Please check your order confirmation receipt.');
+          return;
+        }
+      }
+
+      activeFoundOrder = order;
+      renderPortalResult();
+    }
+
+    function renderPortalResult() {
+      const box = document.getElementById('portal-result-box');
+      box.style.display = 'block';
+
+      document.getElementById('res-order-id').textContent = activeFoundOrder.id;
+      document.getElementById('res-order-date').textContent = ` • Placed: ${activeFoundOrder.date || 'Recent'}`;
+      document.getElementById('res-customer-name').textContent = activeFoundOrder.customer ? (activeFoundOrder.customer.name || activeFoundOrder.customer) : 'Elena Rostova';
+      document.getElementById('res-customer-email').textContent = activeFoundOrder.customer?.email || activeFoundOrder.email || 'customer@example.com';
+      document.getElementById('res-order-total').textContent = `$${(activeFoundOrder.total || 52.00).toFixed(2)}`;
+      document.getElementById('res-pay-method').textContent = activeFoundOrder.paymentMethod || 'UPI (Google Pay)';
+
+      const statusView = document.getElementById('res-current-status-view');
+      const actionButtons = document.getElementById('res-action-buttons');
+
+      if (activeFoundOrder.refundStatus === 'Refunded') {
+        statusView.innerHTML = `
+          <div style="background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; padding: 1rem; border-radius: var(--radius-sm); color: #2ecc71; font-size: 0.9rem;">
+            <i class="ri-checkbox-circle-fill"></i> <strong>Refund Completed:</strong> $${(activeFoundOrder.refundAmount || activeFoundOrder.total || 52.00).toFixed(2)} was reversed to ${activeFoundOrder.refundMethod || 'Original Payment Source'}.
+          </div>
+        `;
+        actionButtons.style.display = 'none';
+      } else if (activeFoundOrder.refundStatus === 'Pending Review') {
+        statusView.innerHTML = `
+          <div style="background: rgba(212, 175, 55, 0.15); border: 1px solid var(--border-gold); padding: 1rem; border-radius: var(--radius-sm); color: var(--gold-light); font-size: 0.9rem;">
+            <i class="ri-time-line"></i> <strong>Refund Claim Active:</strong> Requesting ${activeFoundOrder.refundMethod || 'Instant UPI Refund'}. Our concierge is verifying the tracking return.
+          </div>
+        `;
+        actionButtons.style.display = 'none';
+      } else {
+        statusView.innerHTML = `
+          <div style="background: rgba(255, 117, 143, 0.1); border: 1px solid rgba(255, 117, 143, 0.3); padding: 0.9rem; border-radius: var(--radius-sm); color: var(--text-primary); font-size: 0.85rem;">
+            <i class="ri-shield-star-line" style="color: var(--pink-accent);"></i> <strong>30-Day Guarantee Active:</strong> You may request an instant refund, replacement size set, or VIP store credit below.
+          </div>
+        `;
+        actionButtons.style.display = 'flex';
+      }
+    }
+
+    function initiatePortalRefund(type) {
+      if (!activeFoundOrder) return;
+      
+      let promptVal = prompt(`Confirm ${type} for Order #${activeFoundOrder.id}.\nEnter UPI ID / notes:`, 'elena@okaxis');
+      if (promptVal === null) return;
+
+      let orders = JSON.parse(localStorage.getItem('luxeclaws_orders') || '[]');
+      let idx = orders.findIndex(o => o.id === activeFoundOrder.id);
+      
+      if (idx !== -1) {
+        orders[idx].refundStatus = 'Pending Review';
+        orders[idx].refundMethod = `${type} (${promptVal})`;
+        orders[idx].refundRequestedAt = new Date().toISOString();
+        localStorage.setItem('luxeclaws_orders', JSON.stringify(orders));
+        activeFoundOrder = orders[idx];
+      } else {
+        activeFoundOrder.refundStatus = 'Pending Review';
+        activeFoundOrder.refundMethod = `${type} (${promptVal})`;
+      }
+
+      alert(`✓ Refund Request Recorded for #${activeFoundOrder.id}!\nDestination: ${type}\nOur concierge will process this claim within 2 hours.`);
+      renderPortalResult();
+    }
+  </script>
   </main>
 
   <!-- Footer -->
