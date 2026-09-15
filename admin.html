@@ -901,16 +901,66 @@
           <input type="text" id="prod-badge" placeholder="E.g. NEW DROP, BESTSELLER, LIMITED">
         </div>
         <div class="form-group">
-          <label>Image Asset Path</label>
-          <select id="prod-image-select">
-            <option value="assets/glazed_pearl.jpg">Glazed Opal Pearl</option>
-            <option value="assets/y2k_cyber.jpg">Cyber Y2K Chrome</option>
-            <option value="assets/emerald_velvet.jpg">Emerald Baroque Velvet</option>
-            <option value="assets/cherry_3d.jpg">Sweet Cherry 3D Jelly</option>
-            <option value="assets/blush_french.jpg">Blush French Ombre</option>
-            <option value="assets/celestial_midnight.jpg">Celestial Midnight Starlight</option>
-            <option value="assets/prep_kit.jpg">Prep & Care Kit</option>
-          </select>
+          <label>Product Imagery *</label>
+          <div class="admin-image-upload-wrapper">
+            <!-- Source Selector Tabs -->
+            <div class="image-source-tabs">
+              <button type="button" class="image-tab-btn active" id="tab-btn-upload" onclick="switchImageSourceTab('upload')">
+                <i class="ri-upload-cloud-2-line"></i> Upload File
+              </button>
+              <button type="button" class="image-tab-btn" id="tab-btn-preset" onclick="switchImageSourceTab('preset')">
+                <i class="ri-gallery-line"></i> Preset Assets
+              </button>
+              <button type="button" class="image-tab-btn" id="tab-btn-url" onclick="switchImageSourceTab('url')">
+                <i class="ri-link"></i> Image URL
+              </button>
+            </div>
+
+            <!-- Tab 1: File Upload (Drag & Drop or File Picker) -->
+            <div id="image-pane-upload" class="image-source-pane">
+              <input type="file" id="prod-image-file" accept="image/*" style="display: none;" onchange="handleProductImageFileUpload(this)">
+              <div class="image-dropzone" id="image-dropzone" onclick="document.getElementById('prod-image-file').click()">
+                <i class="ri-image-add-line"></i>
+                <p>Click or drag & drop to upload nail artwork</p>
+                <span>Supports JPG, PNG, WEBP, GIF (Saved automatically)</span>
+              </div>
+            </div>
+
+            <!-- Tab 2: Preset Assets -->
+            <div id="image-pane-preset" class="image-source-pane" style="display: none;">
+              <select id="prod-image-select" onchange="handlePresetImageChange(this.value)">
+                <option value="assets/glazed_pearl.jpg">Glazed Opal Pearl</option>
+                <option value="assets/y2k_cyber.jpg">Cyber Y2K Chrome</option>
+                <option value="assets/emerald_velvet.jpg">Emerald Baroque Velvet</option>
+                <option value="assets/cherry_3d.jpg">Sweet Cherry 3D Jelly</option>
+                <option value="assets/blush_french.jpg">Blush French Ombre</option>
+                <option value="assets/celestial_midnight.jpg">Celestial Midnight Starlight</option>
+                <option value="assets/prep_kit.jpg">Prep & Care Kit</option>
+              </select>
+            </div>
+
+            <!-- Tab 3: External URL -->
+            <div id="image-pane-url" class="image-source-pane" style="display: none;">
+              <input type="url" id="prod-image-url" placeholder="https://example.com/images/my-nail-art.jpg" oninput="handleUrlImageChange(this.value)">
+            </div>
+
+            <!-- Hidden input holding current final image -->
+            <input type="hidden" id="prod-image-final" value="assets/glazed_pearl.jpg">
+
+            <!-- Live Image Preview Box -->
+            <div class="image-preview-container" id="image-preview-box">
+              <img id="image-preview-thumb" src="assets/glazed_pearl.jpg" alt="Preview" class="image-preview-thumb">
+              <div class="image-preview-meta">
+                <strong id="image-preview-name">Glazed Opal Pearl</strong>
+                <span id="image-preview-type">Preset Asset</span>
+              </div>
+              <div class="image-preview-actions">
+                <button type="button" class="btn btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.75rem;" onclick="document.getElementById('prod-image-file').click()" title="Choose File">
+                  <i class="ri-folder-upload-line"></i> Browse
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Full Description</label>

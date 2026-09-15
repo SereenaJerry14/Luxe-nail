@@ -349,15 +349,136 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Add / Edit Product Modal
+  // --------------------------------------------------------------------------
+  // Add / Edit Product Modal & Image Upload Handling
+  // --------------------------------------------------------------------------
   const productModal = document.getElementById('product-modal');
   const saveProductForm = document.getElementById('save-product-form');
   const productModalTitle = document.getElementById('product-modal-title');
+
+  // Helper to update preview card
+  window.updateImagePreview = function(src, name, type) {
+    const previewThumb = document.getElementById('image-preview-thumb');
+    const previewName = document.getElementById('image-preview-name');
+    const previewType = document.getElementById('image-preview-type');
+    const finalInput = document.getElementById('prod-image-final');
+
+    if (previewThumb && src) previewThumb.src = src;
+    if (previewName && name) previewName.textContent = name;
+    if (previewType && type) previewType.textContent = type;
+    if (finalInput && src) finalInput.value = src;
+  };
+
+  // Switch between Upload, Preset, and URL tabs
+  window.switchImageSourceTab = function(tab) {
+    const tabs = ['upload', 'preset', 'url'];
+    tabs.forEach(t => {
+      const btn = document.getElementById(`tab-btn-${t}`);
+      const pane = document.getElementById(`image-pane-${t}`);
+      if (btn) btn.classList.toggle('active', t === tab);
+      if (pane) pane.style.display = (t === tab) ? 'block' : 'none';
+    });
+  };
+
+  // Helper to optimize and convert image file to Base64
+  function processUploadedImageFile(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      showToast('Please select a valid image file (PNG, JPG, WEBP). ⚠️');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        // High quality scale down to preserve storage while looking crisp
+        const maxDim = 1000;
+        let width = img.width;
+        let height = img.height;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+        updateImagePreview(dataUrl, file.name, `Uploaded File (${Math.round(file.size / 1024)} KB)`);
+        showToast('Image uploaded and preview updated! 📸✨');
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  window.handleProductImageFileUpload = function(input) {
+    if (input.files && input.files[0]) {
+      processUploadedImageFile(input.files[0]);
+    }
+  };
+
+  window.handlePresetImageChange = function(val) {
+    const select = document.getElementById('prod-image-select');
+    const selectedText = select.options[select.selectedIndex]?.text || 'Preset Asset';
+    updateImagePreview(val, selectedText, 'Preset Asset');
+  };
+
+  window.handleUrlImageChange = function(val) {
+    if (val && val.trim().length > 0) {
+      updateImagePreview(val.trim(), 'External Web Image', 'Web URL');
+    }
+  };
+
+  // Setup drag & drop on image dropzone
+  const dropzone = document.getElementById('image-dropzone');
+  if (dropzone) {
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.add('dragover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.remove('dragover');
+      });
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        const file = e.dataTransfer.files[0];
+        processUploadedImageFile(file);
+      }
+    });
+  }
 
   window.openAddProductModal = function() {
     if (!productModal) return;
     if (saveProductForm) saveProductForm.reset();
     document.getElementById('prod-edit-id').value = '';
+    
+    // Reset image options
+    switchImageSourceTab('upload');
+    const defaultPreset = 'assets/glazed_pearl.jpg';
+    updateImagePreview(defaultPreset, 'Glazed Opal Pearl (Default)', 'Preset Asset');
+    const presetSelect = document.getElementById('prod-image-select');
+    if (presetSelect) presetSelect.value = defaultPreset;
+    const fileInput = document.getElementById('prod-image-file');
+    if (fileInput) fileInput.value = '';
+
     if (productModalTitle) productModalTitle.textContent = 'Create Handcrafted Nail Drop';
     productModal.classList.add('open');
   };
@@ -376,8 +497,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('prod-price').value = p.price;
     document.getElementById('prod-category').value = p.category;
     document.getElementById('prod-badge').value = p.badge || '';
-    document.getElementById('prod-image-select').value = p.image;
     document.getElementById('prod-desc').value = p.description || '';
+
+    // Handle Image Mode in Edit
+    const imgVal = p.image || 'assets/glazed_pearl.jpg';
+    const finalInput = document.getElementById('prod-image-final');
+    if (finalInput) finalInput.value = imgVal;
+
+    if (imgVal.startsWith('data:image')) {
+      switchImageSourceTab('upload');
+      updateImagePreview(imgVal, p.name, 'Uploaded Image File');
+    } else if (imgVal.startsWith('http://') || imgVal.startsWith('https://')) {
+      switchImageSourceTab('url');
+      const urlInput = document.getElementById('prod-image-url');
+      if (urlInput) urlInput.value = imgVal;
+      updateImagePreview(imgVal, p.name, 'External Web Image');
+    } else {
+      switchImageSourceTab('preset');
+      const presetSelect = document.getElementById('prod-image-select');
+      if (presetSelect) presetSelect.value = imgVal;
+      const optText = presetSelect ? presetSelect.options[presetSelect.selectedIndex]?.text : 'Preset Asset';
+      updateImagePreview(imgVal, optText || p.name, 'Preset Asset');
+    }
 
     if (productModalTitle) productModalTitle.textContent = `Edit Drop: ${p.name}`;
     if (productModal) productModal.classList.add('open');
@@ -392,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const price = parseFloat(document.getElementById('prod-price').value) || 48.00;
       const category = document.getElementById('prod-category').value;
       const badge = document.getElementById('prod-badge').value;
-      const image = document.getElementById('prod-image-select').value;
+      const image = document.getElementById('prod-image-final')?.value || document.getElementById('prod-image-select')?.value || 'assets/glazed_pearl.jpg';
       const desc = document.getElementById('prod-desc').value;
 
       if (editId) {
