@@ -1646,11 +1646,15 @@ button, input, select, textarea {
   padding: 1.5rem;
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transition: var(--transition);
 }
-.modal-backdrop.open {
+.modal-backdrop.open,
+.modal-backdrop[style*="display: flex"],
+.modal-backdrop[style*="display:flex"] {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .checkout-modal-container {
@@ -1667,7 +1671,9 @@ button, input, select, textarea {
   transform: scale(0.95);
   transition: transform 0.3s ease;
 }
-.modal-backdrop.open .checkout-modal-container {
+.modal-backdrop.open .checkout-modal-container,
+.modal-backdrop[style*="display: flex"] .checkout-modal-container,
+.modal-backdrop[style*="display:flex"] .checkout-modal-container {
   transform: scale(1);
 }
 
@@ -2620,4 +2626,445 @@ button, input, select, textarea {
     position: static;
   }
 }
+
+/* ==========================================================================
+   USER PROFILE & ORDER MANAGEMENT SUITE (TRACKING, CANCEL, INVOICE, EDIT)
+   ========================================================================== */
+
+/* Order Filtering Tabs & Search */
+.order-controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-filter-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.order-filter-btn {
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.order-filter-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-gold);
+}
+
+.order-filter-btn.active {
+  background: var(--gold-gradient);
+  color: #000;
+  font-weight: 700;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+}
+
+.order-search-input-wrapper {
+  position: relative;
+  min-width: 240px;
+}
+
+.order-search-input-wrapper i {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.order-search-input-wrapper input {
+  padding-left: 2.3rem;
+  width: 100%;
+}
+
+/* Order Card & Header */
+.luxury-order-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-order-card:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-badge.placed {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+  border: 1px solid rgba(52, 152, 219, 0.4);
+}
+
+.status-badge.crafting {
+  background: rgba(212, 175, 55, 0.18);
+  color: var(--gold-light);
+  border: 1px solid var(--border-gold);
+}
+
+.status-badge.shipped {
+  background: rgba(155, 89, 182, 0.18);
+  color: #c39bd3;
+  border: 1px solid rgba(155, 89, 182, 0.4);
+}
+
+.status-badge.delivered {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+.status-badge.cancelled {
+  background: rgba(231, 76, 60, 0.15);
+  color: #ff6b6b;
+  border: 1px solid rgba(231, 76, 60, 0.4);
+}
+
+/* Order Live Tracking Stepper */
+.order-stepper-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1.2rem 1.5rem;
+  margin: 1.2rem 0;
+}
+
+.order-stepper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.stepper-progress-bar {
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  right: 30px;
+  height: 3px;
+  background: var(--border-subtle);
+  z-index: 1;
+}
+
+.stepper-progress-fill {
+  height: 100%;
+  background: var(--gold-gradient);
+  transition: width 0.5s ease;
+}
+
+.stepper-step {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 80px;
+}
+
+.stepper-node {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-elevated);
+  border: 2px solid var(--border-subtle);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  transition: var(--transition-fast);
+}
+
+.stepper-step.completed .stepper-node {
+  background: var(--gold-primary);
+  border-color: var(--gold-light);
+  color: #000;
+  font-weight: 700;
+}
+
+.stepper-step.active .stepper-node {
+  background: var(--bg-surface-elevated);
+  border-color: var(--gold-light);
+  color: var(--gold-light);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.25);
+  animation: stepperPulse 2s infinite ease-in-out;
+}
+
+@keyframes stepperPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2); }
+  50% { box-shadow: 0 0 0 7px rgba(212, 175, 55, 0.4); }
+}
+
+.stepper-step.cancelled .stepper-node {
+  background: rgba(231, 76, 60, 0.2);
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.stepper-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.2;
+}
+
+.stepper-step.active .stepper-label,
+.stepper-step.completed .stepper-label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .order-stepper {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .stepper-progress-bar {
+    display: none;
+  }
+  .stepper-step {
+    flex-direction: row;
+    width: 100%;
+    text-align: left;
+    gap: 0.8rem;
+  }
+  .stepper-node {
+    margin-bottom: 0;
+  }
+}
+
+/* Order Item Rows */
+.order-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.order-item-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.6rem 0;
+}
+
+.order-item-row:not(:last-child) {
+  border-bottom: 1px dashed var(--border-subtle);
+}
+
+.order-item-img {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  border: 1px solid var(--border-subtle);
+}
+
+/* Order Actions Bar */
+.order-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.2rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.order-action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn-cancel-order {
+  border-color: rgba(255, 107, 107, 0.4) !important;
+  color: #ff6b6b !important;
+}
+
+.btn-cancel-order:hover {
+  background: rgba(255, 107, 107, 0.15) !important;
+  border-color: #ff6b6b !important;
+}
+
+/* Cancellation Reason Selector Cards */
+.cancel-reason-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.cancel-reason-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.cancel-reason-card:hover {
+  border-color: var(--border-gold);
+}
+
+.cancel-reason-card input[type="radio"] {
+  margin-top: 0.2rem;
+  accent-color: var(--gold-primary);
+}
+
+.cancel-reason-card.selected {
+  border-color: var(--gold-primary);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+/* Invoice Paper Styling */
+.invoice-sheet {
+  background: #ffffff;
+  color: #1a1a1a;
+  padding: 2.5rem;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: var(--font-sans);
+  position: relative;
+}
+
+.invoice-sheet * {
+  color: #1a1a1a;
+}
+
+.invoice-sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.invoice-table th {
+  background: #f8f6f0;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0d8c3;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #555;
+}
+
+.invoice-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+}
+
+.invoice-watermark {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  border: 2px dashed #d4af37;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  color: #d4af37 !important;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  transform: rotate(-5deg);
+  opacity: 0.85;
+}
+
+/* Profile Info Cards */
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-detail-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1.4rem;
+  position: relative;
+}
+
+.profile-detail-card:hover {
+  border-color: var(--border-gold);
+}
+
+.profile-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.profile-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold-light);
+}
+
 

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VIP Atelier Profile & Orders | LUXECLAWS Haute Nail Atelier</title>
-  <meta name="description" content="Manage your LUXECLAWS user profile, live order tracking, previous orders history, order cancellation, and custom nail sizing calibrations.">
+  <meta name="description"
+    content="Manage your LUXECLAWS user profile, live order tracking, previous orders history, order cancellation, and custom nail sizing calibrations.">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
 </head>
+
 <body>
   <!-- Top Announcement Bar -->
   <div class="announcement-bar">
@@ -58,7 +61,8 @@
         <span>VIP Client Profile</span>
       </nav>
       <h1 class="font-serif">Client Profile & Order Center</h1>
-      <p>Track live shipments, manage current & past orders, cancel pending commissions, and calibrate custom fingertip sizes.</p>
+      <p>Track live shipments, manage current & past orders, cancel pending commissions, and calibrate custom fingertip
+        sizes.</p>
     </div>
   </section>
 
@@ -68,10 +72,12 @@
       <div class="cart-table-card">
         <!-- Auth Tabs -->
         <div style="display: flex; border-bottom: 1px solid var(--border-subtle); margin-bottom: 2rem;">
-          <button class="btn btn-secondary active" id="auth-tab-login" onclick="switchAuthTab('login')" style="flex: 1; border-radius: 0; border: none; border-bottom: 2px solid var(--gold-primary);">
+          <button class="btn btn-secondary active" id="auth-tab-login" onclick="switchAuthTab('login')"
+            style="flex: 1; border-radius: 0; border: none; border-bottom: 2px solid var(--gold-primary);">
             VIP Member Sign In
           </button>
-          <button class="btn btn-secondary" id="auth-tab-register" onclick="switchAuthTab('register')" style="flex: 1; border-radius: 0; border: none;">
+          <button class="btn btn-secondary" id="auth-tab-register" onclick="switchAuthTab('register')"
+            style="flex: 1; border-radius: 0; border: none;">
             Create VIP Account
           </button>
         </div>
@@ -80,19 +86,22 @@
         <form id="page-login-form" onsubmit="handleAccountLogin(event)">
           <div class="form-group" style="margin-bottom: 1.2rem;">
             <label>Email Address</label>
-            <input type="email" id="login-email-input" class="form-input" required placeholder="vip@luxeclaws.com" value="elena.r@luxury.com">
+            <input type="email" id="login-email-input" class="form-input" required placeholder="vip@luxeclaws.com"
+              value="elena.r@luxury.com">
           </div>
 
           <div class="form-group" style="margin-bottom: 1.5rem;">
             <label>Password</label>
-            <input type="password" id="login-pass-input" class="form-input" required placeholder="••••••••" value="password123">
+            <input type="password" id="login-pass-input" class="form-input" required placeholder="••••••••"
+              value="password123">
           </div>
 
           <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; margin-bottom: 1rem;">
             <i class="ri-login-box-line"></i> Sign In to Account
           </button>
 
-          <button type="button" class="btn btn-secondary" onclick="quickFillDemoUser()" style="width: 100%; font-size: 0.85rem;">
+          <button type="button" class="btn btn-secondary" onclick="quickFillDemoUser()"
+            style="width: 100%; font-size: 0.85rem;">
             <i class="ri-flashlight-line"></i> 1-Click Instant Demo Login (Elena Rostova - Gold VIP)
           </button>
         </form>
@@ -111,12 +120,14 @@
 
           <div class="form-group" style="margin-bottom: 1.2rem;">
             <label>Password (min 6 characters) *</label>
-            <input type="password" id="reg-pass-input" class="form-input" required minlength="6" placeholder="Create a secure password">
+            <input type="password" id="reg-pass-input" class="form-input" required minlength="6"
+              placeholder="Create a secure password">
           </div>
 
           <div class="form-group" style="margin-bottom: 1.5rem;">
             <label>Default Nail Sizing Profile</label>
-            <select id="reg-size-input" class="form-input" style="background: var(--bg-surface-elevated); color: var(--text-primary);">
+            <select id="reg-size-input" class="form-input"
+              style="background: var(--bg-surface-elevated); color: var(--text-primary);">
               <option value="XS">Extra Small (3, 6, 5, 7, 9)</option>
               <option value="S" selected>Small (2, 5, 4, 6, 8) - Most Popular</option>
               <option value="M">Medium (1, 5, 4, 6, 7)</option>
@@ -139,9 +150,12 @@
         <div class="user-avatar-badge" id="dash-avatar">ER</div>
         <div style="text-align: center; margin-bottom: 1.5rem;">
           <h3 class="font-serif" id="dash-username" style="font-size: 1.2rem;">Elena Rostova</h3>
-          <span class="badge badge-gold" id="dash-tier" style="font-size: 0.75rem; margin-top: 0.3rem;">GOLD VIP ATELIER MEMBER</span>
-          <p id="dash-email" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">elena.r@luxury.com</p>
-          <p id="dash-phone" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">+1 (555) 019-2834</p>
+          <span class="badge badge-gold" id="dash-tier" style="font-size: 0.75rem; margin-top: 0.3rem;">GOLD VIP ATELIER
+            MEMBER</span>
+          <p id="dash-email" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">
+            elena.r@luxury.com</p>
+          <p id="dash-phone" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">+1 (555) 019-2834
+          </p>
         </div>
 
         <ul class="account-nav-list">
@@ -188,24 +202,33 @@
         <!-- TAB 1: OVERVIEW -->
         <div id="tab-overview" class="tab-pane">
           <!-- VIP Tier Banner -->
-          <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(255, 117, 143, 0.12) 100%); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 1.8rem; margin-bottom: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+          <div
+            style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(255, 117, 143, 0.12) 100%); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 1.8rem; margin-bottom: 2rem;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
               <div>
-                <span style="font-size: 0.8rem; letter-spacing: 0.1em; color: var(--gold-light); text-transform: uppercase;">Atelier Rewards Program</span>
+                <span
+                  style="font-size: 0.8rem; letter-spacing: 0.1em; color: var(--gold-light); text-transform: uppercase;">Atelier
+                  Rewards Program</span>
                 <h2 class="font-serif" style="font-size: 1.6rem; margin-top: 0.2rem;">480 Tier Glam Points</h2>
               </div>
-              <span class="badge badge-gold" style="font-size: 0.85rem; padding: 0.5rem 1rem;">Exclusive 15% VIP Discount Active</span>
+              <span class="badge badge-gold" style="font-size: 0.85rem; padding: 0.5rem 1rem;">Exclusive 15% VIP
+                Discount Active</span>
             </div>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">You are only 120 points away from Diamond VIP Atelier status with complimentary bespoke shape sculpting!</p>
-            <div style="background: var(--bg-surface); height: 8px; border-radius: var(--radius-full); overflow: hidden;">
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">You are only 120 points
+              away from Diamond VIP Atelier status with complimentary bespoke shape sculpting!</p>
+            <div
+              style="background: var(--bg-surface); height: 8px; border-radius: var(--radius-full); overflow: hidden;">
               <div style="background: var(--gold-gradient); width: 80%; height: 100%;"></div>
             </div>
           </div>
 
           <!-- Quick Stats Grid -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; margin-bottom: 2rem;">
+          <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; margin-bottom: 2rem;">
             <div class="cart-table-card" style="padding: 1.2rem; text-align: center;">
-              <i class="ri-shopping-cart-2-line" style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.4rem;"></i>
+              <i class="ri-shopping-cart-2-line"
+                style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.4rem;"></i>
               <h3 id="stat-total-orders" style="font-size: 1.6rem; font-weight: 700;">0</h3>
               <p style="color: var(--text-secondary); font-size: 0.8rem;">Total Orders Placed</p>
             </div>
@@ -215,12 +238,14 @@
               <p style="color: var(--text-secondary); font-size: 0.8rem;">Active Shipments</p>
             </div>
             <div class="cart-table-card" style="padding: 1.2rem; text-align: center;">
-              <i class="ri-heart-3-line" style="font-size: 1.8rem; color: var(--pink-accent); margin-bottom: 0.4rem;"></i>
+              <i class="ri-heart-3-line"
+                style="font-size: 1.8rem; color: var(--pink-accent); margin-bottom: 0.4rem;"></i>
               <h3 id="stat-wishlist-count" style="font-size: 1.6rem; font-weight: 700;">0</h3>
               <p style="color: var(--text-secondary); font-size: 0.8rem;">Saved Wishlist Sets</p>
             </div>
             <div class="cart-table-card" style="padding: 1.2rem; text-align: center;">
-              <i class="ri-fingerprint-line" style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.4rem;"></i>
+              <i class="ri-fingerprint-line"
+                style="font-size: 1.8rem; color: var(--gold-light); margin-bottom: 0.4rem;"></i>
               <h3 id="stat-saved-size" style="font-size: 1.6rem; font-weight: 700;">Size S</h3>
               <p style="color: var(--text-secondary); font-size: 0.8rem;">Calibrated Fit</p>
             </div>
@@ -231,7 +256,8 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
               <div>
                 <h3 class="font-serif" style="font-size: 1.3rem; margin: 0;">Latest Atelier Order</h3>
-                <span style="font-size: 0.8rem; color: var(--text-secondary);">Real-time status updates & fast cancellation access</span>
+                <span style="font-size: 0.8rem; color: var(--text-secondary);">Real-time status updates & fast
+                  cancellation access</span>
               </div>
               <button class="btn btn-secondary" onclick="switchDashboardTab('orders')">
                 <i class="ri-list-check-2"></i> View All Orders
@@ -246,10 +272,12 @@
         <!-- TAB 2: ORDER HISTORY, TRACKING & CANCELLATION -->
         <div id="tab-orders" class="tab-pane" style="display: none;">
           <div class="cart-table-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
               <div>
                 <h3 class="font-serif" style="font-size: 1.5rem; margin: 0;">My Orders & Live Tracking</h3>
-                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">Check active progress, track courier delivery, cancel pending orders, or request returns.</p>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">Check active progress,
+                  track courier delivery, cancel pending orders, or request returns.</p>
               </div>
               <a href="shop.html" class="btn btn-primary" style="font-size: 0.85rem;">
                 <i class="ri-sparkling-fill"></i> Discover New Drops
@@ -275,7 +303,8 @@
 
               <div class="order-search-input-wrapper">
                 <i class="ri-search-line"></i>
-                <input type="text" id="order-search-input" class="form-input" placeholder="Search by Order ID or nail set..." oninput="handleOrderSearch(this.value)">
+                <input type="text" id="order-search-input" class="form-input"
+                  placeholder="Search by Order ID or nail set..." oninput="handleOrderSearch(this.value)">
               </div>
             </div>
 
@@ -289,10 +318,12 @@
         <!-- TAB 3: USER PROFILE DETAILS & EDIT -->
         <div id="tab-profile" class="tab-pane" style="display: none;">
           <div class="cart-table-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
               <div>
                 <h3 class="font-serif" style="font-size: 1.5rem; margin: 0;">Client Profile Information</h3>
-                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">Manage your VIP credentials, contact details, and nail atelier preferences.</p>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">Manage your VIP
+                  credentials, contact details, and nail atelier preferences.</p>
               </div>
               <button class="btn btn-primary" onclick="openEditProfileModal()">
                 <i class="ri-edit-2-line"></i> Edit Profile Info
@@ -308,15 +339,18 @@
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem;">
                   <div>
-                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Full Name</span>
+                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Full
+                      Name</span>
                     <div id="prof-name-val" style="font-weight: 600; font-size: 1.05rem;">Elena Rostova</div>
                   </div>
                   <div>
-                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Email Address</span>
+                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Email
+                      Address</span>
                     <div id="prof-email-val" style="font-weight: 500;">elena.r@luxury.com</div>
                   </div>
                   <div>
-                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Phone Number</span>
+                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Phone
+                      Number</span>
                     <div id="prof-phone-val" style="font-weight: 500;">+1 (555) 019-2834</div>
                   </div>
                 </div>
@@ -330,15 +364,18 @@
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem;">
                   <div>
-                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Street Address</span>
+                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Street
+                      Address</span>
                     <div id="prof-addr-val" style="font-weight: 500;">742 Evergreen Terrace, Suite 4B</div>
                   </div>
                   <div>
-                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">City, State & ZIP</span>
+                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">City,
+                      State & ZIP</span>
                     <div id="prof-city-val" style="font-weight: 500;">Beverly Hills, CA 90210</div>
                   </div>
                   <div>
-                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Country</span>
+                    <span
+                      style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Country</span>
                     <div id="prof-country-val" style="font-weight: 500;">United States (Insured Express)</div>
                   </div>
                 </div>
@@ -352,28 +389,36 @@
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem;">
                   <div>
-                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Preferred Nail Shape</span>
+                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Preferred
+                      Nail Shape</span>
                     <div id="prof-shape-val" style="font-weight: 500;">Medium Almond (Natural Arch)</div>
                   </div>
                   <div>
-                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Default Sizing Preset</span>
+                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Default
+                      Sizing Preset</span>
                     <div id="prof-preset-val" style="font-weight: 500;">Small (2, 5, 4, 6, 8)</div>
                   </div>
                   <div>
-                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Client Bio / Notes</span>
-                    <div id="prof-notes-val" style="color: var(--text-secondary); font-size: 0.85rem;">Enjoys glazed opal aura and 3D sculpted crystal finishes for gala events.</div>
+                    <span style="color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">Client
+                      Bio / Notes</span>
+                    <div id="prof-notes-val" style="color: var(--text-secondary); font-size: 0.85rem;">Enjoys glazed
+                      opal aura and 3D sculpted crystal finishes for gala events.</div>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Password & Security Card -->
-            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div
+              style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
               <div>
-                <h4 style="margin: 0 0 0.3rem 0;"><i class="ri-lock-password-line" style="color: var(--gold-light);"></i> Account Security & Credentials</h4>
-                <p style="margin: 0; color: var(--text-secondary); font-size: 0.85rem;">Password was last updated 14 days ago. 256-bit encrypted authentication active.</p>
+                <h4 style="margin: 0 0 0.3rem 0;"><i class="ri-lock-password-line"
+                    style="color: var(--gold-light);"></i> Account Security & Credentials</h4>
+                <p style="margin: 0; color: var(--text-secondary); font-size: 0.85rem;">Password was last updated 14
+                  days ago. 256-bit encrypted authentication active.</p>
               </div>
-              <button class="btn btn-secondary" onclick="showToast('Password reset link sent to your registered email! ✉️', 'ri-mail-check-line')">
+              <button class="btn btn-secondary"
+                onclick="showToast('Password reset link sent to your registered email! ✉️', 'ri-mail-check-line')">
                 Change Password
               </button>
             </div>
@@ -389,8 +434,10 @@
             </div>
             <div id="wishlist-empty-box" style="display: none; text-align: center; padding: 3rem 1rem;">
               <i class="ri-heart-line" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
-              <p style="color: var(--text-secondary);">Your wishlist is empty. Tap the heart on any set in our collection to save it here.</p>
-              <a href="shop.html" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">Browse Nail Sets</a>
+              <p style="color: var(--text-secondary);">Your wishlist is empty. Tap the heart on any set in our
+                collection to save it here.</p>
+              <a href="shop.html" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">Browse Nail
+                Sets</a>
             </div>
           </div>
         </div>
@@ -398,39 +445,48 @@
         <!-- TAB 5: SIZING CALIBRATION -->
         <div id="tab-sizing" class="tab-pane" style="display: none;">
           <div class="cart-table-card">
-            <h3 class="font-serif" style="font-size: 1.4rem; margin-bottom: 0.5rem;">Client Fingertip Sizing Calibration</h3>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">Save your exact fingernail millimeter width measurements so every handcrafted set fits flush like a bespoke glove.</p>
+            <h3 class="font-serif" style="font-size: 1.4rem; margin-bottom: 0.5rem;">Client Fingertip Sizing Calibration
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">Save your exact fingernail
+              millimeter width measurements so every handcrafted set fits flush like a bespoke glove.</p>
 
             <form id="sizing-save-form" onsubmit="saveCustomSizing(event)">
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
                 <div class="form-group" style="text-align: center;">
                   <label style="font-size: 0.8rem; font-weight: 600;">Thumb</label>
-                  <input type="number" id="size-thumb" class="form-input" style="text-align: center;" value="15" min="8" max="22" required>
+                  <input type="number" id="size-thumb" class="form-input" style="text-align: center;" value="15" min="8"
+                    max="22" required>
                   <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
                 </div>
                 <div class="form-group" style="text-align: center;">
                   <label style="font-size: 0.8rem; font-weight: 600;">Index</label>
-                  <input type="number" id="size-index" class="form-input" style="text-align: center;" value="12" min="8" max="22" required>
+                  <input type="number" id="size-index" class="form-input" style="text-align: center;" value="12" min="8"
+                    max="22" required>
                   <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
                 </div>
                 <div class="form-group" style="text-align: center;">
                   <label style="font-size: 0.8rem; font-weight: 600;">Middle</label>
-                  <input type="number" id="size-middle" class="form-input" style="text-align: center;" value="13" min="8" max="22" required>
+                  <input type="number" id="size-middle" class="form-input" style="text-align: center;" value="13"
+                    min="8" max="22" required>
                   <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
                 </div>
                 <div class="form-group" style="text-align: center;">
                   <label style="font-size: 0.8rem; font-weight: 600;">Ring</label>
-                  <input type="number" id="size-ring" class="form-input" style="text-align: center;" value="11" min="8" max="22" required>
+                  <input type="number" id="size-ring" class="form-input" style="text-align: center;" value="11" min="8"
+                    max="22" required>
                   <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
                 </div>
                 <div class="form-group" style="text-align: center;">
                   <label style="font-size: 0.8rem; font-weight: 600;">Pinky</label>
-                  <input type="number" id="size-pinky" class="form-input" style="text-align: center;" value="9" min="6" max="20" required>
+                  <input type="number" id="size-pinky" class="form-input" style="text-align: center;" value="9" min="6"
+                    max="20" required>
                   <span style="font-size: 0.75rem; color: var(--text-muted);">mm</span>
                 </div>
               </div>
 
-              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                 <span id="sizing-calc-tag" class="badge badge-gold">Mapped to Standard Size: Small (S)</span>
                 <button type="submit" class="btn btn-primary">
                   <i class="ri-save-line"></i> Save Sizing Profile
@@ -443,24 +499,33 @@
         <!-- TAB 6: SAVED ADDRESSES & PAYMENT METHODS -->
         <div id="tab-addresses" class="tab-pane" style="display: none;">
           <div class="cart-table-card">
-            <h3 class="font-serif" style="font-size: 1.4rem; margin-bottom: 1.5rem;">Saved Delivery Addresses & Cards</h3>
+            <h3 class="font-serif" style="font-size: 1.4rem; margin-bottom: 1.5rem;">Saved Delivery Addresses & Cards
+            </h3>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+            <div
+              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
               <!-- Address Card -->
-              <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 1.5rem; position: relative;">
-                <span class="badge badge-gold" style="position: absolute; top: 15px; right: 15px; font-size: 0.7rem;">DEFAULT SHIPPING</span>
+              <div
+                style="background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 1.5rem; position: relative;">
+                <span class="badge badge-gold"
+                  style="position: absolute; top: 15px; right: 15px; font-size: 0.7rem;">DEFAULT SHIPPING</span>
                 <h4 style="margin-bottom: 0.5rem;"><i class="ri-home-4-line"></i> Primary Residence</h4>
                 <p id="addr-display-name" style="font-weight: 600; margin-bottom: 0.2rem;">Elena Rostova</p>
-                <p id="addr-display-street" style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">742 Evergreen Terrace, Suite 4B</p>
-                <p id="addr-display-city" style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Beverly Hills, CA 90210</p>
-                <p id="addr-display-phone" style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">+1 (555) 019-2834</p>
+                <p id="addr-display-street" style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">742
+                  Evergreen Terrace, Suite 4B</p>
+                <p id="addr-display-city" style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">Beverly
+                  Hills, CA 90210</p>
+                <p id="addr-display-phone"
+                  style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">+1 (555) 019-2834</p>
               </div>
 
               <!-- Payment Card -->
-              <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.5rem;">
+              <div
+                style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.5rem;">
                 <span class="badge badge-pink" style="float: right; font-size: 0.7rem;">DEFAULT CARD</span>
                 <h4 style="margin-bottom: 0.5rem;"><i class="ri-visa-line"></i> Visa Infinite</h4>
-                <p style="font-family: monospace; font-size: 1.1rem; letter-spacing: 2px; margin: 0.8rem 0;">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4242</p>
+                <p style="font-family: monospace; font-size: 1.1rem; letter-spacing: 2px; margin: 0.8rem 0;">
+                  &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4242</p>
                 <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Expires: 08/28</p>
               </div>
             </div>
@@ -474,52 +539,61 @@
   <div class="modal-backdrop" id="cancel-order-modal" style="display: none;">
     <div class="checkout-modal-container" style="max-width: 540px;">
       <button class="modal-close-btn" onclick="closeCancelModal()"><i class="ri-close-line"></i></button>
-      
+
       <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem;">
-        <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(231, 76, 60, 0.15); color: #ff6b6b; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+        <div
+          style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(231, 76, 60, 0.15); color: #ff6b6b; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
           <i class="ri-close-circle-line"></i>
         </div>
         <div>
           <h3 class="font-serif" style="font-size: 1.3rem; margin: 0;">Cancel Atelier Order</h3>
-          <span style="font-size: 0.8rem; color: var(--text-secondary);">Order: <strong id="cancel-modal-order-id" style="color: var(--gold-light);">ORD-XXXXXX</strong></span>
+          <span style="font-size: 0.8rem; color: var(--text-secondary);">Order: <strong id="cancel-modal-order-id"
+              style="color: var(--gold-light);">ORD-XXXXXX</strong></span>
         </div>
       </div>
 
-      <div style="background: rgba(231, 76, 60, 0.08); border: 1px solid rgba(231, 76, 60, 0.3); padding: 0.9rem; border-radius: var(--radius-sm); margin-bottom: 1.2rem; font-size: 0.85rem; color: var(--text-secondary);">
-        <i class="ri-information-line" style="color: #ff6b6b;"></i> 
-        Orders can be cancelled free of charge prior to final dispatch. If payment was made, your refund will be processed immediately according to your chosen payout channel below.
+      <div
+        style="background: rgba(231, 76, 60, 0.08); border: 1px solid rgba(231, 76, 60, 0.3); padding: 0.9rem; border-radius: var(--radius-sm); margin-bottom: 1.2rem; font-size: 0.85rem; color: var(--text-secondary);">
+        <i class="ri-information-line" style="color: #ff6b6b;"></i>
+        Orders can be cancelled free of charge prior to final dispatch. If payment was made, your refund will be
+        processed immediately according to your chosen payout channel below.
       </div>
 
       <form id="cancel-order-form" onsubmit="submitCancelOrder(event)">
         <div class="form-group" style="margin-bottom: 1.2rem;">
-          <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Reason for Order Cancellation *</label>
+          <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Reason for Order Cancellation
+            *</label>
           <div class="cancel-reason-grid">
             <label class="cancel-reason-card selected" onclick="selectCancelReasonCard(this)">
               <input type="radio" name="cancel-reason" value="Selected Wrong Nail Size or Shape" checked>
               <div>
                 <strong>Selected Wrong Nail Size or Shape</strong>
-                <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">I need to re-order with updated finger mm measurements</p>
+                <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">I need to re-order with updated
+                  finger mm measurements</p>
               </div>
             </label>
             <label class="cancel-reason-card" onclick="selectCancelReasonCard(this)">
               <input type="radio" name="cancel-reason" value="Changed Mind / Found Another Design">
               <div>
                 <strong>Changed Mind / Found Another Set</strong>
-                <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">I want to browse other luxury drops in the atelier</p>
+                <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">I want to browse other luxury
+                  drops in the atelier</p>
               </div>
             </label>
             <label class="cancel-reason-card" onclick="selectCancelReasonCard(this)">
               <input type="radio" name="cancel-reason" value="Need to Change Shipping Destination">
               <div>
                 <strong>Need to Change Shipping Address</strong>
-                <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">My delivery address needs correction before courier pickup</p>
+                <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">My delivery address needs
+                  correction before courier pickup</p>
               </div>
             </label>
             <label class="cancel-reason-card" onclick="selectCancelReasonCard(this)">
               <input type="radio" name="cancel-reason" value="Placed Accidental Duplicate Order">
               <div>
                 <strong>Accidental Duplicate Order</strong>
-                <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">Order was submitted more than once</p>
+                <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary);">Order was submitted more than
+                  once</p>
               </div>
             </label>
           </div>
@@ -527,16 +601,19 @@
 
         <div class="form-group" style="margin-bottom: 1.2rem;">
           <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Refund Payout Preference *</label>
-          <select id="cancel-refund-channel" class="form-input" style="background: var(--bg-surface-elevated); color: var(--text-primary);">
+          <select id="cancel-refund-channel" class="form-input"
+            style="background: var(--bg-surface-elevated); color: var(--text-primary);">
             <option value="Instant UPI Refund">⚡ Instant UPI Payout (Within 10 Minutes)</option>
-            <option value="Atelier Store Credit + 10% VIP Bonus">💎 Atelier Store Credit (+10% Bonus Added Instantly)</option>
+            <option value="Atelier Store Credit + 10% VIP Bonus">💎 Atelier Store Credit (+10% Bonus Added Instantly)
+            </option>
             <option value="Original Payment Method">💳 Original Payment Method (2-3 Business Days)</option>
           </select>
         </div>
 
         <div class="form-group" style="margin-bottom: 1.5rem;">
           <label>Additional Cancellation Notes (Optional)</label>
-          <input type="text" id="cancel-notes-input" class="form-input" placeholder="e.g. Will reorder with medium coffin shape...">
+          <input type="text" id="cancel-notes-input" class="form-input"
+            placeholder="e.g. Will reorder with medium coffin shape...">
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 0.8rem;">
@@ -553,14 +630,16 @@
   <div class="modal-backdrop" id="edit-profile-modal" style="display: none;">
     <div class="checkout-modal-container" style="max-width: 520px;">
       <button class="modal-close-btn" onclick="closeEditProfileModal()"><i class="ri-close-line"></i></button>
-      
+
       <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem;">
-        <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(212, 175, 55, 0.15); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+        <div
+          style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(212, 175, 55, 0.15); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
           <i class="ri-edit-line"></i>
         </div>
         <div>
           <h3 class="font-serif" style="font-size: 1.3rem; margin: 0;">Update VIP Profile Details</h3>
-          <span style="font-size: 0.8rem; color: var(--text-secondary);">Your updated information syncs instantly across checkout and orders</span>
+          <span style="font-size: 0.8rem; color: var(--text-secondary);">Your updated information syncs instantly across
+            checkout and orders</span>
         </div>
       </div>
 
@@ -598,7 +677,8 @@
 
         <div class="form-group" style="margin-bottom: 1.5rem;">
           <label>Favorite Nail Shape</label>
-          <select id="edit-shape-input" class="form-input" style="background: var(--bg-surface-elevated); color: var(--text-primary);">
+          <select id="edit-shape-input" class="form-input"
+            style="background: var(--bg-surface-elevated); color: var(--text-primary);">
             <option value="Almond">Almond</option>
             <option value="Coffin">Coffin / Ballerina</option>
             <option value="Stiletto">Stiletto (Extra Long)</option>
@@ -619,15 +699,19 @@
 
   <!-- ORDER INVOICE MODAL -->
   <div class="modal-backdrop" id="invoice-modal" style="display: none;">
-    <div class="checkout-modal-container" style="max-width: 680px; max-height: 90vh; overflow-y: auto; background: #ffffff;">
-      <button class="modal-close-btn" onclick="closeInvoiceModal()" style="color: #1a1a1a;"><i class="ri-close-line"></i></button>
-      
+    <div class="checkout-modal-container"
+      style="max-width: 680px; max-height: 90vh; overflow-y: auto; background: #ffffff;">
+      <button class="modal-close-btn" onclick="closeInvoiceModal()" style="color: #1a1a1a;"><i
+          class="ri-close-line"></i></button>
+
       <div id="invoice-render-area" class="invoice-sheet">
         <!-- Rendered by JS -->
       </div>
 
-      <div style="display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
-        <button type="button" class="btn btn-secondary" onclick="closeInvoiceModal()" style="color: #333; border-color: #ccc;">Close</button>
+      <div
+        style="display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+        <button type="button" class="btn btn-secondary" onclick="closeInvoiceModal()"
+          style="color: #333; border-color: #ccc;">Close</button>
         <button type="button" class="btn btn-primary" onclick="printInvoice()">
           <i class="ri-printer-line"></i> Print Official Receipt
         </button>
@@ -639,37 +723,45 @@
   <div class="modal-backdrop" id="account-refund-modal" style="display: none;">
     <div class="checkout-modal-container" style="max-width: 560px; max-height: 90vh; overflow-y: auto;">
       <button class="modal-close-btn" onclick="closeRefundModal()"><i class="ri-close-line"></i></button>
-      
+
       <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem;">
-        <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(255, 117, 143, 0.15); color: var(--pink-accent); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+        <div
+          style="width: 44px; height: 44px; border-radius: var(--radius-full); background: rgba(255, 117, 143, 0.15); color: var(--pink-accent); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
           <i class="ri-refund-2-line"></i>
         </div>
         <div>
           <h3 class="font-serif" style="font-size: 1.4rem; margin: 0;">Request Return / Refund</h3>
-          <span style="font-size: 0.8rem; color: var(--text-secondary);">Backed by our 30-Day Atelier Perfect Fit Guarantee</span>
+          <span style="font-size: 0.8rem; color: var(--text-secondary);">Backed by our 30-Day Atelier Perfect Fit
+            Guarantee</span>
         </div>
       </div>
 
-      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); padding: 1rem 1.2rem; border-radius: var(--radius-sm); margin-bottom: 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+      <div
+        style="background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); padding: 1rem 1.2rem; border-radius: var(--radius-sm); margin-bottom: 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
         <div>
           <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">Order ID</span>
           <div id="refund-modal-order-id" style="font-weight: 700; color: var(--gold-light);">ORD-XXXXXX</div>
         </div>
         <div>
-          <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">Original Payment</span>
-          <div id="refund-modal-payment-mode" style="font-size: 0.88rem; color: var(--text-primary); font-weight: 600;">UPI (Google Pay)</div>
+          <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">Original
+            Payment</span>
+          <div id="refund-modal-payment-mode" style="font-size: 0.88rem; color: var(--text-primary); font-weight: 600;">
+            UPI (Google Pay)</div>
         </div>
         <div>
-          <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">Refundable Amount</span>
+          <span style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase;">Refundable
+            Amount</span>
           <div id="refund-modal-total" style="font-weight: 700; color: #2ecc71; font-size: 1.1rem;">$0.00</div>
         </div>
       </div>
 
-      <form id="client-refund-form" onsubmit="submitRefundRequest(event)" style="display: flex; flex-direction: column; gap: 1.2rem;">
+      <form id="client-refund-form" onsubmit="submitRefundRequest(event)"
+        style="display: flex; flex-direction: column; gap: 1.2rem;">
         <div class="form-group">
           <label>Reason for Return / Refund *</label>
           <select id="refund-reason-select" class="form-input" required>
-            <option value="Sizing Calibration Mismatch">Sizing Calibration Mismatch (Free Exchange Set or 100% Refund)</option>
+            <option value="Sizing Calibration Mismatch">Sizing Calibration Mismatch (Free Exchange Set or 100% Refund)
+            </option>
             <option value="Changed Mind - Unopened Package">Changed Mind / Unopened Factory-Sealed Box</option>
             <option value="Damaged / Broken in Transit">Damaged / Broken in Transit</option>
             <option value="Received Wrong Nail Shape / Design">Received Wrong Nail Shape / Design</option>
@@ -679,22 +771,28 @@
         <div class="form-group">
           <label style="margin-bottom: 0.6rem; display: block;">Select Refund Payout Channel *</label>
           <div style="display: flex; flex-direction: column; gap: 0.6rem;">
-            <label style="display: flex; align-items: center; justify-content: space-between; padding: 0.8rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); cursor: pointer;">
+            <label
+              style="display: flex; align-items: center; justify-content: space-between; padding: 0.8rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); cursor: pointer;">
               <div style="display: flex; align-items: center; gap: 0.8rem;">
-                <input type="radio" name="refund-method-choice" value="upi" checked onchange="toggleRefundMethodFields('upi')">
+                <input type="radio" name="refund-method-choice" value="upi" checked
+                  onchange="toggleRefundMethodFields('upi')">
                 <div>
                   <strong>⚡ Instant UPI Payout</strong>
-                  <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Transferred to your UPI ID within 24h of return receipt</p>
+                  <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Transferred to your UPI ID
+                    within 24h of return receipt</p>
                 </div>
               </div>
             </label>
 
-            <label style="display: flex; align-items: center; justify-content: space-between; padding: 0.8rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); cursor: pointer;">
+            <label
+              style="display: flex; align-items: center; justify-content: space-between; padding: 0.8rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); cursor: pointer;">
               <div style="display: flex; align-items: center; gap: 0.8rem;">
-                <input type="radio" name="refund-method-choice" value="credit" onchange="toggleRefundMethodFields('credit')">
+                <input type="radio" name="refund-method-choice" value="credit"
+                  onchange="toggleRefundMethodFields('credit')">
                 <div>
                   <strong>💎 Atelier Store Credit + 10% Bonus</strong>
-                  <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Instant wallet balance credited for next order</p>
+                  <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Instant wallet balance
+                    credited for next order</p>
                 </div>
               </div>
               <span class="badge badge-pink" style="font-size: 0.7rem;">+10% BONUS</span>
@@ -704,12 +802,14 @@
 
         <div id="refund-upi-field-box" class="form-group">
           <label>Your UPI ID / VPA for Payout *</label>
-          <input type="text" id="refund-upi-input" class="form-input" placeholder="e.g. yourname@okhdfcbank" value="elena.r@okaxis">
+          <input type="text" id="refund-upi-input" class="form-input" placeholder="e.g. yourname@okhdfcbank"
+            value="elena.r@okaxis">
         </div>
 
         <div class="form-group">
           <label>Additional Notes / Sizing Measurement Corrections</label>
-          <textarea id="refund-notes-input" class="form-input" rows="3" placeholder="Tell our master artisan what happened or provide updated millimeter widths if requesting a size exchange..."></textarea>
+          <textarea id="refund-notes-input" class="form-input" rows="3"
+            placeholder="Tell our master artisan what happened or provide updated millimeter widths if requesting a size exchange..."></textarea>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 0.8rem;">
@@ -730,7 +830,8 @@
           <span class="brand-title">LUXECLAWS</span>
           <span class="brand-subtitle">HAUTE NAIL ATELIER</span>
         </a>
-        <p>Bespoke handcrafted acrylic press-on nails built with salon-grade Japanese builder gel and authentic Swarovski crystals.</p>
+        <p>Bespoke handcrafted acrylic press-on nails built with salon-grade Japanese builder gel and authentic
+          Swarovski crystals.</p>
       </div>
       <div class="footer-column">
         <h4>Shop Collections</h4>
@@ -762,7 +863,8 @@
       <p>&copy; 2026 LUXECLAWS Haute Nail Atelier. All Rights Reserved.</p>
       <div style="display: flex; gap: 1.2rem; align-items: center;">
         <span>Handcrafted in Tokyo & Los Angeles</span>
-        <a href="admin.html" style="color: var(--text-muted); opacity: 0.4;" title="Atelier Admin Portal"><i class="ri-lock-line"></i></a>
+        <a href="admin.html" style="color: var(--text-muted); opacity: 0.4;" title="Atelier Admin Portal"><i
+            class="ri-lock-line"></i></a>
       </div>
     </div>
   </footer>
@@ -1048,11 +1150,11 @@
                 <div class="stepper-progress-fill" style="width: ${fillWidth}%;"></div>
               </div>
               ${steps.map((st, i) => {
-                let stepClass = '';
-                if (i < activeIndex) stepClass = 'completed';
-                else if (i === activeIndex) stepClass = 'active';
+          let stepClass = '';
+          if (i < activeIndex) stepClass = 'completed';
+          else if (i === activeIndex) stepClass = 'active';
 
-                return `
+          return `
                   <div class="stepper-step ${stepClass}">
                     <div class="stepper-node">
                       <i class="${i < activeIndex ? 'ri-check-line' : st.icon}"></i>
@@ -1060,7 +1162,7 @@
                     <span class="stepper-label">${st.label}</span>
                   </div>
                 `;
-              }).join('')}
+        }).join('')}
             </div>
           </div>
         `;
@@ -1094,7 +1196,7 @@
         // Apply search
         if (currentSearchQuery.trim()) {
           const q = currentSearchQuery.toLowerCase().trim();
-          filtered = filtered.filter(o => 
+          filtered = filtered.filter(o =>
             o.id.toLowerCase().includes(q) ||
             (o.trackingNumber && o.trackingNumber.toLowerCase().includes(q)) ||
             (o.items && o.items.some(it => it.name.toLowerCase().includes(q)))
@@ -1244,14 +1346,14 @@
       // -------------------------------------------------------------
       // Global Interactivity Handlers
       // -------------------------------------------------------------
-      window.switchAuthTab = function(tab) {
+      window.switchAuthTab = function (tab) {
         document.getElementById('auth-tab-login').classList.toggle('active', tab === 'login');
         document.getElementById('auth-tab-register').classList.toggle('active', tab === 'register');
         document.getElementById('page-login-form').style.display = tab === 'login' ? 'block' : 'none';
         document.getElementById('page-register-form').style.display = tab === 'register' ? 'block' : 'none';
       };
 
-      window.switchDashboardTab = function(tabName) {
+      window.switchDashboardTab = function (tabName) {
         document.querySelectorAll('.tab-pane').forEach(el => el.style.display = 'none');
         document.querySelectorAll('.account-nav-btn').forEach(btn => btn.classList.remove('active'));
 
@@ -1264,7 +1366,7 @@
         window.location.hash = tabName;
       };
 
-      window.filterOrders = function(filter) {
+      window.filterOrders = function (filter) {
         currentOrderFilter = filter;
         document.querySelectorAll('.order-filter-btn').forEach(btn => btn.classList.remove('active'));
         const activeBtn = document.getElementById(`filter-btn-${filter}`);
@@ -1272,12 +1374,12 @@
         renderOrdersList();
       };
 
-      window.handleOrderSearch = function(query) {
+      window.handleOrderSearch = function (query) {
         currentSearchQuery = query;
         renderOrdersList();
       };
 
-      window.quickFillDemoUser = function() {
+      window.quickFillDemoUser = function () {
         currentUser = {
           name: 'Elena Rostova',
           email: 'elena.r@luxury.com',
@@ -1295,7 +1397,7 @@
         showToast('Welcome back, Elena! (Gold VIP)', 'ri-vip-crown-fill');
       };
 
-      window.handleAccountLogin = function(e) {
+      window.handleAccountLogin = function (e) {
         e.preventDefault();
         const email = document.getElementById('login-email-input').value;
         const name = email.split('@')[0].replace('.', ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Elena Rostova';
@@ -1317,7 +1419,7 @@
         showToast(`Signed in successfully! Welcome back, ${name}! ✨`, 'ri-checkbox-circle-fill');
       };
 
-      window.handleAccountRegister = function(e) {
+      window.handleAccountRegister = function (e) {
         e.preventDefault();
         const name = document.getElementById('reg-name-input').value;
         const email = document.getElementById('reg-email-input').value;
@@ -1340,7 +1442,7 @@
         showToast(`Welcome to LUXECLAWS Atelier, ${name}!`, 'ri-sparkling-fill');
       };
 
-      window.handleAccountLogout = function() {
+      window.handleAccountLogout = function () {
         if (confirm('Are you sure you want to sign out of your VIP account?')) {
           localStorage.removeItem('luxeclaws_user');
           currentUser = null;
@@ -1352,7 +1454,7 @@
       // -------------------------------------------------------------
       // Order Cancellation System
       // -------------------------------------------------------------
-      window.openCancelModal = function(orderId) {
+      window.openCancelModal = function (orderId) {
         activeCancelOrderId = orderId;
         const ord = orders.find(o => o.id === orderId);
         if (!ord) return;
@@ -1361,19 +1463,19 @@
         document.getElementById('cancel-order-modal').style.display = 'flex';
       };
 
-      window.closeCancelModal = function() {
+      window.closeCancelModal = function () {
         document.getElementById('cancel-order-modal').style.display = 'none';
         activeCancelOrderId = null;
       };
 
-      window.selectCancelReasonCard = function(cardEl) {
+      window.selectCancelReasonCard = function (cardEl) {
         document.querySelectorAll('.cancel-reason-card').forEach(c => c.classList.remove('selected'));
         cardEl.classList.add('selected');
         const radio = cardEl.querySelector('input[type="radio"]');
         if (radio) radio.checked = true;
       };
 
-      window.submitCancelOrder = function(e) {
+      window.submitCancelOrder = function (e) {
         e.preventDefault();
         if (!activeCancelOrderId) return;
 
@@ -1404,7 +1506,7 @@
       // -------------------------------------------------------------
       // Edit Profile Modal
       // -------------------------------------------------------------
-      window.openEditProfileModal = function() {
+      window.openEditProfileModal = function () {
         if (!currentUser) return;
         document.getElementById('edit-name-input').value = currentUser.name || '';
         document.getElementById('edit-email-input').value = currentUser.email || '';
@@ -1417,11 +1519,11 @@
         document.getElementById('edit-profile-modal').style.display = 'flex';
       };
 
-      window.closeEditProfileModal = function() {
+      window.closeEditProfileModal = function () {
         document.getElementById('edit-profile-modal').style.display = 'none';
       };
 
-      window.saveProfileEdits = function(e) {
+      window.saveProfileEdits = function (e) {
         e.preventDefault();
         if (!currentUser) return;
 
@@ -1442,7 +1544,7 @@
       // -------------------------------------------------------------
       // Invoice Modal & Print
       // -------------------------------------------------------------
-      window.openInvoiceModal = function(orderId) {
+      window.openInvoiceModal = function (orderId) {
         const ord = orders.find(o => o.id === orderId);
         if (!ord) return;
 
@@ -1531,18 +1633,18 @@
         document.getElementById('invoice-modal').style.display = 'flex';
       };
 
-      window.closeInvoiceModal = function() {
+      window.closeInvoiceModal = function () {
         document.getElementById('invoice-modal').style.display = 'none';
       };
 
-      window.printInvoice = function() {
+      window.printInvoice = function () {
         window.print();
       };
 
       // -------------------------------------------------------------
       // Reorder Items
       // -------------------------------------------------------------
-      window.reorderItems = function(orderId) {
+      window.reorderItems = function (orderId) {
         const ord = orders.find(o => o.id === orderId);
         if (!ord || !ord.items) return;
 
@@ -1571,7 +1673,7 @@
       // -------------------------------------------------------------
       // Sizing Profile Form
       // -------------------------------------------------------------
-      window.saveCustomSizing = function(e) {
+      window.saveCustomSizing = function (e) {
         e.preventDefault();
         if (!currentUser) return;
         currentUser.measurements = {
@@ -1588,7 +1690,7 @@
       // -------------------------------------------------------------
       // Wishlist Handlers
       // -------------------------------------------------------------
-      window.removeFromWishlistPage = function(id) {
+      window.removeFromWishlistPage = function (id) {
         wishlist = wishlist.filter(item => item !== id);
         localStorage.setItem('luxeclaws_wishlist', JSON.stringify(wishlist));
         renderWishlistGrid();
@@ -1598,7 +1700,7 @@
         showToast('Removed from Wishlist', 'ri-heart-line');
       };
 
-      window.quickAddToCartFromWishlist = function(id) {
+      window.quickAddToCartFromWishlist = function (id) {
         const prod = products.find(p => p.id === id);
         if (!prod) return;
         let cart = JSON.parse(localStorage.getItem('luxeclaws_cart') || '[]');
@@ -1620,7 +1722,7 @@
       // -------------------------------------------------------------
       // Return / Refund Modal Handlers
       // -------------------------------------------------------------
-      window.openRefundModal = function(orderId) {
+      window.openRefundModal = function (orderId) {
         activeRefundOrderId = orderId;
         const ord = orders.find(o => o.id === orderId);
         if (!ord) return;
@@ -1629,21 +1731,21 @@
         document.getElementById('refund-modal-total').textContent = `$${ord.total.toFixed(2)}`;
         document.getElementById('refund-modal-payment-mode').textContent = ord.paymentMethod || 'Credit Card / UPI';
         document.getElementById('refund-upi-input').value = currentUser?.email?.split('@')[0] + '@okaxis' || 'elena@okaxis';
-        
+
         document.getElementById('account-refund-modal').style.display = 'flex';
       };
 
-      window.closeRefundModal = function() {
+      window.closeRefundModal = function () {
         document.getElementById('account-refund-modal').style.display = 'none';
         activeRefundOrderId = null;
       };
 
-      window.toggleRefundMethodFields = function(method) {
+      window.toggleRefundMethodFields = function (method) {
         const upiField = document.getElementById('refund-upi-field-box');
         if (upiField) upiField.style.display = (method === 'upi') ? 'block' : 'none';
       };
 
-      window.submitRefundRequest = function(e) {
+      window.submitRefundRequest = function (e) {
         e.preventDefault();
         if (!activeRefundOrderId) return;
 
@@ -1660,7 +1762,7 @@
           storedOrders[idx].refundMethod = method === 'upi' ? `Instant UPI (${upiId})` : 'Atelier Store Credit (+10% Bonus)';
           storedOrders[idx].refundNotes = notes;
           storedOrders[idx].refundRequestedAt = new Date().toISOString();
-          
+
           localStorage.setItem('luxeclaws_orders', JSON.stringify(storedOrders));
           orders = storedOrders;
         }
@@ -1687,4 +1789,5 @@
     });
   </script>
 </body>
+
 </html>

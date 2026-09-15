@@ -252,13 +252,22 @@ document.addEventListener('DOMContentLoaded', () => {
               <h5>${state.user.name}</h5>
               <span>✨ VIP Member • Size ${state.user.size}</span>
             </div>
-            <button class="user-dropdown-item" onclick="openSizingFromProfile()">
-              <i class="ri-ruler-2-line"></i> My Nail Size: <strong>${state.user.size}</strong>
-            </button>
-            <button class="user-dropdown-item" onclick="openOrdersFromProfile()">
-              <i class="ri-shopping-bag-line"></i> Order History
-            </button>
-            <button class="user-dropdown-item" onclick="logoutUser()" style="color: var(--pink-accent); border-top: 1px solid var(--border-subtle); margin-top: 0.4rem;">
+            <a href="profile.html#overview" class="user-dropdown-item" style="text-decoration: none; color: inherit;">
+              <i class="ri-dashboard-line"></i> VIP Portal Overview
+            </a>
+            <a href="profile.html#orders" class="user-dropdown-item" style="text-decoration: none; color: inherit;">
+              <i class="ri-shopping-bag-3-line"></i> My Orders & Live Tracking
+            </a>
+            <a href="profile.html#profile" class="user-dropdown-item" style="text-decoration: none; color: inherit;">
+              <i class="ri-user-settings-line"></i> Profile & Delivery Details
+            </a>
+            <a href="profile.html#sizing" class="user-dropdown-item" style="text-decoration: none; color: inherit;">
+              <i class="ri-ruler-2-line"></i> Nail Sizing: <strong>${state.user.size}</strong>
+            </a>
+            <a href="profile.html#wishlist" class="user-dropdown-item" style="text-decoration: none; color: inherit;">
+              <i class="ri-heart-line"></i> Saved Wishlist
+            </a>
+            <button class="user-dropdown-item" onclick="logoutUser()" style="color: var(--pink-accent); border-top: 1px solid var(--border-subtle); margin-top: 0.4rem; width: 100%; text-align: left; background: transparent; border-left: none; border-right: none; border-bottom: none; cursor: pointer;">
               <i class="ri-logout-box-r-line"></i> Sign Out
             </button>
           </div>
@@ -298,11 +307,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   window.openSizingFromProfile = function() {
-    window.location.hash = 'sizing';
+    window.location.href = 'profile.html#sizing';
   };
 
   window.openOrdersFromProfile = function() {
-    showToast('All your previous orders are tracked and archived in your VIP portal! ✨', 'ri-history-line');
+    window.location.href = 'profile.html#orders';
   };
 
   // Initial user nav render
